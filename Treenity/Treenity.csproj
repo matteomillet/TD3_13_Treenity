@@ -10,10 +10,14 @@
 
   <ItemGroup>
     <None Remove="Ressources\Images\BackgroundMenu.png" />
+    <None Remove="Ressources\Images\playButton.png" />
+    <None Remove="Ressources\Images\rulesButton.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
+    <Resource Include="Ressources\Images\playButton.png" />
+    <Resource Include="Ressources\Images\rulesButton.png" />
   </ItemGroup>
 
 </Project>
