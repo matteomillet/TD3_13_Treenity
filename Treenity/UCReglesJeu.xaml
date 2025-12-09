@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="Treenity.UCReglesJeu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Treenity"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Image Margin="12,38,12,38" Source="/Ressources/Images/PanneauRegleJeu.png" Stretch="Fill" OpacityMask="Black"/>
+        <TextBox HorizontalAlignment="Left" Margin="88,96,0,0" TextWrapping="Wrap" Text="Jeu type rogue-like ou il faut grimper un arbre, à chaque branche, le joueur fait face à un d’ennemi. Lors de chaque manche, il est possible de récupérer des items sur des ennemis tués. A la fin de chaque manche, le joueur peut sélectionner une compétence pour améliorer son personnage. Une fois arriver en haut de l'arbre, il doit affronter un boss final." VerticalAlignment="Top" Width="612" Height="239" Background="Transparent" TextChanged="TextBox_TextChanged" FontSize="24"/>
+
+    </Grid>
+</UserControl>

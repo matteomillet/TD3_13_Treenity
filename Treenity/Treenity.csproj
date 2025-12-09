@@ -9,11 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\Images\backgroundFinJeu.jpg" />
     <None Remove="Ressources\Images\BackgroundMenu.png" />
+    <None Remove="Ressources\Images\FinJeuBackground.png" />
+    <None Remove="Ressources\Images\PanneauRegleJeu.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="UCFinish.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\Images\backgroundFinJeu.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
+    <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
+    <Resource Include="UCFinish.xaml" />
   </ItemGroup>
 
 </Project>
