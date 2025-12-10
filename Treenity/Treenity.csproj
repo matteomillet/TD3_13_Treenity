@@ -11,6 +11,7 @@
   <ItemGroup>
     <None Remove="Ressources\Images\backgroundFinJeu.jpg" />
     <None Remove="Ressources\Images\BackgroundMenu.png" />
+    <None Remove="Ressources\Images\ButtonShape.png" />
     <None Remove="Ressources\Images\FinJeuBackground.png" />
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
     <None Remove="Ressources\Images\YouWinTitle.png" />
@@ -24,6 +25,8 @@
   <ItemGroup>
     <Resource Include="Ressources\Images\backgroundFinJeu.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
+    <Resource Include="Ressources\Images\ButtonShape.png" />
+    <Resource Include="Ressources\Images\pinguin.png" />
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
     <Resource Include="Ressources\Images\YouWinTitle.png" />
     <Resource Include="Ressources\Images\playButton.png" />
