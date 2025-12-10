@@ -23,7 +23,7 @@ namespace Treenity
             AfficheDemarrage();
         }
 
-        private void AfficheDemarrage(object sender, RoutedEventArgs e)
+        private void AfficheDemarrage()
         {
             UCDemarrage uc = new UCDemarrage();
 
