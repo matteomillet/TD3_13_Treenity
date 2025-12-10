@@ -28,10 +28,10 @@ namespace Treenity
 
             ZoneJeu.Content = uc;
 
-            uc.rulesButton.Click += AfficherRegles();
+            uc.rulesButton.Click += AfficherRegles;
         }
 
-        private void AfficherChoixPerso(object sender, RoutedEventArgs e)
+        private void AfficherRegles(object sender, RoutedEventArgs e)
         {
             UCReglesJeu uc = new UCReglesJeu();
 

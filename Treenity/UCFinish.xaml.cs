@@ -22,7 +22,7 @@ namespace Treenity
     {
         public UCFinish()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
     }
 }
