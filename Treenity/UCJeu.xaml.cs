@@ -57,7 +57,7 @@ namespace Treenity
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
-            imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
+            imgPerso.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
             ScaleTransform fliptrans = new ScaleTransform();
             imgPerso.RenderTransform = fliptrans;
 
