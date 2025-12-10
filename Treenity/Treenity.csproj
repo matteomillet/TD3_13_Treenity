@@ -13,6 +13,7 @@
     <None Remove="Ressources\Images\BackgroundMenu.png" />
     <None Remove="Ressources\Images\FinJeuBackground.png" />
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
+    <None Remove="Ressources\Images\YouWinTitle.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +26,7 @@
     <Resource Include="Ressources\Images\backgroundFinJeu.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
+    <Resource Include="Ressources\Images\YouWinTitle.png" />
     <Resource Include="UCFinish.xaml" />
     <Resource Include="Ressources\Images\playButton.png" />
     <Resource Include="Ressources\Images\rulesButton.png" />
