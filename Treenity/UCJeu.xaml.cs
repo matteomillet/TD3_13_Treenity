@@ -25,12 +25,17 @@ namespace Treenity
     /// </summary>
     public partial class UCJeu : UserControl
     {
-        Ennemies ennemie1 = new Ennemies();
+        public int vitessePerso = 2;
+        Ennemies[] ennemies = new Ennemies[10];
         public UCJeu()
         {
             InitializeComponent();
-            AffichageEntite(ennemie1);
-            
+
+            for(int i = 0; i < ennemies.Length; i++)
+            {
+                ennemies[i] = new Ennemies();
+                AffichageEntite(ennemies[i]);
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -45,43 +50,31 @@ namespace Treenity
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
+            imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
+            ScaleTransform fliptrans = new ScaleTransform();
+            imgPerso.RenderTransform = fliptrans;
+
             if (e.Key == Key.Right || e.Key == Key.D)
-            {
-                imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
-                ScaleTransform fliptrans = new ScaleTransform();
+            {  
                 fliptrans.ScaleX = 1;
-                imgPerso.RenderTransform = fliptrans;
-                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + 2);
+                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + vitessePerso);
             }
 
 
             if (e.Key == Key.Left || e.Key == Key.Q)
             {
-                imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
-                ScaleTransform fliptrans = new ScaleTransform();
                 fliptrans.ScaleX = -1;
-                imgPerso.RenderTransform = fliptrans;
-                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - 2);
-
+                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - vitessePerso);
             }
-
-
         }
 
         public void AffichageEntite(Ennemies entite)
         {
             Image ennemieImg = new Image();
-            ennemieImg.Width = 200;
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(entite.style);
-            bitmapImage.DecodePixelWidth = 200;
-            bitmapImage.EndInit();
-            ennemieImg.Source = bitmapImage;
+            ennemieImg.Source = entite.imageEnnemie;
             canvasJeu.Children.Add(ennemieImg);
             Canvas.SetLeft(ennemieImg, entite.posLeft);
             Canvas.SetTop(ennemieImg, entite.posTop);
-
         }
     }
 }
