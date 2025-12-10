@@ -25,17 +25,24 @@ namespace Treenity
     /// </summary>
     public partial class UCJeu : UserControl
     {
-        Ennemies ennemie1 = new Ennemies();
         public System.Drawing.Rectangle rectangleJoueur = new System.Drawing.Rectangle();
+        public int vitessePerso = 2;
+        Ennemies[] ennemies = new Ennemies[10];
         public UCJeu()
         {
             InitializeComponent();
-            AffichageEntite(ennemie1);
 
             rectangleJoueur.X = (int) Canvas.GetLeft(imgPerso);
             rectangleJoueur.Y = (int)Canvas.GetTop(imgPerso);
             rectangleJoueur.Height = (int) imgPerso.Height;
             rectangleJoueur.Width = (int)imgPerso.Width;
+        
+
+            for(int i = 0; i < ennemies.Length; i++)
+            {
+                ennemies[i] = new Ennemies();
+                AffichageEntite(ennemies[i]);
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -50,43 +57,33 @@ namespace Treenity
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
+            imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
+            ScaleTransform fliptrans = new ScaleTransform();
+            imgPerso.RenderTransform = fliptrans;
+
             if (e.Key == Key.Right || e.Key == Key.D)
             {
-                imgPerso.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-                ScaleTransform fliptrans = new ScaleTransform();
                 fliptrans.ScaleX = 1;
-                imgPerso.RenderTransform = fliptrans;
-                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + 2);
-                rectangleJoueur.X = rectangleJoueur.X + 2;
-                
+                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + vitessePerso);
+                rectangleJoueur.X += vitessePerso;
             }
 
 
             if (e.Key == Key.Left || e.Key == Key.Q)
             {
-                imgPerso.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
-                ScaleTransform fliptrans = new ScaleTransform();
                 fliptrans.ScaleX = -1;
-                imgPerso.RenderTransform = fliptrans;
-                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - 2);
-                rectangleJoueur.X = rectangleJoueur.X - 2;
+                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - vitessePerso);
+                rectangleJoueur.X -= vitessePerso;
             }
-
-
         }
 
         public void AffichageEntite(Ennemies entite)
         {
             Image ennemieImg = new Image();
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.BeginInit();
-            bitmapImage.UriSource = new Uri(entite.style);
-            bitmapImage.EndInit();
-            ennemieImg.Source = bitmapImage;
+            ennemieImg.Source = entite.imageEnnemie;
             canvasJeu.Children.Add(ennemieImg);
             Canvas.SetLeft(ennemieImg, entite.posLeft);
             Canvas.SetTop(ennemieImg, entite.posTop);
-
         }
     }
 }
