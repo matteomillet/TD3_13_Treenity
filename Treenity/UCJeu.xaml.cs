@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Windows.Themes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
+
+
 namespace Treenity
 {
     /// <summary>
@@ -20,9 +25,12 @@ namespace Treenity
     /// </summary>
     public partial class UCJeu : UserControl
     {
+        Ennemies ennemie1 = new Ennemies();
         public UCJeu()
         {
             InitializeComponent();
+            AffichageEntite(ennemie1);
+            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -55,8 +63,27 @@ namespace Treenity
                 imgPerso.RenderTransform = fliptrans;
                 Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - 2);
 
-
             }
+
+
+        }
+
+        public void AffichageEntite(Ennemies entite)
+        {
+            Image ennemieImg = new Image();
+            ennemieImg.Width = 200;
+            BitmapImage bitmapImage = new BitmapImage();
+            bitmapImage.BeginInit();
+            bitmapImage.UriSource = new Uri(entite.style);
+            bitmapImage.DecodePixelWidth = 200;
+            bitmapImage.EndInit();
+            ennemieImg.Source = bitmapImage;
+            canvasJeu.Children.Add(ennemieImg);
+            Canvas.SetLeft(ennemieImg, entite.posLeft);
+            Canvas.SetTop(ennemieImg, entite.posTop);
+
         }
     }
 }
+
+

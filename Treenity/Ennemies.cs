@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Windows.Media.Imaging;
 
 namespace Treenity
 {
-    internal class Ennemies
+    public class Ennemies
     {
-        String name;
-        string style = "Ressources/Images/pinguin.png";
-        int pv;
-        int strength;
+        public String name="Elfe";
+        public string style = "pack://application:,,,/Ressources/Images/pinguin.png";
+        public int pv =12;
+        public int strength =15;
+        public int posTop = new Random().Next(100,401);
+        public int posLeft = new Random().Next(100,401);
     }
 }
