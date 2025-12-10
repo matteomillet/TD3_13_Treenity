@@ -31,13 +31,22 @@ namespace Treenity
             uc.rulesButton.Click += AfficherRegles;
         }
 
+        private void AfficheDemarrage(object sender, RoutedEventArgs e)
+        {
+            UCDemarrage uc = new UCDemarrage();
+
+            ZoneJeu.Content = uc;
+
+            uc.rulesButton.Click += AfficherRegles;
+        }
+
         private void AfficherRegles(object sender, RoutedEventArgs e)
         {
             UCReglesJeu uc = new UCReglesJeu();
 
             ZoneJeu.Content = uc;
 
-            uc.BoutonRetourRegle.click += AfficheDemarrage;
+            uc.boutonRetourRegle.Click += AfficheDemarrage;
         }
     }
 }
