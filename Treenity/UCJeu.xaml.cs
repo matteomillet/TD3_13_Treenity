@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Drawing;
+using sd = System.Drawing;
 
 
 
@@ -25,10 +25,11 @@ namespace Treenity
     /// </summary>
     public partial class UCJeu : UserControl
     {
-        public System.Drawing.Rectangle rectangleJoueur = new System.Drawing.Rectangle();
+        public sd.Rectangle rectangleJoueur = new sd.Rectangle();
         public int vitessePerso = 2;
         Ennemies[] ennemies = new Ennemies[10];
-        System.Drawing.Rectangle[] rectEnnemies = new System.Drawing.Rectangle[10];
+        sd.Rectangle[] rectEnnemies = new sd.Rectangle[10];
+        
         public UCJeu()
         {
             InitializeComponent();
@@ -73,7 +74,7 @@ namespace Treenity
             }
 
 
-            if (e.Key == Key.Left || e.Key == Key.Q)
+            if (e.Key == Key.Left || e.Key == Key.Q )
             {
                 fliptrans.ScaleX = -1;
                 Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - vitessePerso);
@@ -88,6 +89,19 @@ namespace Treenity
             canvasJeu.Children.Add(ennemieImg);
             Canvas.SetLeft(ennemieImg, entite.posLeft);
             Canvas.SetTop(ennemieImg, entite.posTop);
+        }
+
+        public bool Colision(sd.Rectangle[] entites, sd.Rectangle joueur)
+        {
+            /*
+             Le rectangle du joueur entre en colision avec rectangle dans liste si oui = true sinon = false
+
+             */
+
+
+            bool colision = true;
+
+            return colision;
         }
     }
 }
