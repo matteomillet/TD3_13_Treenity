@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Image Margin="12,49,12,27" Source="/Ressources/Images/PanneauRegleJeu.png" Stretch="Fill" OpacityMask="Black"/>
-        <TextBox x:Name="TextboxRegleJeu" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Jeu type rogue-like ou il faut grimper un arbre, à chaque branche, le joueur fait face à un d’ennemi. Lors de chaque manche, il est possible de récupérer des items sur des ennemis tués. A la fin de chaque manche, le joueur peut sélectionner une compétence pour améliorer son personnage. Une fois arriver en haut de l'arbre, il doit affronter un boss final." VerticalAlignment="Center" Background="Transparent" FontSize="24" BorderThickness="0" Height="198" Width="644" TextChanged="TextboxRegleJeu_TextChanged"/>
+        <TextBox x:Name="TextboxRegleJeu" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Jeu type rogue-like ou il faut grimper un arbre, à chaque branche, le joueur fait face à un d’ennemi. Lors de chaque manche, il est possible de récupérer des items sur des ennemis tués. A la fin de chaque manche, le joueur peut sélectionner une compétence pour améliorer son personnage. Une fois arriver en haut de l'arbre, il doit affronter un boss final." VerticalAlignment="Center" Background="Transparent" FontSize="24" BorderThickness="0" Height="198" Width="644"/>
         <Button x:Name="boutonRetourRegle" Content="Button" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Height="42" Width="82"/>
 
     </Grid>
