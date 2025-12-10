@@ -36,6 +36,8 @@ namespace Treenity
             UCReglesJeu uc = new UCReglesJeu();
 
             ZoneJeu.Content = uc;
+
+            uc.BoutonRetourRegle.click += AfficheDemarrage;
         }
     }
 }
