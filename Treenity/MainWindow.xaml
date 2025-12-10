@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Treenity" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
     <Window.Background>
-        <ImageBrush ImageSource="Ressources/Images/BackgroundMenu.png"/>
+        <ImageBrush x:Name="background" ImageSource="Ressources/Images/BackgroundMenu.png"/>
     </Window.Background>
     <ContentControl x:Name="ZoneJeu"/>
 </Window>

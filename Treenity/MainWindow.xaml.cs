@@ -56,9 +56,8 @@ namespace Treenity
             UCFinish uc = new UCFinish();
 
             ZoneJeu.Content = uc;
-            Main
 
-            //uc.backMenuButton.Click += AfficheDemarrage;
+            uc.backMenuButton.Click += AfficheDemarrage;
         }
     }
 }
