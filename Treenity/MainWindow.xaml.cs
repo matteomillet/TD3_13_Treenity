@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,7 +23,7 @@ namespace Treenity
             AfficheDemarrage();
         }
 
-        private void AfficheDemarrage()
+        private void AfficheDemarrage(object sender, RoutedEventArgs e)
         {
             UCDemarrage uc = new UCDemarrage();
 
@@ -37,7 +38,7 @@ namespace Treenity
 
             ZoneJeu.Content = uc;
 
-            uc.BoutonRetourRegle.click += AfficheDemarrage;
+            uc.BoutonRetourRegle.Click += AfficheDemarrage;
         }
     }
 }
