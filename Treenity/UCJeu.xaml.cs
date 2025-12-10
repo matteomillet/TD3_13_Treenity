@@ -28,6 +28,7 @@ namespace Treenity
         public System.Drawing.Rectangle rectangleJoueur = new System.Drawing.Rectangle();
         public int vitessePerso = 2;
         Ennemies[] ennemies = new Ennemies[10];
+        System.Drawing.Rectangle[] rectEnnemies = new System.Drawing.Rectangle[10];
         public UCJeu()
         {
             InitializeComponent();
@@ -37,10 +38,13 @@ namespace Treenity
             rectangleJoueur.Height = (int) imgPerso.Height;
             rectangleJoueur.Width = (int)imgPerso.Width;
         
-
             for(int i = 0; i < ennemies.Length; i++)
             {
                 ennemies[i] = new Ennemies();
+                rectEnnemies[i].X = ennemies[i].posLeft;
+                rectEnnemies[i].Y = ennemies[i].posTop;
+                rectEnnemies[i].Height = (int)ennemies[i].imageEnnemie.Height;
+                rectEnnemies[i].Width = (int)ennemies[i].imageEnnemie.Width;
                 AffichageEntite(ennemies[i]);
             }
         }
@@ -57,7 +61,7 @@ namespace Treenity
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
-            imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
+            imgPerso.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
             ScaleTransform fliptrans = new ScaleTransform();
             imgPerso.RenderTransform = fliptrans;
 
