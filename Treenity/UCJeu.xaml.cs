@@ -24,5 +24,39 @@ namespace Treenity
         {
             InitializeComponent();
         }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
+            Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
+        }
+
+        private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
+        {
+        }
+
+        private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Right || e.Key == Key.D)
+            {
+                imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
+                ScaleTransform fliptrans = new ScaleTransform();
+                fliptrans.ScaleX = 1;
+                imgPerso.RenderTransform = fliptrans;
+                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + 2);
+            }
+
+
+            if (e.Key == Key.Left || e.Key == Key.Q)
+            {
+                imgPerso.RenderTransformOrigin = new Point(0.5, 0.5);
+                ScaleTransform fliptrans = new ScaleTransform();
+                fliptrans.ScaleX = -1;
+                imgPerso.RenderTransform = fliptrans;
+                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - 2);
+
+
+            }
+        }
     }
 }

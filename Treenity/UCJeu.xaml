@@ -5,11 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Treenity"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Background>
         <ImageBrush ImageSource="/Ressources/Images/backgroundForest.jpg"/>
     </UserControl.Background>
-    <Grid>
-        <Image Margin="281,181,247,225" Source="/Ressources/Images/Branche.png" Stretch="Fill"/>
-    </Grid>
+    <Canvas x:Name="canvasJeu">
+        <Image Margin="189,181,0,0" Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" />
+        <Image Margin="553,-88,0,0" Source="/Ressources/Images/Tronc.png" Stretch="Fill"/>
+        <Image x:Name="imgPerso" Source="/Ressources/Images/bucheron.png" Stretch="Fill" Height="102" Width="118" Canvas.Left="26" Canvas.Top="322" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+    </Canvas>
 </UserControl>

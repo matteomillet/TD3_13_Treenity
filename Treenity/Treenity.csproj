@@ -14,6 +14,7 @@
     <None Remove="Ressources\Images\BackgroundMenu.png" />
     <None Remove="Ressources\Images\branche.png" />
     <None Remove="Ressources\Images\Branche.png.png" />
+    <None Remove="Ressources\Images\bucheron.png" />
     <None Remove="Ressources\Images\FinJeuBackground.png" />
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
     <None Remove="Ressources\Images\Tronc.png" />
@@ -30,7 +31,9 @@
     <Resource Include="Ressources\Images\backgroundForest.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
     <Resource Include="Ressources\Images\branche.png" />
+    <Resource Include="Ressources\Images\bucheron.png" />
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
+    <Resource Include="Ressources\Images\Tronc.png" />
     <Resource Include="Ressources\Images\YouWinTitle.png" />
     <Resource Include="Ressources\Images\playButton.png" />
     <Resource Include="Ressources\Images\rulesButton.png" />
