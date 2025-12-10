@@ -19,6 +19,23 @@ namespace Treenity
         public MainWindow()
         {
             InitializeComponent();
+            AfficheDemarrage();
+        }
+
+        private void AfficheDemarrage()
+        {
+            UCDemarrage uc = new UCDemarrage();
+
+            ZoneJeu.Content = uc;
+
+            uc.rulesButton.Click += AfficherRegles();
+        }
+
+        private void AfficherChoixPerso(object sender, RoutedEventArgs e)
+        {
+            UCReglesJeu uc = new UCReglesJeu();
+
+            ZoneJeu.Content = uc;
         }
     }
 }
