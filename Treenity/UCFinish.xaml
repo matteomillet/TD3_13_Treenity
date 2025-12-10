@@ -11,6 +11,6 @@
     </UserControl.Background>
     <Grid>
         <Image Margin="66,131,66,225" Source="/Ressources/Images/YouWinTitle.png" Stretch="Fill"/>
-
+        <Button x:Name="backMenuButton" Content="Retour au menu" HorizontalAlignment="Left" Margin="400,294,0,0" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

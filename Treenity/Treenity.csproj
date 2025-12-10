@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="UCFinish.xaml" />
     <None Remove="Ressources\Images\playButton.png" />
     <None Remove="Ressources\Images\rulesButton.png" />
   </ItemGroup>
@@ -27,7 +26,6 @@
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
     <Resource Include="Ressources\Images\YouWinTitle.png" />
-    <Resource Include="UCFinish.xaml" />
     <Resource Include="Ressources\Images\playButton.png" />
     <Resource Include="Ressources\Images\rulesButton.png" />
   </ItemGroup>
