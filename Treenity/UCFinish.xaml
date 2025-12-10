@@ -10,7 +10,7 @@
         <ImageBrush ImageSource="/Ressources/Images/backgroundFinJeu.jpg" Stretch="UniformToFill"/>
     </UserControl.Background>
     <Grid>
-        <Label x:Name="labelTitreFinJeu" Content="You win!!" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" Height="107" Width="242" FontSize="56" />
+        <Image Margin="66,131,66,225" Source="/Ressources/Images/YouWinTitle.png" Stretch="Fill"/>
 
     </Grid>
 </UserControl>
