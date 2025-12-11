@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Treenity"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded">
+             d:DesignHeight="1080" d:DesignWidth="1920" Loaded="UserControl_Loaded">
     <UserControl.Background>
         <ImageBrush ImageSource="/Ressources/Images/backgroundForest.jpg"/>
     </UserControl.Background>
     <Canvas x:Name="canvasJeu">
-        <Image Margin="189,181,0,0" Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" />
-        <Image Margin="553,-88,0,0" Source="/Ressources/Images/Tronc.png" Stretch="Fill"/>
-        <Image x:Name="imgPerso" Source="/Ressources/Images/bucheron.png" Stretch="Fill" Height="102" Width="118" Canvas.Left="26" Canvas.Top="330" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <Image Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" Canvas.Left="1304" Canvas.Top="721" />
+        <Image Source="/Ressources/Images/Tronc.png" Stretch="Fill" Canvas.Left="1668" Canvas.Top="532"/>
+        <Image x:Name="imgPerso" Source="/Ressources/Images/bucheron.png" Stretch="Fill" Height="102" Width="118" Canvas.Left="26" Canvas.Top="322" VerticalAlignment="Top" HorizontalAlignment="Center"/>
         <Button x:Name="jeuToMenu" Content="Retour au menu" Canvas.Left="734" Canvas.Top="39"/>
     </Canvas>
 </UserControl>

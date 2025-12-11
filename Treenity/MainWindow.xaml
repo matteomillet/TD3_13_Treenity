@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Treenity"
         mc:Ignorable="d"
-        Title="Treenity" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
+        Title="Treenity" Height="1080" Width="1920" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
     <Window.Background>
         <ImageBrush x:Name="background" ImageSource="Ressources/Images/BackgroundMenu.png"/>
     </Window.Background>

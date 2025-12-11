@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
+
 
 
 
@@ -29,26 +29,33 @@ namespace Treenity
         public Rect rectangleJoueur = new Rect();
         public int vitessePerso = 2;
         Ennemies[] ennemies = new Ennemies[10];
-        Rect[] rectEnnemies = new Rect[10];
         private static DispatcherTimer minuterie;
-
         public UCJeu()
         {
             InitializeComponent();
+            InitializeJoueur();
+            InitializeEnnemies();  
+        }
 
-            rectangleJoueur.X = (int) Canvas.GetLeft(imgPerso);
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
+            Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
+        }
+
+        private void InitializeJoueur()
+        {
+            rectangleJoueur.X = (int)Canvas.GetLeft(imgPerso);
             rectangleJoueur.Y = (int)Canvas.GetTop(imgPerso);
-            rectangleJoueur.Height = (int) imgPerso.Height;
+            rectangleJoueur.Height = (int)imgPerso.Height;
             rectangleJoueur.Width = (int)imgPerso.Width;
-        
-            for(int i = 0; i < ennemies.Length; i++)
+        }
+
+        private void InitializeEnnemies()
+        {
+            for (int i = 0; i < ennemies.Length; i++)
             {
                 ennemies[i] = new Ennemies();
-                rectEnnemies[i].X = ennemies[i].posLeft;
-                rectEnnemies[i].Y = ennemies[i].posTop;
-                rectEnnemies[i].Height = (int)ennemies[i].imageEnnemie.Height;
-                rectEnnemies[i].Width = (int)ennemies[i].imageEnnemie.Width;
-                Console.WriteLine($"Position rectangle ennemie {i} : {rectEnnemies[i].X}, {rectEnnemies[i].Y}");
                 AffichageEntite(ennemies[i]);
             }
 
@@ -105,7 +112,7 @@ namespace Treenity
         public void AffichageEntite(Ennemies entite)
         {
             Image ennemieImg = new Image();
-            ennemieImg.Source = entite.imageEnnemie;
+            ennemieImg.Source = Ennemies.imageEnnemie;
             canvasJeu.Children.Add(ennemieImg);
             Canvas.SetLeft(ennemieImg, entite.posLeft);
             Canvas.SetTop(ennemieImg, entite.posTop);
