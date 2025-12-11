@@ -27,7 +27,6 @@ namespace Treenity
         public Rect rectangleJoueur = new Rect();
         public int vitessePerso = 2;
         Ennemies[] ennemies = new Ennemies[10];
-        Rect[] rectEnnemies = new Rect[10];
         
         public UCJeu()
         {
@@ -55,10 +54,6 @@ namespace Treenity
             for (int i = 0; i < ennemies.Length; i++)
             {
                 ennemies[i] = new Ennemies();
-                rectEnnemies[i].X = ennemies[i].posLeft;
-                rectEnnemies[i].Y = ennemies[i].posTop;
-                rectEnnemies[i].Height = (int)ennemies[i].imageEnnemie.Height;
-                rectEnnemies[i].Width = (int)ennemies[i].imageEnnemie.Width;
                 AffichageEntite(ennemies[i]);
             }
         }
@@ -92,7 +87,7 @@ namespace Treenity
         public void AffichageEntite(Ennemies entite)
         {
             Image ennemieImg = new Image();
-            ennemieImg.Source = entite.imageEnnemie;
+            ennemieImg.Source = Ennemies.imageEnnemie;
             canvasJeu.Children.Add(ennemieImg);
             Canvas.SetLeft(ennemieImg, entite.posLeft);
             Canvas.SetTop(ennemieImg, entite.posTop);
