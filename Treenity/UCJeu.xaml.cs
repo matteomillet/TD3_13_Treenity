@@ -6,6 +6,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -14,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using sd = System.Drawing;
+using System.Windows.Threading;
 
 
 
@@ -25,11 +26,12 @@ namespace Treenity
     /// </summary>
     public partial class UCJeu : UserControl
     {
-        public sd.Rectangle rectangleJoueur = new sd.Rectangle();
+        public Rect rectangleJoueur = new Rect();
         public int vitessePerso = 2;
         Ennemies[] ennemies = new Ennemies[10];
-        sd.Rectangle[] rectEnnemies = new sd.Rectangle[10];
-        
+        Rect[] rectEnnemies = new Rect[10];
+        private static DispatcherTimer minuterie;
+
         public UCJeu()
         {
             InitializeComponent();
@@ -46,8 +48,11 @@ namespace Treenity
                 rectEnnemies[i].Y = ennemies[i].posTop;
                 rectEnnemies[i].Height = (int)ennemies[i].imageEnnemie.Height;
                 rectEnnemies[i].Width = (int)ennemies[i].imageEnnemie.Width;
+                Console.WriteLine($"Position rectangle ennemie {i} : {rectEnnemies[i].X}, {rectEnnemies[i].Y}");
                 AffichageEntite(ennemies[i]);
             }
+
+            InitializeTimer();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -80,6 +85,21 @@ namespace Treenity
                 Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - vitessePerso);
                 rectangleJoueur.X -= vitessePerso;
             }
+
+            if (e.Key == Key.Space || e.Key == Key.Z)
+            {
+                Canvas.SetTop(imgPerso, Canvas.GetTop(imgPerso) - vitessePerso);
+                rectangleJoueur.Y -= vitessePerso;
+            }
+
+            if (e.Key == Key.Down || e.Key == Key.S)
+            {
+                Canvas.SetTop(imgPerso, Canvas.GetTop(imgPerso) - vitessePerso);
+                rectangleJoueur.Y -= vitessePerso;
+            }
+
+            Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
+            Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
         }
 
         public void AffichageEntite(Ennemies entite)
@@ -91,7 +111,7 @@ namespace Treenity
             Canvas.SetTop(ennemieImg, entite.posTop);
         }
 
-        public bool Colision(sd.Rectangle[] entites, sd.Rectangle joueur)
+        public bool Colision(Ennemies[] entites, Rect joueur)
         {
             /*
              Le rectangle du joueur entre en colision avec rectangle dans liste si oui = true sinon = false
@@ -99,9 +119,66 @@ namespace Treenity
              */
 
 
-            bool colision = true;
+            bool colision = false;
+
+            //Console.WriteLine("Detection des colision avec les ennemies : start");
+            for (int i = 0; i < entites.Length; i++)
+            {
+                //Console.WriteLine("Detection de la colision avec l'ennemie numero : " + i);
+                if (joueur.IntersectsWith(entites.rectangle[i]))
+                {
+                    //Console.WriteLine("Colision avec l'ennemie numero " + i);
+                    
+                    Colision(entites.rectangle[i], joueur);
+                    return true;
+                }
+            }
 
             return colision;
+        }
+
+        public string Colision(Rect entite, Rect joueur)
+        {
+            
+            string directionColision = "";
+            double distanceRect = Math.Sqrt(Math.Pow((joueur.X - entite.X), 2) + Math.Pow((joueur.Y - entite.Y), 2));
+            Rect  rectIntersect = Rect.Intersect(entite, joueur);
+
+            if (rectIntersect.Height > rectIntersect.Width)
+            {
+                if (joueur.Y > entite.Y)
+                    directionColision = "droite";
+                else
+                    directionColision = "gauche";
+            }
+            else
+            {
+                if (joueur.X < entite.X)
+                    directionColision = "bas";
+                else
+                    directionColision = "haut";
+            }
+
+            Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.X}, {entite.Y}");
+            Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
+            Console.WriteLine($"direction colision: {directionColision}");
+            return directionColision;
+        }
+
+        private void InitializeTimer()
+        {
+            minuterie = new DispatcherTimer();
+            // configure l'intervalle du Timer
+            minuterie.Interval = TimeSpan.FromMilliseconds(16);
+            // associe l’appel de la méthode Jeu à la fin de la minuterie
+            minuterie.Tick += DetecterColision;
+            // lancement du timer
+            minuterie.Start();
+        }
+
+        private void DetecterColision(object? sender, EventArgs e)
+        {
+            Colision(rectEnnemies, rectangleJoueur);
         }
     }
 }
