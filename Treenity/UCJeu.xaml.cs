@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using sd = System.Drawing;
 
 
 
@@ -25,21 +24,35 @@ namespace Treenity
     /// </summary>
     public partial class UCJeu : UserControl
     {
-        public sd.Rectangle rectangleJoueur = new sd.Rectangle();
+        public Rect rectangleJoueur = new Rect();
         public int vitessePerso = 2;
         Ennemies[] ennemies = new Ennemies[10];
-        sd.Rectangle[] rectEnnemies = new sd.Rectangle[10];
+        Rect[] rectEnnemies = new Rect[10];
         
         public UCJeu()
         {
             InitializeComponent();
+            InitializeJoueur();
+            InitializeEnnemies();  
+        }
 
-            rectangleJoueur.X = (int) Canvas.GetLeft(imgPerso);
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
+            Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
+        }
+
+        private void InitializeJoueur()
+        {
+            rectangleJoueur.X = (int)Canvas.GetLeft(imgPerso);
             rectangleJoueur.Y = (int)Canvas.GetTop(imgPerso);
-            rectangleJoueur.Height = (int) imgPerso.Height;
+            rectangleJoueur.Height = (int)imgPerso.Height;
             rectangleJoueur.Width = (int)imgPerso.Width;
-        
-            for(int i = 0; i < ennemies.Length; i++)
+        }
+
+        private void InitializeEnnemies()
+        {
+            for (int i = 0; i < ennemies.Length; i++)
             {
                 ennemies[i] = new Ennemies();
                 rectEnnemies[i].X = ennemies[i].posLeft;
@@ -48,12 +61,6 @@ namespace Treenity
                 rectEnnemies[i].Width = (int)ennemies[i].imageEnnemie.Width;
                 AffichageEntite(ennemies[i]);
             }
-        }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
-            Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
         }
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
@@ -91,7 +98,7 @@ namespace Treenity
             Canvas.SetTop(ennemieImg, entite.posTop);
         }
 
-        public bool Colision(sd.Rectangle[] entites, sd.Rectangle joueur)
+        public bool Colision(Rect[] entites, Rect joueur)
         {
             /*
              Le rectangle du joueur entre en colision avec rectangle dans liste si oui = true sinon = false
