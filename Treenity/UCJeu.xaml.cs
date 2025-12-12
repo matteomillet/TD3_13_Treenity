@@ -35,6 +35,7 @@ namespace Treenity
             InitializeComponent();
             InitializeJoueur();
             InitializeEnnemies();  
+            InitializeTimer();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -55,8 +56,7 @@ namespace Treenity
         {
             for (int i = 0; i < ennemies.Length; i++)
             {
-                ennemies[i] = new Ennemies();
-                AffichageEntite(ennemies[i]);
+                ennemies[i] = new Ennemies(canvasJeu);
             }
 
             InitializeTimer();
@@ -104,15 +104,6 @@ namespace Treenity
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
         }
 
-        public void AffichageEntite(Ennemies entite)
-        {
-            Image ennemieImg = new Image();
-            ennemieImg.Source = Ennemies.imageEnnemie;
-            canvasJeu.Children.Add(ennemieImg);
-            Canvas.SetLeft(ennemieImg, entite.posLeft);
-            Canvas.SetTop(ennemieImg, entite.posTop);
-        }
-
         public bool Colision(Ennemies[] entites, Rect joueur)
         {
             /*
@@ -127,7 +118,7 @@ namespace Treenity
             for (int i = 0; i < entites.Length; i++)
             {
                 //Console.WriteLine("Detection de la colision avec l'ennemie numero : " + i);
-                if (joueur.IntersectsWith(entites[i].rectangle[i]))
+                if (joueur.IntersectsWith(entites[i].rectangle))
                 {
                     //Console.WriteLine("Colision avec l'ennemie numero " + i);
                     
@@ -173,14 +164,18 @@ namespace Treenity
             // configure l'intervalle du Timer
             minuterie.Interval = TimeSpan.FromMilliseconds(16);
             // associe l’appel de la méthode Jeu à la fin de la minuterie
-            minuterie.Tick += DetecterColision;
+            minuterie.Tick += Jeu;
             // lancement du timer
             minuterie.Start();
         }
 
-        private void DetecterColision(object? sender, EventArgs e)
+        private void Jeu(object? sender, EventArgs e)
         {
-            Colision(ennemies, rectangleJoueur);
+            foreach(Ennemies ennemie in ennemies)
+            {
+                ennemie.MoveEnnemie(rectangleJoueur, ennemie.rectangle);
+                Console.WriteLine(ennemie.posLeft);
+            }
         }
     }
 }
