@@ -134,37 +134,8 @@ namespace Treenity
         }
 
 
-            if (rectIntersect.Height > rectIntersect.Width)
-            {
-                if (joueur.Y > entite.Y)
-                    directionColision = "droite";
-                else
-                    directionColision = "gauche";
-            }
-            else
-            {
-                if (joueur.X < entite.X)
-                    directionColision = "bas";
-                else
-                    directionColision = "haut";
-            }
 
-            Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.X}, {entite.Y}");
-            Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
-            Console.WriteLine($"direction colision: {directionColision}");
-            return directionColision;
-        }
-
-        private void InitializeTimer()
-        {
-            minuterie = new DispatcherTimer();
-            // configure l'intervalle du Timer
-            minuterie.Interval = TimeSpan.FromMilliseconds(16);
-            // associe l’appel de la méthode Jeu à la fin de la minuterie
-            minuterie.Tick += DetecterColision;
-            // lancement du timer
-            minuterie.Start();
-        }
+        
 
         
     }
