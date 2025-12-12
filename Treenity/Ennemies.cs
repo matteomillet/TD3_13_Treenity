@@ -22,8 +22,9 @@ namespace Treenity
 
         public static String name = "Elfe";
         public static BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
+        public static int pvMax = 50;
 
-        public int pv = 12;
+        public int pv = 50;
         public int degats = 15;
         public int vitesse = 1;
 
@@ -34,6 +35,9 @@ namespace Treenity
 
         public Rect rectangle;
         public System.Windows.Shapes.Rectangle hitboxRect;
+
+        public System.Windows.Shapes.Rectangle barrePVMax;
+        public System.Windows.Shapes.Rectangle barrePV;
 
         public Ennemies(Canvas canvas)
         {
@@ -49,6 +53,32 @@ namespace Treenity
 
             canvas.Children.Add(ennemieImg);
             rectangle = new Rect(posLeft, posTop, imageEnnemie.PixelWidth, imageEnnemie.PixelHeight);
+
+            barrePVMax = new System.Windows.Shapes.Rectangle
+            {
+                Width = 80,
+                Height = 10,
+                Fill = Brushes.Black,
+            };
+
+            Canvas.SetLeft(barrePVMax, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
+            Canvas.SetTop(barrePVMax, posTop + ennemieImg.Height + 5);
+
+            canvas.Children.Add(barrePVMax);
+
+            barrePV = new System.Windows.Shapes.Rectangle
+            {
+                Width = 80,
+                Height = 10,
+                Fill = Brushes.Green,
+                Stroke = Brushes.Black,
+                StrokeThickness = 1,
+            };
+
+            Canvas.SetLeft(barrePV, posLeft + (ennemieImg.Width - barrePV.Width) / 2);
+            Canvas.SetTop(barrePV, posTop + ennemieImg.Height + 5);
+
+            canvas.Children.Add(barrePV);
 
             hitboxRect = new System.Windows.Shapes.Rectangle
             {
@@ -79,14 +109,36 @@ namespace Treenity
             posLeft += vitesse * sens;
 
             rectangle.X = posLeft;
-            rectangle.Y = posTop;
+
 
 
             Canvas.SetLeft(ennemieImg , posLeft);
 
             Canvas.SetLeft(hitboxRect, posLeft);
 
+            Canvas.SetLeft(barrePVMax, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
+            Canvas.SetLeft(barrePV, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
+
             Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");  
+        }
+
+        public void RecevoirDegats(int degat)
+        {
+            pv -= degat;
+            if(pv < 0) pv = 0;
+
+            double pourcentage = (double)pv / pvMax;
+
+            barrePV.Width = 80 * pourcentage;
+
+            if (pourcentage > 0.5)
+                barrePV.Fill = Brushes.Green;
+            else if (pourcentage > 0.25)
+                barrePV.Fill = Brushes.Orange;
+            else
+                barrePV.Fill = Brushes.Red;
+
+
         }
     }
 }

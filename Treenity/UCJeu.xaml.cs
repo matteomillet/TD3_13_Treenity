@@ -32,6 +32,8 @@ namespace Treenity
         Rect[] obstacleHitbox = new Rect[2];
         private static DispatcherTimer minuterie;
         public System.Windows.Shapes.Rectangle hitboxJoueur;
+        int rayonAttaque = 150;
+        System.Windows.Shapes.Ellipse cercleDebug;
         public UCJeu()
         {
             InitializeComponent();
@@ -54,7 +56,7 @@ namespace Treenity
             rectangleJoueur.Height = (int)imgPerso.Height;
             rectangleJoueur.Width = (int)imgPerso.Width;
 
-            hitboxJoueur = new System.Windows.Shapes.Rectangle
+            hitboxJoueur = new Rectangle
             {
                 Width = imgPerso.Width,
                 Height = imgPerso.Height,
@@ -63,6 +65,16 @@ namespace Treenity
             };
 
             canvasJeu.Children.Add(hitboxJoueur);
+
+            cercleDebug = new Ellipse();
+            cercleDebug.Width = rayonAttaque * 2;
+            cercleDebug.Height = rayonAttaque * 2;
+            cercleDebug.Stroke = Brushes.Red;
+            cercleDebug.StrokeThickness = 2;
+
+            cercleDebug.Opacity = 0.5;
+
+            canvasJeu.Children.Add(cercleDebug);
         }
 
         private void InitializeEnnemies()
@@ -72,7 +84,6 @@ namespace Treenity
                 ennemies[i] = new Ennemies(canvasJeu);
             }
         }
-
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
         {
@@ -111,12 +122,12 @@ namespace Treenity
                 rectangleJoueur.Y += vitessePerso;
             }
 
+            if (e.Key == Key.Enter)
+                Attaque(ennemies, rectangleJoueur, 2);
+
             //Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
         }
-
-        
-
 
         private void InitializeTimer()
         {
@@ -136,9 +147,7 @@ namespace Treenity
                 ennemie.MoveEnnemie(rectangleJoueur, ennemie.rectangle);
                 //Console.WriteLine(ennemie.posLeft);
 
-                
             }
-
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, rectangleJoueur);
 
@@ -148,13 +157,17 @@ namespace Treenity
                 DeplacerJoueur(colision,ref rectangleJoueur, imgPerso);
             }
 
-            
-
             Canvas.SetLeft(hitboxJoueur, rectangleJoueur.X);
             Canvas.SetTop(hitboxJoueur, rectangleJoueur.Y);
 
-            
+            double centreX = rectangleJoueur.X + (rectangleJoueur.Width / 2);
+            double centreY = rectangleJoueur.Y + (rectangleJoueur.Height / 2);
 
+            double left = centreX - rayonAttaque;
+            double top = centreY - rayonAttaque;
+
+            Canvas.SetLeft(cercleDebug, left);
+            Canvas.SetTop(cercleDebug, top);
         }
 
         private static void DeplacerJoueur(String direction, ref Rect joueurHitbox, Image imgPerso)
@@ -173,12 +186,32 @@ namespace Treenity
                 Canvas.SetTop(imgPerso, Canvas.GetTop(imgPerso) + recul);
             }
         }
-
-
-
         
+        private static void Attaque(Ennemies[] ennemies, Rect joueur, int degats)
+        {
+            int rayonAttaque = 150;
 
-        
+            int joueurCentreX = (int)(joueur.X + (joueur.Width / 2));
+            int joueurCentreY = (int)(joueur.Y + (joueur.Height / 2));
+
+            foreach (Ennemies ennemie in ennemies)
+            {
+                double ennemiCentreX = ennemie.posLeft + (ennemie.ennemieImg.Width / 2);
+                double ennemiCentreY = ennemie.posTop + (ennemie.ennemieImg.Height / 2);
+
+                double distanceX = joueurCentreX - ennemiCentreX;
+                double distanceY = joueurCentreY - ennemiCentreY;
+
+                double distanceCarre = (distanceX * distanceX) + (distanceY * distanceY);
+                double rayonCarre = rayonAttaque * rayonAttaque;
+
+                if (distanceCarre <= rayonCarre)
+                {
+                    ennemie.RecevoirDegats(degats);
+                    Console.WriteLine("Ennemi touché dans le rayon !");
+                }
+            }
+        }
     }
 }
 
