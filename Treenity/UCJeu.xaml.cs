@@ -28,9 +28,10 @@ namespace Treenity
     {
         public Rect rectangleJoueur = new Rect();
         public int vitessePerso = 2;
-        Ennemies[] ennemies = new Ennemies[10];
+        Ennemies[] ennemies = new Ennemies[1];
         Rect[] obstacleHitbox = new Rect[2];
         private static DispatcherTimer minuterie;
+        public System.Windows.Shapes.Rectangle hitboxJoueur;
         public UCJeu()
         {
             InitializeComponent();
@@ -51,6 +52,16 @@ namespace Treenity
             rectangleJoueur.Y = (int)Canvas.GetTop(imgPerso);
             rectangleJoueur.Height = (int)imgPerso.Height;
             rectangleJoueur.Width = (int)imgPerso.Width;
+
+            hitboxJoueur = new System.Windows.Shapes.Rectangle
+            {
+                Width = imgPerso.Width,
+                Height = imgPerso.Height,
+                Stroke = Brushes.Cyan,
+                StrokeThickness = 2
+            };
+
+            canvasJeu.Children.Add(hitboxJoueur);
         }
 
         private void InitializeEnnemies()
@@ -101,7 +112,7 @@ namespace Treenity
                 rectangleJoueur.Y += vitessePerso;
             }
 
-            Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
+            //Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
         }
 
@@ -124,13 +135,44 @@ namespace Treenity
             foreach (Ennemies ennemie in ennemies)
             {
                 ennemie.MoveEnnemie(rectangleJoueur, ennemie.rectangle);
-                Console.WriteLine(ennemie.posLeft);
+                //Console.WriteLine(ennemie.posLeft);
+
+                
+            }
+
+
+            string colision = MethodeColision.ColisionAvecEnnemies(ennemies, rectangleJoueur);
+
+            if (colision != "pas colision")
+            {
+                Console.WriteLine("Colision detecter");
+                DeplacerJoueur(colision, rectangleJoueur, imgPerso);
             }
 
             
 
+            Canvas.SetLeft(hitboxJoueur, rectangleJoueur.X);
+            Canvas.SetTop(hitboxJoueur, rectangleJoueur.Y);
 
-            MethodeColision.ColisionAvecEnnemies(ennemies, rectangleJoueur);
+            
+
+        }
+
+        private static void DeplacerJoueur(String direction, Rect joueurHitbox, Image imgPerso)
+        {
+            string abssice = direction.Substring(0, 1);
+            int recul = int.Parse(direction.Substring(1,direction.Length-1));
+           
+            if (abssice == "X")
+            {
+                joueurHitbox.X = joueurHitbox.X + recul;
+                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + recul);
+            }
+            else
+            {
+                joueurHitbox.Y = joueurHitbox.Y + recul;
+                Canvas.SetTop(imgPerso, Canvas.GetTop(imgPerso) + recul);
+            }
         }
 
 

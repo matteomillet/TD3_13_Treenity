@@ -9,7 +9,7 @@ namespace Treenity
 {
     internal class MethodeColision
     {
-        public static bool ColisionAvecEnnemies(Ennemies[] entites, Rect joueur)
+        public static string ColisionAvecEnnemies(Ennemies[] entites, Rect joueur)
         {
             /*
              Méthode permettant de savoir si il y a une colision entre le joueur et un ennemie.
@@ -18,7 +18,7 @@ namespace Treenity
              */
 
 
-            bool colision = false;
+            
 
             //Console.WriteLine("Detection des colision avec les ennemies : start");
             for (int i = 0; i < entites.Length; i++)
@@ -26,36 +26,38 @@ namespace Treenity
                 //Console.WriteLine("Detection de la colision avec l'ennemie numero : " + i);
                 if (joueur.IntersectsWith(entites[i].rectangle))
                 {
-                    //Console.WriteLine("Colision avec l'ennemie numero " + i);
+                    Console.WriteLine("Colision avec l'ennemie numero " + i);
 
-                    DirectionColision(entites[i].rectangle, joueur);
-                    return true;
+                    return DirectionColision(entites[i].rectangle, joueur);
+                    
                 }
             }
 
-            return colision;
+            return "pas colision";
+
+            
         }
 
         public static string DirectionColision(Rect entite, Rect joueur)
         {
 
             string directionColision = "";
-            double distanceRect = Math.Sqrt(Math.Pow((joueur.X - entite.X), 2) + Math.Pow((joueur.Y - entite.Y), 2));
             Rect rectIntersect = Rect.Intersect(entite, joueur);
 
-            if (rectIntersect.Height > rectIntersect.Width)
+
+            if (rectIntersect.Height >= rectIntersect.Width)
             {
                 if (joueur.X > entite.X)
-                    directionColision = "droite";
+                    directionColision = "X10"; //droite
                 else
-                    directionColision = "gauche";
+                    directionColision = "X-10"; //gauche
             }
             else
             {
                 if (joueur.Y > entite.Y)
-                    directionColision = "bas";
+                    directionColision = "Y-10"; // bas
                 else
-                    directionColision = "haut";
+                    directionColision = "Y10"; // haut
             }
 
             Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.X}, {entite.Y}");

@@ -11,6 +11,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Drawing;
+
 
 namespace Treenity
 {
@@ -31,6 +33,7 @@ namespace Treenity
         public Image ennemieImg = new Image();
 
         public Rect rectangle;
+        public System.Windows.Shapes.Rectangle hitboxRect;
 
         public Ennemies(Canvas canvas)
         {
@@ -38,13 +41,26 @@ namespace Treenity
             posTop = rand.Next(0, 1080);
 
             ennemieImg.Source = imageEnnemie;
+            ennemieImg.Width = imageEnnemie.PixelWidth; 
+            ennemieImg.Height = imageEnnemie.PixelHeight;
 
             Canvas.SetTop(ennemieImg, posTop);
             Canvas.SetLeft(ennemieImg, posLeft);
 
             canvas.Children.Add(ennemieImg);
 
-            rectangle = new Rect(posLeft, posTop, ennemieImg.Width, ennemieImg.Height);
+            hitboxRect = new System.Windows.Shapes.Rectangle
+            {
+                Width = ennemieImg.Width,
+                Height = ennemieImg.Height,
+                Stroke = Brushes.Red,
+                StrokeThickness = 2
+            };
+
+            Canvas.SetLeft(hitboxRect, posLeft);
+            Canvas.SetTop(hitboxRect, posTop);
+
+            canvas.Children.Add(hitboxRect);
         }
 
         public void MoveEnnemie(Rect joueur, Rect entite)
@@ -61,7 +77,12 @@ namespace Treenity
             rectangle.X = posLeft;
             rectangle.Y = posTop;
 
+
             Canvas.SetLeft(ennemieImg , posLeft);
+
+            Canvas.SetLeft(hitboxRect, posLeft);
+
+            Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");  
         }
     }
 }
