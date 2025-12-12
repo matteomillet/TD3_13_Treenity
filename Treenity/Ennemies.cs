@@ -109,18 +109,20 @@ namespace Treenity
             posLeft += vitesse * sens;
 
             rectangle.X = posLeft;
-            
 
 
 
-            Canvas.SetLeft(ennemieImg , posLeft);
+
+            Canvas.SetLeft(ennemieImg, posLeft);
 
             Canvas.SetLeft(hitboxRect, posLeft);
 
             Canvas.SetLeft(barrePVMax, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
             Canvas.SetLeft(barrePV, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
 
-            Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");  
+            Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");
+
+        }
 
         public void RecevoirDegats(int degat)
         {
@@ -152,6 +154,6 @@ namespace Treenity
                 Canvas.SetTop(ennemie.hitboxRect, ennemie.rectangle.Y);
             }
         }
-        }
+        
     }
 }
