@@ -27,7 +27,7 @@ namespace Treenity
     public partial class UCJeu : UserControl
     {
         public Rect rectangleJoueur = new Rect();
-        public int vitessePerso = 2;
+        public int vitessePerso = 4;
         Ennemies[] ennemies = new Ennemies[10];
         Rect[] obstacleHitbox = new Rect[2];
         private static DispatcherTimer minuterie;
@@ -35,14 +35,15 @@ namespace Treenity
         {
             InitializeComponent();
             InitializeJoueur();
-            InitializeEnnemies();  
-            InitializeTimer();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
             Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
+
+            InitializeEnnemies();
+            InitializeTimer();
         }
 
         private void InitializeJoueur()
@@ -59,8 +60,6 @@ namespace Treenity
             {
                 ennemies[i] = new Ennemies(canvasJeu);
             }
-
-            InitializeTimer();
         }
 
 
