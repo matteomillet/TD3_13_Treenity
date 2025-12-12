@@ -9,6 +9,7 @@ namespace Treenity
 {
     internal class MethodeColision
     {
+        private static readonly string RECUL = "40";
         public static string ColisionAvecEnnemies(Ennemies[] entites, Rect joueur)
         {
             /*
@@ -48,18 +49,19 @@ namespace Treenity
             if (rectIntersect.Height >= rectIntersect.Width)
             {
                 if (joueur.X > entite.X)
-                    directionColision = "X10"; //droite
+                    directionColision = "X+"; //droite
                 else
-                    directionColision = "X-10"; //gauche
+                    directionColision = "X-"; //gauche
             }
             else
             {
                 if (joueur.Y > entite.Y)
-                    directionColision = "Y-10"; // bas
+                    directionColision = "Y+"; // bas
                 else
-                    directionColision = "Y10"; // haut
+                    directionColision = "Y-"; // haut
             }
 
+            directionColision += RECUL;
             Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.X}, {entite.Y}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {joueur.X}, {joueur.Y}");
             Console.WriteLine($"direction colision: {directionColision}");

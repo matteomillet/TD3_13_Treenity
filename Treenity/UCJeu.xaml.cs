@@ -145,7 +145,7 @@ namespace Treenity
             if (colision != "pas colision")
             {
                 Console.WriteLine("Colision detecter");
-                DeplacerJoueur(colision, rectangleJoueur, imgPerso);
+                DeplacerJoueur(colision,ref rectangleJoueur, imgPerso);
             }
 
             
@@ -157,7 +157,7 @@ namespace Treenity
 
         }
 
-        private static void DeplacerJoueur(String direction, Rect joueurHitbox, Image imgPerso)
+        private static void DeplacerJoueur(String direction, ref Rect joueurHitbox, Image imgPerso)
         {
             string abssice = direction.Substring(0, 1);
             int recul = int.Parse(direction.Substring(1,direction.Length-1));
