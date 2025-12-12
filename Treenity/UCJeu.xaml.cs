@@ -122,7 +122,7 @@ namespace Treenity
                 {
                     //Console.WriteLine("Colision avec l'ennemie numero " + i);
                     
-                    Colision(entites[i].rectangle, joueur);
+                    Colision(entites, joueur);
                     return true;
                 }
             }
@@ -130,29 +130,29 @@ namespace Treenity
             return colision;
         }
 
-        public string Colision(Rect entite, Rect joueur)
+        public string Colision(Ennemies entite, Rect joueur)
         {
             
             string directionColision = "";
-            double distanceRect = Math.Sqrt(Math.Pow((joueur.X - entite.X), 2) + Math.Pow((joueur.Y - entite.Y), 2));
-            Rect  rectIntersect = Rect.Intersect(entite, joueur);
+            double distanceRect = Math.Sqrt(Math.Pow((joueur.X - entite.rectangle.X), 2) + Math.Pow((joueur.Y - entite.rectangle.Y), 2));
+            Rect  rectIntersect = Rect.Intersect(entite.rectangle, joueur);
 
             if (rectIntersect.Height > rectIntersect.Width)
             {
-                if (joueur.Y > entite.Y)
+                if (joueur.Y > entite.rectangle.Y)
                     directionColision = "droite";
                 else
                     directionColision = "gauche";
             }
             else
             {
-                if (joueur.X < entite.X)
+                if (joueur.X < entite.rectangle.X)
                     directionColision = "bas";
                 else
                     directionColision = "haut";
             }
 
-            Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.X}, {entite.Y}");
+            Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.rectangle.X}, {entite.rectangle.Y}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
             Console.WriteLine($"direction colision: {directionColision}");
             return directionColision;
