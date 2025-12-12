@@ -15,7 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
 
 
 
@@ -62,11 +62,6 @@ namespace Treenity
             InitializeTimer();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
-            Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
-        }
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
         {
@@ -132,11 +127,11 @@ namespace Treenity
             for (int i = 0; i < entites.Length; i++)
             {
                 //Console.WriteLine("Detection de la colision avec l'ennemie numero : " + i);
-                if (joueur.IntersectsWith(entites.rectangle[i]))
+                if (joueur.IntersectsWith(entites[i].rectangle[i]))
                 {
                     //Console.WriteLine("Colision avec l'ennemie numero " + i);
                     
-                    Colision(entites.rectangle[i], joueur);
+                    Colision(entites[i].rectangle, joueur);
                     return true;
                 }
             }
@@ -185,7 +180,7 @@ namespace Treenity
 
         private void DetecterColision(object? sender, EventArgs e)
         {
-            Colision(rectEnnemies, rectangleJoueur);
+            Colision(ennemies, rectangleJoueur);
         }
     }
 }

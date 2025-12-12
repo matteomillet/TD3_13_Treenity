@@ -24,7 +24,7 @@ namespace Treenity
         public int posTop = new Random().Next(0, 1080);
         public int posLeft = new Random().Next(0, 1920);
 
-        Rect rectangle = new Rect() { X = 0, Y = 0, Height = imageEnnemie.Height, Width = imageEnnemie.Width};
+        public Rect rectangle = new Rect() { X = 0, Y = 0, Height = imageEnnemie.Height, Width = imageEnnemie.Width};
 
         public void MoveEnnemie(Rect joueur, Rect entite)
         {
