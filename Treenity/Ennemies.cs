@@ -121,6 +121,7 @@ namespace Treenity
             Canvas.SetLeft(barrePV, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
 
             Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");
+        }
 
         }
 
@@ -139,21 +140,22 @@ namespace Treenity
                 barrePV.Fill = Brushes.Orange;
             else
                 barrePV.Fill = Brushes.Red;
-
-
         }
 
-        public void FaireTomberEnnemie(Ennemies ennemie)
+        public void FaireTomberEnnemie()
         {
             Console.WriteLine("detection0");
-            if(!MethodeColision.EntiteToucheSol(ennemie.rectangle))
+            if(!MethodeColision.EntiteToucheSol(rectangle))
             {
                 Console.WriteLine("tomber");
-                ennemie.rectangle.Y += 3;
-                Canvas.SetTop(ennemie.ennemieImg, ennemie.rectangle.Y);
-                Canvas.SetTop(ennemie.hitboxRect, ennemie.rectangle.Y);
+                rectangle.Y += 3;
+                posTop = (int)rectangle.Y;
+                Canvas.SetTop(ennemieImg, rectangle.Y);
+                Canvas.SetTop(hitboxRect, rectangle.Y);
+
+                Canvas.SetTop(barrePV, posTop + 40);
+                Canvas.SetTop(barrePVMax, posTop + 40);
             }
         }
-        
     }
 }
