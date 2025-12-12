@@ -37,8 +37,8 @@ namespace Treenity
 
         public Ennemies(Canvas canvas)
         {
-            posLeft = rand.Next(0, 1920);
-            posTop = rand.Next(0, 1080);
+            posLeft = rand.Next(0, (int)(canvas.ActualWidth - imageEnnemie.PixelWidth));
+            posTop = rand.Next(0, (int)(canvas.ActualHeight - imageEnnemie.PixelHeight));
 
             ennemieImg.Source = imageEnnemie;
             ennemieImg.Width = imageEnnemie.PixelWidth; 
@@ -48,6 +48,7 @@ namespace Treenity
             Canvas.SetLeft(ennemieImg, posLeft);
 
             canvas.Children.Add(ennemieImg);
+            rectangle = new Rect(posLeft, posTop, imageEnnemie.PixelWidth, imageEnnemie.PixelHeight);
 
             hitboxRect = new System.Windows.Shapes.Rectangle
             {
@@ -65,12 +66,15 @@ namespace Treenity
 
         public void MoveEnnemie(Rect joueur, Rect entite)
         {
-            int sens;
+            int sens = 0;
 
-            if (joueur.X <= posLeft)
-                sens = -1;
-            else
+            int joueurBordDroit = (int)(joueur.X + joueur.Width);
+            int ennemiBordDroit = (int)(posLeft + rectangle.Width);
+
+            if (ennemiBordDroit < joueur.X)
                 sens = 1;
+            else if (posLeft > joueurBordDroit)
+                sens = -1;
 
             posLeft += vitesse * sens;
 
