@@ -21,7 +21,7 @@ namespace Treenity
         private static Random rand = new Random();
 
         public static String name = "Elfe";
-        public static BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
+        public static BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/golem_glace_single.png"));
 
         public int pv = 12;
         public int degats = 15;
@@ -79,7 +79,7 @@ namespace Treenity
             posLeft += vitesse * sens;
 
             rectangle.X = posLeft;
-            rectangle.Y = posTop;
+            
 
 
             Canvas.SetLeft(ennemieImg , posLeft);
@@ -87,6 +87,18 @@ namespace Treenity
             Canvas.SetLeft(hitboxRect, posLeft);
 
             Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");  
+        }
+
+        public void FaireTomberEnnemie(Ennemies ennemie)
+        {
+            Console.WriteLine("detection0");
+            if(!MethodeColision.EntiteToucheSol(ennemie.rectangle))
+            {
+                Console.WriteLine("tomber");
+                ennemie.rectangle.Y += 3;
+                Canvas.SetTop(ennemie.ennemieImg, ennemie.rectangle.Y);
+                Canvas.SetTop(ennemie.hitboxRect, ennemie.rectangle.Y);
+            }
         }
     }
 }

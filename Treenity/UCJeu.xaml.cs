@@ -28,7 +28,7 @@ namespace Treenity
     {
         public Rect rectangleJoueur = new Rect();
         public int vitessePerso = 4;
-        Ennemies[] ennemies = new Ennemies[10];
+        Ennemies[] ennemies = new Ennemies[1];
         Rect[] obstacleHitbox = new Rect[2];
         private static DispatcherTimer minuterie;
         public System.Windows.Shapes.Rectangle hitboxJoueur;
@@ -133,10 +133,17 @@ namespace Treenity
         {
             foreach (Ennemies ennemie in ennemies)
             {
-                ennemie.MoveEnnemie(rectangleJoueur, ennemie.rectangle);
-                //Console.WriteLine(ennemie.posLeft);
+                Console.WriteLine("l'ennemie va peut etre tomber");
+                ennemie.FaireTomberEnnemie(ennemie);
+                Console.WriteLine("Tomber Y = " + ennemie.rectangle.Y);
+            }
 
-                
+            foreach (Ennemies ennemie in ennemies)
+            {
+                ennemie.MoveEnnemie(rectangleJoueur, ennemie.rectangle);
+                Console.WriteLine("MoveEnnemie Y = " + ennemie.rectangle.Y);
+
+
             }
 
 
@@ -153,8 +160,12 @@ namespace Treenity
             Canvas.SetLeft(hitboxJoueur, rectangleJoueur.X);
             Canvas.SetTop(hitboxJoueur, rectangleJoueur.Y);
 
+            //faire tomber joueur
+            FaireTomberJoueur(ref rectangleJoueur, imgPerso,ref hitboxJoueur);
+
             
 
+            
         }
 
         private static void DeplacerJoueur(String direction, ref Rect joueurHitbox, Image imgPerso)
@@ -174,8 +185,22 @@ namespace Treenity
             }
         }
 
+        private static void FaireTomberJoueur(ref Rect entite, Image imgEntite, ref System.Windows.Shapes.Rectangle hitboxVisuel)
+        {
+            if (!MethodeColision.EntiteToucheSol(entite))
+            {
+                Console.WriteLine("L'entite tombe");
+                entite.Y = entite.Y + 3;
+                Canvas.SetTop(imgEntite, Canvas.GetTop(imgEntite) + 3);
+            }
 
+            Canvas.SetLeft(hitboxVisuel, entite.X);
+            Canvas.SetTop(hitboxVisuel, entite.Y);
+        }
 
+        
+
+       
         
 
         

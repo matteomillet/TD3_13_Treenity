@@ -81,6 +81,25 @@ namespace Treenity
 
             return "pas colision";
         }
+
+        public static bool EntiteToucheSol(Rect entite)
+        {
+            /*
+             Methode permettant de savoir si l'entite mis en argument touche le sol.
+             * */
+
+                
+            int solY = 900; //valeur a mettre en global
+            Console.WriteLine(entite.Y);
+            if (entite.Y + entite.Height >= solY)
+            {
+                return  true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
 

@@ -17,6 +17,7 @@
     <None Remove="Ressources\Images\ButtonShape.png" />
     <None Remove="Ressources\Images\bucheron.png" />
     <None Remove="Ressources\Images\FinJeuBackground.png" />
+    <None Remove="Ressources\Images\golem_glace_single.png" />
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
     <None Remove="Ressources\Images\Tronc.png" />
     <None Remove="Ressources\Images\YouWinTitle.png" />
@@ -33,6 +34,7 @@
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
     <Resource Include="Ressources\Images\branche.png" />
     <Resource Include="Ressources\Images\ButtonShape.png" />
+    <Resource Include="Ressources\Images\golem_glace_single.png" />
     <Resource Include="Ressources\Images\pinguin.png" />
     <Resource Include="Ressources\Images\bucheron.png" />
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
