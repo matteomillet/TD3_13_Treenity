@@ -145,7 +145,7 @@ namespace Treenity
             foreach (Ennemies ennemie in ennemies)
             {
                 Console.WriteLine("l'ennemie va peut etre tomber");
-                ennemie.FaireTomberEnnemie(ennemie);
+                ennemie.FaireTomberEnnemie();
                 Console.WriteLine("Tomber Y = " + ennemie.rectangle.Y);
             }
 
