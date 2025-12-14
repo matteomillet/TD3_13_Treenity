@@ -8,7 +8,7 @@
              d:DesignHeight="1080" d:DesignWidth="1920">
     
     <Grid>
-        <Button x:Name="playButton" Background="Transparent" BorderThickness="0" Width="150" Height="85">
+        <Button x:Name="playButton" Background="Transparent" BorderThickness="0" Width="150" Height="65">
             <Image Source="Ressources/Images/playButton.png" Width="150"/>
         </Button>
         <Button x:Name="rulesButton" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,100,0,0">

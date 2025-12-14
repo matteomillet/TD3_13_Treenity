@@ -19,12 +19,12 @@
     <None Remove="Ressources\Images\FinJeuBackground.png" />
     <None Remove="Ressources\Images\golem_glace_single.png" />
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
+    <None Remove="Ressources\Images\playButton.png" />
     <None Remove="Ressources\Images\Tronc.png" />
     <None Remove="Ressources\Images\YouWinTitle.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Ressources\Images\playButton.png" />
     <None Remove="Ressources\Images\rulesButton.png" />
   </ItemGroup>
 
@@ -38,9 +38,9 @@
     <Resource Include="Ressources\Images\pinguin.png" />
     <Resource Include="Ressources\Images\bucheron.png" />
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
+    <Resource Include="Ressources\Images\playButton.png" />
     <Resource Include="Ressources\Images\Tronc.png" />
     <Resource Include="Ressources\Images\YouWinTitle.png" />
-    <Resource Include="Ressources\Images\playButton.png" />
     <Resource Include="Ressources\Images\rulesButton.png" />
   </ItemGroup>
 
