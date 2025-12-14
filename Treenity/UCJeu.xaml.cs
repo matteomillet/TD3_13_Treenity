@@ -82,10 +82,13 @@ namespace Treenity
 
         private void InitializeEnnemies()
         {
+            Random rand = new Random();
             ennemies = new List<Ennemies>();
+            BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
             for(int i = 0; i < 10;  i++)
             {
-                ennemies.Add(new Ennemies(canvasJeu));
+                
+                ennemies.Add(new Ennemies(canvasJeu, 50, 15, 1, imageEnnemie));
             }
         }
 

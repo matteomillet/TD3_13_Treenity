@@ -22,12 +22,12 @@ namespace Treenity
         private Canvas canvasJeu;
 
         public static String name = "Elfe";
-        public static BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
+        private BitmapImage imageEnnemie;
         public static int pvMax = 50;
 
-        public int pv = 50;
-        public int degats = 15;
-        public int vitesse = 1;
+        public int pv;
+        public int degats;
+        public int vitesse;
 
         public int posTop;
         public int posLeft;
@@ -40,16 +40,23 @@ namespace Treenity
         public System.Windows.Shapes.Rectangle barrePVMax;
         public System.Windows.Shapes.Rectangle barrePV;
 
-        public Ennemies(Canvas canvas)
+        public Ennemies(Canvas canvas, int pvInitial, int degatsInitial, int vitesseInitial, BitmapImage image)
         {
             canvasJeu = canvas;
 
-            posLeft = rand.Next(0, (int)(canvasJeu.ActualWidth - imageEnnemie.PixelWidth));
-            posTop = rand.Next(0, (int)(canvasJeu.ActualHeight - imageEnnemie.PixelHeight));
+            pv = pvInitial;
+            degats = degatsInitial;
+            vitesse = vitesseInitial;
+
+
+            imageEnnemie = image;
 
             ennemieImg.Source = imageEnnemie;
             ennemieImg.Width = imageEnnemie.PixelWidth; 
             ennemieImg.Height = imageEnnemie.PixelHeight;
+
+            posLeft = rand.Next(0, (int)(canvasJeu.ActualWidth - imageEnnemie.PixelWidth));
+            posTop = rand.Next(0, (int)(canvasJeu.ActualHeight - imageEnnemie.PixelHeight));
 
             Canvas.SetTop(ennemieImg, posTop);
             Canvas.SetLeft(ennemieImg, posLeft);
