@@ -35,6 +35,9 @@ namespace Treenity
         public int directionRegard = 1;
         public Rectangle hitboxJoueur;
         public Ellipse cercleDebug;
+        public double vitesseY = 0; 
+        public const double gravite = 3; 
+        public const double forceSaut = -18;
         public UCJeu()
         {
             InitializeComponent();
@@ -113,17 +116,13 @@ namespace Treenity
                 rectangleJoueur.X -= vitessePerso;
             }
 
-            if (e.Key == Key.Space || e.Key == Key.Z)
+            if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(rectangleJoueur))
             {
-                Canvas.SetTop(imgPerso, Canvas.GetTop(imgPerso) - vitessePerso);
-                rectangleJoueur.Y -= vitessePerso;
+                vitesseY = forceSaut;
+
             }
 
-            if (e.Key == Key.Down || e.Key == Key.S)
-            {
-                Canvas.SetTop(imgPerso, Canvas.GetTop(imgPerso) + vitessePerso);
-                rectangleJoueur.Y += vitessePerso;
-            }
+
 
             if (e.Key == Key.Enter)
                 Attaque(ennemies, rectangleJoueur, 2, directionRegard);
@@ -174,7 +173,7 @@ namespace Treenity
             Canvas.SetTop(hitboxJoueur, rectangleJoueur.Y);
 
             //faire tomber joueur
-            FaireTomberJoueur(ref rectangleJoueur, imgPerso,ref hitboxJoueur);
+            AppliquerGravite(ref rectangleJoueur, imgPerso,ref hitboxJoueur);
 
             
 
@@ -207,17 +206,22 @@ namespace Treenity
             }
         }
 
-        private static void FaireTomberJoueur(ref Rect entite, Image imgEntite, ref System.Windows.Shapes.Rectangle hitboxVisuel)
+        private void AppliquerGravite(ref Rect joueur, Image imgJoueur, ref System.Windows.Shapes.Rectangle hitboxVisuel)
         {
-            if (!MethodeColision.EntiteToucheSol(entite))
+            vitesseY += gravite;
+            joueur.Y += vitesseY;
+
+
+            if (MethodeColision.EntiteToucheSol(joueur))
             {
-                Console.WriteLine("L'entite tombe");
-                entite.Y = entite.Y + 3;
-                Canvas.SetTop(imgEntite, Canvas.GetTop(imgEntite) + 3);
+                joueur.Y = 900 - joueur.Height;
+                vitesseY = 0;
+
             }
 
-            Canvas.SetLeft(hitboxVisuel, entite.X);
-            Canvas.SetTop(hitboxVisuel, entite.Y);
+
+            Canvas.SetTop(imgJoueur, joueur.Y);
+
         }
 
         private static void Attaque(List<Ennemies> ennemies, Rect joueur, int degats, int direction)
