@@ -28,12 +28,13 @@ namespace Treenity
     {
         public Rect rectangleJoueur = new Rect();
         public int vitessePerso = 4;
-        Ennemies[] ennemies = new Ennemies[1];
+        public List<Ennemies> ennemies;
         Rect[] obstacleHitbox = new Rect[2];
         private static DispatcherTimer minuterie;
-        public System.Windows.Shapes.Rectangle hitboxJoueur;
-        int rayonAttaque = 150;
-        System.Windows.Shapes.Ellipse cercleDebug;
+        public static int rayonAttaque = 150;
+        public int directionRegard = 1;
+        public Rectangle hitboxJoueur;
+        public Ellipse cercleDebug;
         public UCJeu()
         {
             InitializeComponent();
@@ -66,22 +67,22 @@ namespace Treenity
 
             canvasJeu.Children.Add(hitboxJoueur);
 
+            // Initialisation d'un cercle de debug pour visualiser le rayon d'attaque
             cercleDebug = new Ellipse();
             cercleDebug.Width = rayonAttaque * 2;
             cercleDebug.Height = rayonAttaque * 2;
             cercleDebug.Stroke = Brushes.Red;
             cercleDebug.StrokeThickness = 2;
 
-            cercleDebug.Opacity = 0.5;
-
             canvasJeu.Children.Add(cercleDebug);
         }
 
         private void InitializeEnnemies()
         {
-            for (int i = 0; i < ennemies.Length; i++)
+            ennemies = new List<Ennemies>();
+            for(int i = 0; i < 10;  i++)
             {
-                ennemies[i] = new Ennemies(canvasJeu);
+                ennemies.Add(new Ennemies(canvasJeu));
             }
         }
 
@@ -97,6 +98,7 @@ namespace Treenity
 
             if ((e.Key == Key.Right || e.Key == Key.D) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, rectangleJoueur) != "droite")
             {
+                directionRegard = 1;
                 fliptrans.ScaleX = 1;
                 Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + vitessePerso);
                 rectangleJoueur.X += vitessePerso;
@@ -105,6 +107,7 @@ namespace Treenity
 
             if ((e.Key == Key.Left || e.Key == Key.Q) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, rectangleJoueur) != "droite")
             {
+                directionRegard = -1;
                 fliptrans.ScaleX = -1;
                 Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) - vitessePerso);
                 rectangleJoueur.X -= vitessePerso;
@@ -123,7 +126,7 @@ namespace Treenity
             }
 
             if (e.Key == Key.Enter)
-                Attaque(ennemies, rectangleJoueur, 2);
+                Attaque(ennemies, rectangleJoueur, 2, directionRegard);
 
             //Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {rectangleJoueur.X}, {rectangleJoueur.Y}");
@@ -142,18 +145,21 @@ namespace Treenity
 
         private void Jeu(object? sender, EventArgs e)
         {
-            foreach (Ennemies ennemie in ennemies)
+            for(int i = ennemies.Count - 1; i >= 0; i--)
             {
+                if (ennemies[i].pv <= 0)
+                {
+                    ennemies[i].Mourir();
+                    ennemies.RemoveAt(i);
+
+                    continue;
+                }
+
                 Console.WriteLine("l'ennemie va peut etre tomber");
-                ennemie.FaireTomberEnnemie();
-                Console.WriteLine("Tomber Y = " + ennemie.rectangle.Y);
-            }
-
-            foreach (Ennemies ennemie in ennemies)
-            {
-                ennemie.MoveEnnemie(rectangleJoueur, ennemie.rectangle);
-                Console.WriteLine("MoveEnnemie Y = " + ennemie.rectangle.Y);
-
+                ennemies[i].FaireTomberEnnemie();
+                Console.WriteLine("Tomber Y = " + ennemies[i].rectangle.Y);
+                ennemies[i].MoveEnnemie(rectangleJoueur, ennemies[i].rectangle);
+                Console.WriteLine("MoveEnnemie Y = " + ennemies[i].rectangle.Y);
             }
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, rectangleJoueur);
@@ -172,7 +178,7 @@ namespace Treenity
 
             
 
-            
+            // Cercle de debug pour apercevoire le rayon d'attaque
             double centreX = rectangleJoueur.X + (rectangleJoueur.Width / 2);
             double centreY = rectangleJoueur.Y + (rectangleJoueur.Height / 2);
 
@@ -181,6 +187,7 @@ namespace Treenity
 
             Canvas.SetLeft(cercleDebug, left);
             Canvas.SetTop(cercleDebug, top);
+            
         }
 
         private static void DeplacerJoueur(String direction, ref Rect joueurHitbox, Image imgPerso)
@@ -213,11 +220,8 @@ namespace Treenity
             Canvas.SetTop(hitboxVisuel, entite.Y);
         }
 
-        private static void Attaque(Ennemies[] ennemies, Rect joueur, int degats)
+        private static void Attaque(List<Ennemies> ennemies, Rect joueur, int degats, int direction)
         {
-            int rayonAttaque = 150;
-
-
             int joueurCentreX = (int)(joueur.X + (joueur.Width / 2));
             int joueurCentreY = (int)(joueur.Y + (joueur.Height / 2));
 
@@ -230,9 +234,17 @@ namespace Treenity
                 double distanceY = joueurCentreY - ennemiCentreY;
 
                 double distanceCarre = (distanceX * distanceX) + (distanceY * distanceY);
-                double rayonCarre = rayonAttaque * rayonAttaque;
 
-                if (distanceCarre <= rayonCarre)
+                bool estDevant = false;
+
+                if (direction == 1)
+                {
+                    if (ennemiCentreX > joueurCentreX) estDevant = true;
+                }
+                else
+                    if (ennemiCentreX < joueurCentreX) estDevant = true;
+
+                if (distanceCarre <= (rayonAttaque * rayonAttaque) && estDevant)
                 {
                     ennemie.RecevoirDegats(degats);
                     Console.WriteLine("Ennemi touché dans le rayon !");

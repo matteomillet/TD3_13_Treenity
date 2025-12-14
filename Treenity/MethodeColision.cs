@@ -10,7 +10,7 @@ namespace Treenity
     internal class MethodeColision
     {
         private static readonly string RECUL = "40";
-        public static string ColisionAvecEnnemies(Ennemies[] entites, Rect joueur)
+        public static string ColisionAvecEnnemies(List<Ennemies> entites, Rect joueur)
         {
             /*
              Méthode permettant de savoir si il y a une colision entre le joueur et un ennemie.
@@ -22,7 +22,7 @@ namespace Treenity
             
 
             //Console.WriteLine("Detection des colision avec les ennemies : start");
-            for (int i = 0; i < entites.Length; i++)
+            for (int i = 0; i < entites.Count; i++)
             {
                 //Console.WriteLine("Detection de la colision avec l'ennemie numero : " + i);
                 if (joueur.IntersectsWith(entites[i].rectangle))

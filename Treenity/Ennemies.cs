@@ -19,6 +19,7 @@ namespace Treenity
     public class Ennemies
     {
         private static Random rand = new Random();
+        private Canvas canvasJeu;
 
         public static String name = "Elfe";
         public static BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
@@ -41,8 +42,10 @@ namespace Treenity
 
         public Ennemies(Canvas canvas)
         {
-            posLeft = rand.Next(0, (int)(canvas.ActualWidth - imageEnnemie.PixelWidth));
-            posTop = rand.Next(0, (int)(canvas.ActualHeight - imageEnnemie.PixelHeight));
+            canvasJeu = canvas;
+
+            posLeft = rand.Next(0, (int)(canvasJeu.ActualWidth - imageEnnemie.PixelWidth));
+            posTop = rand.Next(0, (int)(canvasJeu.ActualHeight - imageEnnemie.PixelHeight));
 
             ennemieImg.Source = imageEnnemie;
             ennemieImg.Width = imageEnnemie.PixelWidth; 
@@ -51,7 +54,7 @@ namespace Treenity
             Canvas.SetTop(ennemieImg, posTop);
             Canvas.SetLeft(ennemieImg, posLeft);
 
-            canvas.Children.Add(ennemieImg);
+            canvasJeu.Children.Add(ennemieImg);
             rectangle = new Rect(posLeft, posTop, imageEnnemie.PixelWidth, imageEnnemie.PixelHeight);
 
             barrePVMax = new System.Windows.Shapes.Rectangle
@@ -64,7 +67,7 @@ namespace Treenity
             Canvas.SetLeft(barrePVMax, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
             Canvas.SetTop(barrePVMax, posTop + ennemieImg.Height + 5);
 
-            canvas.Children.Add(barrePVMax);
+            canvasJeu.Children.Add(barrePVMax);
 
             barrePV = new System.Windows.Shapes.Rectangle
             {
@@ -78,7 +81,7 @@ namespace Treenity
             Canvas.SetLeft(barrePV, posLeft + (ennemieImg.Width - barrePV.Width) / 2);
             Canvas.SetTop(barrePV, posTop + ennemieImg.Height + 5);
 
-            canvas.Children.Add(barrePV);
+            canvasJeu.Children.Add(barrePV);
 
             hitboxRect = new System.Windows.Shapes.Rectangle
             {
@@ -91,7 +94,7 @@ namespace Treenity
             Canvas.SetLeft(hitboxRect, posLeft);
             Canvas.SetTop(hitboxRect, posTop);
 
-            canvas.Children.Add(hitboxRect);
+            canvasJeu.Children.Add(hitboxRect);
         }
 
         public void MoveEnnemie(Rect joueur, Rect entite)
@@ -110,9 +113,6 @@ namespace Treenity
 
             rectangle.X = posLeft;
 
-
-
-
             Canvas.SetLeft(ennemieImg, posLeft);
 
             Canvas.SetLeft(hitboxRect, posLeft);
@@ -123,12 +123,14 @@ namespace Treenity
             Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");
         }
 
-        }
-
         public void RecevoirDegats(int degat)
         {
             pv -= degat;
-            if(pv < 0) pv = 0;
+            if(pv < 0)
+            {
+                pv = 0;
+                Mourir();
+            }
 
             double pourcentage = (double)pv / pvMax;
 
@@ -140,6 +142,14 @@ namespace Treenity
                 barrePV.Fill = Brushes.Orange;
             else
                 barrePV.Fill = Brushes.Red;
+        }
+
+        public void Mourir()
+        {
+            canvasJeu.Children.Remove(ennemieImg);
+            canvasJeu.Children.Remove(barrePV);
+            canvasJeu.Children.Remove(barrePVMax);
+            canvasJeu.Children.Remove(hitboxRect);
         }
 
         public void FaireTomberEnnemie()
