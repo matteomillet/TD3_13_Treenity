@@ -16,6 +16,7 @@ namespace Treenity
         public Canvas canvasJeu;   // Canvas sur lequel dessiné
 
         public double vitesseX = 0;
+        public double vitesseXRecul = 0;
         public int pvMax;   // PV Max de l'entité
         public int pv;      // PV actuel de l'entité
         public int degats;  // Dégats de l'entité
@@ -102,14 +103,14 @@ namespace Treenity
 
             if (abssice == "X" && hitboxLogi.X + recul > 0 && hitboxLogi.X + recul < canvasJeu.ActualWidth)
             {
-                hitboxLogi.X = hitboxLogi.X + recul;
-            
+                vitesseY -= 30;
+                vitesseXRecul += recul;
+
             }
             else
             {
                 hitboxLogi.Y = hitboxLogi.Y + recul;
-                Canvas.SetTop(entiteImg, Canvas.GetTop(entiteImg) + recul);
-                Canvas.SetTop(hitboxVisu, Canvas.GetTop(hitboxVisu) + recul);
+                
             }
         }
     }

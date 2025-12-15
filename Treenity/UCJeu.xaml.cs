@@ -146,14 +146,34 @@ namespace Treenity
                 ennemies[i].MoveEnnemie(joueur);
                 //Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
             }
-            
 
-            joueur.hitboxLogi.X += joueur.vitesseX;
+            double deplacementTotalX = joueur.vitesseX + joueur.vitesseXRecul;
+
+            joueur.AppliquerGravite();
+            if (joueur.hitboxLogi.X + joueur.vitesseX > 0 && joueur.hitboxLogi.X + joueur.vitesseX < canvasJeu.ActualWidth - joueur.entiteImg.Width)
+            {
+                joueur.hitboxLogi.X += deplacementTotalX;
+            }
+
+            if (joueur.vitesseXRecul > 0)
+            {
+                joueur.vitesseXRecul -= 4;
+                if (joueur.vitesseXRecul < 0)
+                    joueur.vitesseXRecul = 0;
+            }
+            else
+            {
+                joueur.vitesseXRecul += 4;
+                if (joueur.vitesseXRecul > 0)
+                    joueur.vitesseXRecul = 0;
+            }
+
+
             for (int i = ennemies.Count - 1; i >= 0; i--)
             {
                 ennemies[i].AppliquerGravite();
             }
-            joueur.AppliquerGravite();
+            
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, joueur.hitboxLogi);
 
@@ -177,7 +197,7 @@ namespace Treenity
             Canvas.SetLeft(cercleDebug, left);
             Canvas.SetTop(cercleDebug, top);
             */
-
+            
             joueur.UpdateVisu();
             for (int i = ennemies.Count - 1; i >= 0; i--)
             {
