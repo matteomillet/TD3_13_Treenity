@@ -15,6 +15,8 @@ namespace Treenity
         private const double GRAVITE = 3;
         public Canvas canvasJeu;   // Canvas sur lequel dessiné
 
+        public double vitesseX = 0;
+        public int DirectionRegard = 1;
         public int pvMax;   // PV Max de l'entité
         public int pv;      // PV actuel de l'entité
         public int degats;  // Dégats de l'entité
@@ -39,30 +41,25 @@ namespace Treenity
             entiteImg = new Image();
         }
 
-        public void DeplacerEntite(int distance, Canvas canvasJeux)
+        public void DeplacerEntite(Canvas canvasJeu)
             /*
             méthode permettant de faire déplacer lateralement une entite. distance peut être négative, l'entite va donc reculer
             */
         {
-            if (hitboxLogi.Y + distance >= 0 && hitboxLogi.Y + distance <= canvasJeu.ActualWidth) //ajouter la condition que l'entite ne sera pas bloquer par un obstacle
-                hitboxLogi.Y += distance;
+            if (hitboxLogi.X += vitesseX <= 0 || hitboxLogi.X += vitesseX >= canvasJeu.ActualWidth)
+            hitboxLogi.X += vitesseX;
         }
 
         //Méthode a appeler a chaque tick pour chaque entite 
-        public void UpdateVisu()    // Méthode pour mettre à jour la position de l'entité
+        public void UpdateVisu()    // Méthode pour mettre à jour la position de l'entité en fonction du Rect hiboxLogi
         {
-            Canvas.SetLeft(entiteImg, posLeft); // Mise à jour de la position de l'image en abscisse
-            Canvas.SetTop(entiteImg, posTop);   // Mise à jour de la position de l'image en ordonnée
-
-            // Mise à jour de la hitbox logique
-
-            hitboxLogi.X = posLeft;
-            hitboxLogi.Y = posTop;
+            Canvas.SetLeft(entiteImg, hitboxLogi.X); // Mise à jour de la position de l'image en abscisse
+            Canvas.SetTop(entiteImg, hitboxLogi.Y);   // Mise à jour de la position de l'image en ordonnée
 
             //Mise à jour de la hitbox visuelle
 
-            Canvas.SetLeft(hitboxVisu, posLeft);
-            Canvas.SetTop(hitboxVisu, posTop);
+            Canvas.SetLeft(hitboxVisu, hitboxLogi.X);
+            Canvas.SetTop(hitboxVisu, hitboxLogi.Y);
 
             
         }
@@ -79,7 +76,6 @@ namespace Treenity
                 vitesseY = 0;
             }
 
-            Canvas.SetTop(entiteImg, hitboxLogi.Y);
         }
 
         

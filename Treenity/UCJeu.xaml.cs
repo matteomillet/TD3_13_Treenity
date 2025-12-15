@@ -33,7 +33,7 @@ namespace Treenity
         public Ellipse cercleDebug;
         public double vitesseY = 0; 
         public const double gravite = 3; 
-        public const double forceSaut = -40;
+        public const double FORCE_SAUT = -40;
         public UCJeu()
         {
             InitializeComponent();
@@ -79,21 +79,28 @@ namespace Treenity
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Right || e.Key == Key.D ||
+        e.Key == Key.Left || e.Key == Key.Q)
+            {
+                joueur.vitesseX = 0;
+            }
         }
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.Key == Key.Right || e.Key == Key.D) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi, canvasJeu) != "droite")
+            if (e.Key == Key.Right || e.Key == Key.D)
             {
-                joueur.Deplacer("Droite");
+                joueur.DirectionRegard = 1;
+                joueur.vitesseX = 4;
             }
-            if ((e.Key == Key.Left || e.Key == Key.Q) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi, canvasJeu) != "droite")
+            if (e.Key == Key.Left || e.Key == Key.Q)
             {
-                joueur.Deplacer("Gauche");
+                joueur.DirectionRegard = -1;
+                joueur.vitesseX = -4;
             }
             if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
             {
-                joueur.Deplacer("Saut");
+                joueur.vitesseY += FORCE_SAUT;
             }
             // if (e.Key == Key.Enter)
                 //Attaque(ennemies, rectangleJoueur, 2, directionRegard);
@@ -118,7 +125,7 @@ namespace Treenity
         private void Jeu(object? sender, EventArgs e)
         {
             nbTick++;
-
+            /*
             for(int i = ennemies.Count - 1; i >= 0; i--)
             {
                 if (ennemies[i].pv <= 0)
@@ -134,7 +141,9 @@ namespace Treenity
                 ennemies[i].MoveEnnemie(joueur.hitboxLogi);
                 //Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
             }
+            */
 
+            joueur.DeplacerEntite();
             joueur.AppliquerGravite();
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, joueur.hitboxLogi);
@@ -145,8 +154,7 @@ namespace Treenity
                 joueur.RecevoirRecul(colision);
             }
 
-            Canvas.SetLeft(joueur.hitboxVisu, joueur.hitboxLogi.X);
-            Canvas.SetTop(joueur.hitboxVisu, joueur.hitboxLogi.Y);
+            
             
 
             // Cercle de debug pour apercevoire le rayon d'attaque
@@ -160,6 +168,12 @@ namespace Treenity
             Canvas.SetLeft(cercleDebug, left);
             Canvas.SetTop(cercleDebug, top);
             */
+
+            for (int i = ennemies.Count - 1; i >= 0; i--)
+            {
+                ennemies[i].UpdateVisu();
+            }
+            joueur.UpdateVisu();
             
         }
 

@@ -63,9 +63,9 @@ namespace Treenity
             }
 
             directionColision += RECUL;
-            Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.X}, {entite.Y}");
-            Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {joueur.X}, {joueur.Y}");
-            Console.WriteLine($"direction colision: {directionColision}");
+            //Console.WriteLine($"Position de la hitbox ( rectangle) de l'ennemie {entite.X}, {entite.Y}");
+            //Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {joueur.X}, {joueur.Y}");
+            //Console.WriteLine($"direction colision: {directionColision}");
             return directionColision;
         }
 
@@ -96,7 +96,7 @@ namespace Treenity
 
                 
             int solY = 900; //valeur a mettre en global
-            Console.WriteLine(entite.Y);
+            //Console.WriteLine(entite.Y);
             if (entite.Y + entite.Height >= solY)
             {
                 return  true;

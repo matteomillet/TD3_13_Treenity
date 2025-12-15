@@ -11,8 +11,7 @@ namespace Treenity
 {
     public class Joueur : Entite
     {
-        public const double FORCE_SAUT = -30;
-        public int DirectionRegard = 1; // 1 = Droite, -1 = Gauche
+        
 
         public Joueur(Canvas canvas, int pv, int degats, int vitesse, BitmapImage image)
             : base(canvas, pv, degats, vitesse) // Appel du constructeur parent
@@ -47,26 +46,7 @@ namespace Treenity
             // Fin affichage de la hitbox visuelle
         }
 
-        //Methode en commun a Ennemie et Joueur donc a mettre dans entite
-        public void Deplacer(string direction)  // Méthode de déplacement du joueur
-        {
-            if (direction == "Gauche")
-            {
-                posLeft -= vitesse;
-                DirectionRegard = -1;
-            }
-            else if (direction == "Droite")
-            {
-                posLeft += vitesse;
-                DirectionRegard = 1;
-            }
-            else if (direction == "Saut")
-            {
-                vitesseY = FORCE_SAUT;
-            }
-
-            
-        }
+        
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void Mourir()    // Méthode de mort du joueur
