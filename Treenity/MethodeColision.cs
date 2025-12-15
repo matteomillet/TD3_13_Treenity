@@ -26,11 +26,11 @@ namespace Treenity
             for (int i = 0; i < entites.Count; i++)
             {
                 //Console.WriteLine("Detection de la colision avec l'ennemie numero : " + i);
-                if (joueur.IntersectsWith(entites[i].rectangle))
+                if (joueur.IntersectsWith(entites[i].hitboxLogi))
                 {
                     Console.WriteLine("Colision avec l'ennemie numero " + i);
 
-                    return DirectionColision(entites[i].rectangle, joueur);
+                    return DirectionColision(entites[i].hitboxLogi, joueur);
                     
                 }
             }
