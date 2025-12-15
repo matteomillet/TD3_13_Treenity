@@ -61,6 +61,7 @@ namespace Treenity
         {
             pv -= degats;
             if (pv < 0) pv = 0;
+            GestionSons.Jouer("hitSound");
         }
 
         public void Attaque(Entite cible)

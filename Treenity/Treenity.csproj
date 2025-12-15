@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <None Remove="Ressources\Images\rulesButton.png" />
+    <None Remove="Ressources\Sons\hitSound.mp3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +43,9 @@
     <Resource Include="Ressources\Images\Tronc.png" />
     <Resource Include="Ressources\Images\YouWinTitle.png" />
     <Resource Include="Ressources\Images\rulesButton.png" />
+    <Content Include="Ressources\Sons\hitSound.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
