@@ -16,8 +16,10 @@ using System.Drawing;
 
 namespace Treenity
 {
+    
     public class Ennemies
     {
+        private const double GRAVITE = 3;
         private static Random rand = new Random();
         private Canvas canvasJeu;
 
@@ -28,9 +30,10 @@ namespace Treenity
         public int pv;
         public int degats;
         public int vitesse;
+        public double vitesseY = 0;
 
-        public int posTop;
-        public int posLeft;
+        public double posTop;
+        public double posLeft;
 
         public Image ennemieImg = new Image();
 
@@ -159,20 +162,24 @@ namespace Treenity
             canvasJeu.Children.Remove(hitboxRect);
         }
 
-        public void FaireTomberEnnemie()
+        public void AppliquerGravite()
         {
-            Console.WriteLine("detection0");
-            if(!MethodeColision.EntiteToucheSol(rectangle))
-            {
-                Console.WriteLine("tomber");
-                rectangle.Y += 3;
-                posTop = (int)rectangle.Y;
-                Canvas.SetTop(ennemieImg, rectangle.Y);
-                Canvas.SetTop(hitboxRect, rectangle.Y);
+            vitesseY += GRAVITE;
+            posTop += vitesseY;
 
-                Canvas.SetTop(barrePV, posTop + 40);
-                Canvas.SetTop(barrePVMax, posTop + 40);
+
+            if (MethodeColision.EntiteToucheSol(rectangle))
+            {
+                posTop = 900 - rectangle.Height;
+                vitesseY = 0;
+
             }
+
+            rectangle.Y = posTop;
+            Canvas.SetTop(ennemieImg, posTop);
+            Canvas.SetTop(hitboxRect, posTop);
+            Canvas.SetTop(barrePVMax, posTop + ennemieImg.Height + 5);
+            Canvas.SetTop(barrePV, posTop + ennemieImg.Height + 5);
         }
     }
 }

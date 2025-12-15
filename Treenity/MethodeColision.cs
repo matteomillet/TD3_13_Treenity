@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Treenity
 {
@@ -68,8 +69,13 @@ namespace Treenity
             return directionColision;
         }
 
-        public static string ColisionAvecObstacles(Rect[]obstacles, Rect joueur )
+        public static string ColisionAvecObstacles(Rect[]obstacles, Rect joueur, Canvas canvasJeu)
         {
+            if (joueur.X <= 0)
+                return "gauche";
+
+            if (joueur.X >= canvasJeu.ActualWidth - joueur.Width)
+                return "droite";
 
             for (int i = 0; i < obstacles.Length; i++)
             {
