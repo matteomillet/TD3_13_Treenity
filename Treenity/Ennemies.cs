@@ -1,139 +1,100 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Drawing;
-
 
 namespace Treenity
 {
-    public class Ennemies
+    public class Ennemies : Entite
     {
-        private static Random rand = new Random();
-        private Canvas canvasJeu;
+        private static Random rand = new Random();  // Générateur de nombre aléatoire
 
-        public static String name = "Elfe";
-        private BitmapImage imageEnnemie;
-        public static int pvMax = 50;
+        public System.Windows.Shapes.Rectangle barrePV; // Barre de PV de l'ennemi
+        public System.Windows.Shapes.Rectangle barrePVMax;  // Barre de PV Max de l'ennemi
 
-        public int pv;
-        public int degats;
-        public int vitesse;
-
-        public int posTop;
-        public int posLeft;
-
-        public Image ennemieImg = new Image();
-
-        public Rect rectangle;
-        public System.Windows.Shapes.Rectangle hitboxRect;
-
-        public System.Windows.Shapes.Rectangle barrePVMax;
-        public System.Windows.Shapes.Rectangle barrePV;
-
-        public Ennemies(Canvas canvas, int pvInitial, int degatsInitial, int vitesseInitial, BitmapImage image)
+        public Ennemies(Canvas canvas, int pv, int degats, int vitesse, BitmapImage image)
+            : base(canvas, pv, degats, vitesse) // Appel du constructeur parent
         {
-            canvasJeu = canvas;
+            entiteImg.Source = image;   // Image source de l'ennemi
+            entiteImg.Width = image.PixelWidth; // Largeur exact de l'image en pixel
+            entiteImg.Height = image.PixelHeight;   // Hauteur exact de l'image en pixel
 
-            pv = pvInitial;
-            degats = degatsInitial;
-            vitesse = vitesseInitial;
+            posLeft = rand.Next(0, (int)(canvasJeu.ActualWidth - entiteImg.Width)); // Position aléatoire de l'ennemi en abscisse
+            posTop = rand.Next(0, (int)(canvasJeu.ActualHeight - entiteImg.Height));    // Position aléatoire de l'ennemi en ordonnée
 
+            hitboxLogi = new Rect(posLeft, posTop, entiteImg.Width, entiteImg.Height);   // Création de la hitbox logique de l'ennemie
 
-            imageEnnemie = image;
+            Canvas.SetLeft(entiteImg, posLeft);     // Initialisation de l'image à la position gauche de l'ennemi
+            Canvas.SetTop(entiteImg, posTop);       // Initialisation de l'image à la position heute de l'ennemi
+            canvasJeu.Children.Add(entiteImg);      // Affichage de l'image sur le canvas
 
-            ennemieImg.Source = imageEnnemie;
-            ennemieImg.Width = imageEnnemie.PixelWidth; 
-            ennemieImg.Height = imageEnnemie.PixelHeight;
-
-            posLeft = rand.Next(0, (int)(canvasJeu.ActualWidth - imageEnnemie.PixelWidth));
-            posTop = rand.Next(0, (int)(canvasJeu.ActualHeight - imageEnnemie.PixelHeight));
-
-            Canvas.SetTop(ennemieImg, posTop);
-            Canvas.SetLeft(ennemieImg, posLeft);
-
-            canvasJeu.Children.Add(ennemieImg);
-            rectangle = new Rect(posLeft, posTop, imageEnnemie.PixelWidth, imageEnnemie.PixelHeight);
-
-            barrePVMax = new System.Windows.Shapes.Rectangle
+            // Affichage de la hitbox visuelle de l'ennemi
+            hitboxVisu = new System.Windows.Shapes.Rectangle
             {
-                Width = 80,
-                Height = 10,
-                Fill = Brushes.Black,
-            };
-
-            Canvas.SetLeft(barrePVMax, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
-            Canvas.SetTop(barrePVMax, posTop + ennemieImg.Height + 5);
-
-            canvasJeu.Children.Add(barrePVMax);
-
-            barrePV = new System.Windows.Shapes.Rectangle
-            {
-                Width = 80,
-                Height = 10,
-                Fill = Brushes.Green,
-                Stroke = Brushes.Black,
-                StrokeThickness = 1,
-            };
-
-            Canvas.SetLeft(barrePV, posLeft + (ennemieImg.Width - barrePV.Width) / 2);
-            Canvas.SetTop(barrePV, posTop + ennemieImg.Height + 5);
-
-            canvasJeu.Children.Add(barrePV);
-
-            hitboxRect = new System.Windows.Shapes.Rectangle
-            {
-                Width = ennemieImg.Width,
-                Height = ennemieImg.Height,
+                Width = entiteImg.Width,
+                Height = entiteImg.Height,
                 Stroke = Brushes.Red,
                 StrokeThickness = 2
             };
 
-            Canvas.SetLeft(hitboxRect, posLeft);
-            Canvas.SetTop(hitboxRect, posTop);
+            Canvas.SetLeft(hitboxVisu, posLeft);
+            Canvas.SetTop(hitboxVisu, posTop);
 
-            canvasJeu.Children.Add(hitboxRect);
+            canvasJeu.Children.Add(hitboxVisu);
+            // Fin affichage de la hitbox visuelle
+
+            CreerBarreDeVie();  // Appel de la fonction pour creer la barre de vie
         }
 
-        public void MoveEnnemie(Rect joueur, Rect entite)
+        private void CreerBarreDeVie()  // Méthode de création de la barre de vie de l'ennemi
+        {
+            // Fond noir
+            barrePVMax = new System.Windows.Shapes.Rectangle() { Width = 80, Height = 10, Fill = Brushes.Black };
+            Canvas.SetLeft(barrePVMax, posLeft + (entiteImg.Width - barrePVMax.Width) / 2);
+            Canvas.SetTop(barrePVMax, posTop + entiteImg.Height + 5);
+            canvasJeu.Children.Add(barrePVMax);
+
+            // Barre verte
+            barrePV = new System.Windows.Shapes.Rectangle() { Width = 80, Height = 10, Fill = Brushes.Green };
+            Canvas.SetLeft(barrePV, posLeft + (entiteImg.Width - 80) / 2);
+            Canvas.SetTop(barrePV, posTop + entiteImg.Height + 5);
+            canvasJeu.Children.Add(barrePV);
+        }
+
+        public void MoveEnnemie(Rect joueurHitbox)  // Méthode de déplacement de l'ennemi
         {
             int sens = 0;
-
-            int joueurBordDroit = (int)(joueur.X + joueur.Width);
-            int ennemiBordDroit = (int)(posLeft + rectangle.Width);
-
-            if (ennemiBordDroit < joueur.X)
-                sens = 1;
-            else if (posLeft > joueurBordDroit)
-                sens = -1;
+            if (hitboxLogi.Right < joueurHitbox.Left) sens = 1;      // Joueur est à droite
+            else if (posLeft > joueurHitbox.Right) sens = -1;    // Joueur est à gauche
 
             posLeft += vitesse * sens;
 
-            rectangle.X = posLeft;
+            // Mise à jour visuelle (On utilise la méthode du parent + la barre de vie)
+            UpdateVisu();
 
-            Canvas.SetLeft(ennemieImg, posLeft);
-
-            Canvas.SetLeft(hitboxRect, posLeft);
-
-            Canvas.SetLeft(barrePVMax, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
-            Canvas.SetLeft(barrePV, posLeft + (ennemieImg.Width - barrePVMax.Width) / 2);
-
-            Console.WriteLine($"Posiont hitbox ennemie : {entite.X} {entite.Y}");
+            // Décalage de la barre de vie
+            double decalage = (entiteImg.Width - 80) / 2;
+            Canvas.SetLeft(barrePVMax, posLeft + decalage);
+            Canvas.SetLeft(barrePV, posLeft + decalage);
         }
 
-        public void RecevoirDegats(int degat)
+        public void Mourir()    // Méthode de mort de l'ennemi
+        {
+            canvasJeu.Children.Remove(entiteImg);
+            canvasJeu.Children.Remove(barrePV);
+            canvasJeu.Children.Remove(barrePVMax);
+            canvasJeu.Children.Remove(hitboxVisu);
+        }
+
+        public void RecevoirDegats(int degat)   // Méthode de dégats sur l'ennemi
         {
             pv -= degat;
-            if(pv < 0)
+            if (pv < 0)
             {
                 pv = 0;
                 Mourir();
@@ -149,30 +110,6 @@ namespace Treenity
                 barrePV.Fill = Brushes.Orange;
             else
                 barrePV.Fill = Brushes.Red;
-        }
-
-        public void Mourir()
-        {
-            canvasJeu.Children.Remove(ennemieImg);
-            canvasJeu.Children.Remove(barrePV);
-            canvasJeu.Children.Remove(barrePVMax);
-            canvasJeu.Children.Remove(hitboxRect);
-        }
-
-        public void FaireTomberEnnemie()
-        {
-            Console.WriteLine("detection0");
-            if(!MethodeColision.EntiteToucheSol(rectangle))
-            {
-                Console.WriteLine("tomber");
-                rectangle.Y += 3;
-                posTop = (int)rectangle.Y;
-                Canvas.SetTop(ennemieImg, rectangle.Y);
-                Canvas.SetTop(hitboxRect, rectangle.Y);
-
-                Canvas.SetTop(barrePV, posTop + 40);
-                Canvas.SetTop(barrePVMax, posTop + 40);
-            }
         }
     }
 }
