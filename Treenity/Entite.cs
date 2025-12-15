@@ -91,7 +91,7 @@ namespace Treenity
 
             bool estDevant = false;
 
-            if (directionRegard == 1)
+            if (this.directionRegard == 1)
             {
                 if (centreCibleX > centreEntiteX) estDevant = true;
             }
@@ -100,7 +100,7 @@ namespace Treenity
 
             if (distanceCarre <= (rayonAttaque * rayonAttaque) && estDevant)
             {
-                cible.RecevoirDegats(degats);
+                cible.RecevoirDegats(this.degats);
                 Console.WriteLine("Ennemi touché dans le rayon !");
             }
         }
