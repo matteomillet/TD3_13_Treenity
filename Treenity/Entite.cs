@@ -20,6 +20,8 @@ namespace Treenity
         public int degats;  // Dégats de l'entité
         public int vitesse; // Vitesse de l'entité
         public double vitesseY; // Force de gravité
+        public int directionRegard;
+        public int rayonAttaque;
 
         public double posTop;   // Position haute de l'entité
         public double posLeft;  // Position gauche de l'entité
@@ -39,13 +41,13 @@ namespace Treenity
             entiteImg = new Image();
         }
 
-        public void DeplacerEntite(int distance, Canvas canvasJeux)
+        public void DeplacerEntite(Canvas canvasJeux)
             /*
             méthode permettant de faire déplacer lateralement une entite. distance peut être négative, l'entite va donc reculer
             */
         {
-            if (hitboxLogi.Y + distance >= 0 && hitboxLogi.Y + distance <= canvasJeu.ActualWidth) //ajouter la condition que l'entite ne sera pas bloquer par un obstacle
-                hitboxLogi.Y += distance;
+            if (hitboxLogi.Y + vitesse >= 0 && hitboxLogi.Y + vitesse <= canvasJeu.ActualWidth) //ajouter la condition que l'entite ne sera pas bloquer par un obstacle
+                hitboxLogi.Y += vitesse * directionRegard;
         }
 
         //Méthode a appeler a chaque tick pour chaque entite 
@@ -62,9 +64,7 @@ namespace Treenity
             //Mise à jour de la hitbox visuelle
 
             Canvas.SetLeft(hitboxVisu, posLeft);
-            Canvas.SetTop(hitboxVisu, posTop);
-
-            
+            Canvas.SetTop(hitboxVisu, posTop);   
         }
 
         //Méthode a appeler a chaque tick pour chaque entite 
@@ -82,6 +82,39 @@ namespace Treenity
             Canvas.SetTop(entiteImg, hitboxLogi.Y);
         }
 
-        
+        public virtual void RecevoirDegats(int degats)
+        {
+            pv -= degats;
+            if (pv < 0) pv = 0;
+        }
+
+        public void Attaque(Entite cible)
+        {
+            int centreEntiteX = (int)(hitboxLogi.X + (hitboxLogi.Width / 2));
+            int centreEntiteY = (int)(hitboxLogi.Y + (hitboxLogi.Height / 2));
+
+            double centreCibleX = cible.posLeft + (cible.entiteImg.Width / 2);
+            double centreCibleY = cible.posTop + (cible.entiteImg.Height / 2);
+
+            double distanceX = centreEntiteX - centreCibleX;
+            double distanceY = centreEntiteY - centreCibleY;
+
+            double distanceCarre = (distanceX * distanceX) + (distanceY * distanceY);
+
+            bool estDevant = false;
+
+            if (directionRegard == 1)
+            {
+                if (centreCibleX > centreEntiteX) estDevant = true;
+            }
+            else
+                if (centreCibleX < centreEntiteX) estDevant = true;
+
+            if (distanceCarre <= (rayonAttaque * rayonAttaque) && estDevant)
+            {
+                cible.RecevoirDegats(degats);
+                Console.WriteLine("Ennemi touché dans le rayon !");
+            }
+        }
     }
 }

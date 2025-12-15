@@ -69,11 +69,10 @@ namespace Treenity
         //MoveEnnemie qui peut être changer et genre elle appele une methode dans entite qui fait déplacer l'entite
         public void MoveEnnemie(Rect joueurHitbox)  // Méthode de déplacement de l'ennemi
         {
-            int sens = 0;
-            if (hitboxLogi.Right < joueurHitbox.Left) sens = 1;      // Joueur est à droite
-            else if (posLeft > joueurHitbox.Right) sens = -1;    // Joueur est à gauche
+            if (hitboxLogi.Right < joueurHitbox.Left) directionRegard = 1;      // Joueur est à droite
+            else if (posLeft > joueurHitbox.Right) directionRegard = -1;    // Joueur est à gauche
 
-            posLeft += vitesse * sens;
+            DeplacerEntite(canvasJeu);
 
             // Mise à jour visuelle (On utilise la méthode du parent + la barre de vie)
             UpdateVisu();
@@ -94,15 +93,17 @@ namespace Treenity
         }
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
-        public void RecevoirDegats(int degat)   // Méthode de dégats sur l'ennemi
+        public override void RecevoirDegats(int degat)   // Méthode de dégats sur l'ennemi
         {
-            pv -= degat;
+            base.RecevoirDegats(degats);    // Appel de la méthode RecevoirDegats dans la classe mère
+
             if (pv < 0)
             {
                 pv = 0;
                 Mourir();
             }
 
+            // Mise à jour de la barre de vie
             double pourcentage = (double)pv / pvMax;
 
             barrePV.Width = 80 * pourcentage;

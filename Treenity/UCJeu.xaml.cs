@@ -32,8 +32,8 @@ namespace Treenity
         private static DispatcherTimer minuterie;
         public Ellipse cercleDebug;
         public double vitesseY = 0; 
-        public const double gravite = 3; 
-        public const double forceSaut = -40;
+        public const double gravite = 3;
+        public const double FORCE_SAUT = -40;
         public UCJeu()
         {
             InitializeComponent();
@@ -85,15 +85,17 @@ namespace Treenity
         {
             if ((e.Key == Key.Right || e.Key == Key.D) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi, canvasJeu) != "droite")
             {
-                joueur.Deplacer("Droite");
+                joueur.directionRegard = 1;
+                joueur.DeplacerEntite(canvasJeu);
             }
             if ((e.Key == Key.Left || e.Key == Key.Q) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi, canvasJeu) != "droite")
             {
-                joueur.Deplacer("Gauche");
+                joueur.directionRegard = -1;
+                joueur.DeplacerEntite(canvasJeu);
             }
             if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
             {
-                joueur.Deplacer("Saut");
+                joueur.vitesseY += FORCE_SAUT;
             }
             // if (e.Key == Key.Enter)
                 //Attaque(ennemies, rectangleJoueur, 2, directionRegard);
@@ -162,56 +164,6 @@ namespace Treenity
             */
             
         }
-
-        private static void DeplacerJoueur(String direction, ref Rect joueurHitbox, Image imgPerso, Canvas canvasJeu)
-        {
-            string abssice = direction.Substring(0, 1);
-            int recul = int.Parse(direction.Substring(1,direction.Length-1));
-           
-            if (abssice == "X" && joueurHitbox.X + recul >0 && joueurHitbox.X + recul < canvasJeu.ActualWidth)
-            {
-                joueurHitbox.X = joueurHitbox.X + recul;
-                Canvas.SetLeft(imgPerso, Canvas.GetLeft(imgPerso) + recul);
-            }
-            else
-            {
-                joueurHitbox.Y = joueurHitbox.Y + recul;
-                Canvas.SetTop(imgPerso, Canvas.GetTop(imgPerso) + recul);
-            }
-        }
-        /*
-        private static void Attaque(List<Ennemies> ennemies, Rect joueur, int degats, int direction)
-        {
-            int joueurCentreX = (int)(joueur.X + (joueur.Width / 2));
-            int joueurCentreY = (int)(joueur.Y + (joueur.Height / 2));
-
-            foreach (Ennemies ennemie in ennemies)
-            {
-                double ennemiCentreX = ennemie.posLeft + (ennemie.ennemieImg.Width / 2);
-                double ennemiCentreY = ennemie.posTop + (ennemie.ennemieImg.Height / 2);
-
-                double distanceX = joueurCentreX - ennemiCentreX;
-                double distanceY = joueurCentreY - ennemiCentreY;
-
-                double distanceCarre = (distanceX * distanceX) + (distanceY * distanceY);
-
-                bool estDevant = false;
-
-                if (direction == 1)
-                {
-                    if (ennemiCentreX > joueurCentreX) estDevant = true;
-                }
-                else
-                    if (ennemiCentreX < joueurCentreX) estDevant = true;
-
-                if (distanceCarre <= (rayonAttaque * rayonAttaque) && estDevant)
-                {
-                    ennemie.RecevoirDegats(degats);
-                    Console.WriteLine("Ennemi touché dans le rayon !");
-                }
-            }
-        }
-        */
     }
 }
 

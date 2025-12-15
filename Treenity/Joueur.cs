@@ -11,9 +11,6 @@ namespace Treenity
 {
     public class Joueur : Entite
     {
-        public const double FORCE_SAUT = -30;
-        public int DirectionRegard = 1; // 1 = Droite, -1 = Gauche
-
         public Joueur(Canvas canvas, int pv, int degats, int vitesse, BitmapImage image)
             : base(canvas, pv, degats, vitesse) // Appel du constructeur parent
         {
@@ -53,19 +50,17 @@ namespace Treenity
             if (direction == "Gauche")
             {
                 posLeft -= vitesse;
-                DirectionRegard = -1;
+                directionRegard = -1;
             }
             else if (direction == "Droite")
             {
                 posLeft += vitesse;
-                DirectionRegard = 1;
+                directionRegard = 1;
             }
             else if (direction == "Saut")
             {
-                vitesseY = FORCE_SAUT;
-            }
-
-            
+                // vitesseY = FORCE_SAUT;
+            } 
         }
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
@@ -76,9 +71,10 @@ namespace Treenity
         }
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
-        public void RecevoirDegats(int degat)   // Méthode de dégats sur le joueur
+        public override void RecevoirDegats(int degat)   // Méthode de dégats sur le joueur
         {
-            pv -= degat;
+            base.RecevoirDegats(degat); // Appel de la méthode RecevoirDegats dans la classe mère
+
             if (pv < 0)
             {
                 pv = 0;
