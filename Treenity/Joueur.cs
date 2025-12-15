@@ -65,7 +65,7 @@ namespace Treenity
                 vitesseY = FORCE_SAUT;
             }
 
-            UpdateVisu();
+            
         }
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite

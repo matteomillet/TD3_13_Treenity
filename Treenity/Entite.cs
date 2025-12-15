@@ -39,6 +39,15 @@ namespace Treenity
             entiteImg = new Image();
         }
 
+        public void DeplacerEntite(int distance, Canvas canvasJeux)
+            /*
+            méthode permettant de faire déplacer lateralement une entite. distance peut être négative, l'entite va donc reculer
+            */
+        {
+            if (hitboxLogi.Y + distance >= 0 && hitboxLogi.Y + distance <= canvasJeu.ActualWidth) //ajouter la condition que l'entite ne sera pas bloquer par un obstacle
+                hitboxLogi.Y += distance;
+        }
+
         //Méthode a appeler a chaque tick pour chaque entite 
         public void UpdateVisu()    // Méthode pour mettre à jour la position de l'entité
         {
