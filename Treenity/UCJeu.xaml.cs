@@ -43,6 +43,7 @@ namespace Treenity
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
+
             Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
 
             InitializeEnnemies();
@@ -71,9 +72,9 @@ namespace Treenity
             Random rand = new Random();
             ennemies = new List<Ennemies>();
             BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
-            for(int i = 0; i < 1;  i++)
+            for(int i = 0; i < 3;  i++)
             {        
-                ennemies.Add(new Ennemies(canvasJeu, 50, 15, 1, imageEnnemie));
+                ennemies.Add(new Ennemies(canvasJeu, 50, 10, 1, imageEnnemie));
             }
         }
 
@@ -137,13 +138,14 @@ namespace Treenity
                 {
                     ennemies[i].Mourir();
                     ennemies.RemoveAt(i);
+                    // Console.WriteLine($"Ennemis restants : {ennemies.Count}");
 
                     continue;
                 }
 
                 //Console.WriteLine("l'ennemie va peut etre tomber");
                 //Console.WriteLine("Tomber Y = " + ennemies[i].hitboxLogi.Y);
-                ennemies[i].MoveEnnemie(joueur);
+                ennemies[i].Decision(joueur);
                 //Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
             }
 
