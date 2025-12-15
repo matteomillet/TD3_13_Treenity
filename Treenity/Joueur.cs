@@ -44,9 +44,18 @@ namespace Treenity
             // Fin affichage de la hitbox visuelle
         }
 
-        
-            
+
+        public void UpdateVisu()    // Méthode pour mettre à jour la position de l'entité en fonction du Rect hiboxLogi
+        {
+            Canvas.SetLeft(entiteImg, hitboxLogi.X); // Mise à jour de la position de l'image en abscisse
+            Canvas.SetTop(entiteImg, hitboxLogi.Y);   // Mise à jour de la position de l'image en ordonnée
+
+            //Mise à jour de la hitbox visuelle
+
+            Canvas.SetLeft(hitboxVisu, hitboxLogi.X);
+            Canvas.SetTop(hitboxVisu, hitboxLogi.Y);
         }
+
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void Mourir()    // Méthode de mort du joueur
@@ -68,6 +77,7 @@ namespace Treenity
         }
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite si l'ennemie peut recevoir du recul
+        /*
         public void RecevoirRecul(string direction)
         {
             string abssice = direction.Substring(0, 1);
@@ -86,5 +96,6 @@ namespace Treenity
                 Canvas.SetTop(hitboxVisu, Canvas.GetTop(hitboxVisu) + recul);
             }
         }
+        */
     }
 }

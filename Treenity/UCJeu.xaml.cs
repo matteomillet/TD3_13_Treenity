@@ -125,7 +125,7 @@ namespace Treenity
         private void Jeu(object? sender, EventArgs e)
         {
             nbTick++;
-            /*
+            
             for(int i = ennemies.Count - 1; i >= 0; i--)
             {
                 if (ennemies[i].pv <= 0)
@@ -138,12 +138,16 @@ namespace Treenity
 
                 //Console.WriteLine("l'ennemie va peut etre tomber");
                 //Console.WriteLine("Tomber Y = " + ennemies[i].hitboxLogi.Y);
-                ennemies[i].MoveEnnemie(joueur.hitboxLogi);
+                ennemies[i].MoveEnnemie(joueur);
                 //Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
             }
-            */
+            
 
-            joueur.DeplacerEntite();
+            joueur.hitboxLogi.X += joueur.vitesseX;
+            for (int i = ennemies.Count - 1; i >= 0; i--)
+            {
+                ennemies[i].AppliquerGravite();
+            }
             joueur.AppliquerGravite();
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, joueur.hitboxLogi);
@@ -154,8 +158,8 @@ namespace Treenity
                 joueur.RecevoirRecul(colision);
             }
 
-            
-            
+
+
 
             // Cercle de debug pour apercevoire le rayon d'attaque
             /*
@@ -168,7 +172,12 @@ namespace Treenity
             Canvas.SetLeft(cercleDebug, left);
             Canvas.SetTop(cercleDebug, top);
             */
-            
+
+            joueur.UpdateVisu();
+            for (int i = ennemies.Count - 1; i >= 0; i--)
+            {
+                ennemies[i].UpdateVisu();   
+            }
         }
     }
 }

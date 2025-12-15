@@ -43,26 +43,18 @@ namespace Treenity
             entiteImg = new Image();
         }
 
-        public void DeplacerEntite(Canvas canvasJeux)
-            /*
-            méthode permettant de faire déplacer lateralement une entite. distance peut être négative, l'entite va donc reculer
-            */
+      
+        /*
+        
         {
             if (hitboxLogi.Y + vitesse >= 0 && hitboxLogi.Y + vitesse <= canvasJeu.ActualWidth) //ajouter la condition que l'entite ne sera pas bloquer par un obstacle
                 hitboxLogi.Y += vitesse * directionRegard;
         }
 
-        //Méthode a appeler a chaque tick pour chaque entite 
-        public void UpdateVisu()    // Méthode pour mettre à jour la position de l'entité en fonction du Rect hiboxLogi
-        {
-            Canvas.SetLeft(entiteImg, hitboxLogi.X); // Mise à jour de la position de l'image en abscisse
-            Canvas.SetTop(entiteImg, hitboxLogi.Y);   // Mise à jour de la position de l'image en ordonnée
+        */
 
-            //Mise à jour de la hitbox visuelle
-
-            Canvas.SetLeft(hitboxVisu, posLeft);
-            Canvas.SetTop(hitboxVisu, posTop);   
-        }
+      
+        
 
         //Méthode a appeler a chaque tick pour chaque entite 
         public void AppliquerGravite()
@@ -110,6 +102,24 @@ namespace Treenity
             {
                 cible.RecevoirDegats(degats);
                 Console.WriteLine("Ennemi touché dans le rayon !");
+            }
+        }
+
+        public void RecevoirRecul(string direction)
+        {
+            string abssice = direction.Substring(0, 1);
+            int recul = int.Parse(direction.Substring(1, direction.Length - 1));
+
+            if (abssice == "X" && hitboxLogi.X + recul > 0 && hitboxLogi.X + recul < canvasJeu.ActualWidth)
+            {
+                hitboxLogi.X = hitboxLogi.X + recul;
+            
+            }
+            else
+            {
+                hitboxLogi.Y = hitboxLogi.Y + recul;
+                Canvas.SetTop(entiteImg, Canvas.GetTop(entiteImg) + recul);
+                Canvas.SetTop(hitboxVisu, Canvas.GetTop(hitboxVisu) + recul);
             }
         }
     }

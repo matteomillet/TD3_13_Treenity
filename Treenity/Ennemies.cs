@@ -66,21 +66,42 @@ namespace Treenity
             canvasJeu.Children.Add(barrePV);
         }
 
-        //MoveEnnemie qui peut être changer et genre elle appele une methode dans entite qui fait déplacer l'entite
-        public void MoveEnnemie(Rect joueurHitbox)  // Méthode de déplacement de l'ennemi
+        public void UpdateVisu()    // Méthode pour mettre à jour la position de l'entité en fonction du Rect hiboxLogi
         {
-            if (hitboxLogi.Right < joueurHitbox.Left) directionRegard = 1;      // Joueur est à droite
-            else if (posLeft > joueurHitbox.Right) directionRegard = -1;    // Joueur est à gauche
+            Canvas.SetLeft(entiteImg, hitboxLogi.X); // Mise à jour de la position de l'image en abscisse
+            Canvas.SetTop(entiteImg, hitboxLogi.Y);   // Mise à jour de la position de l'image en ordonnée
 
-            DeplacerEntite(canvasJeu);
+            //Mise à jour de la hitbox visuelle
 
-            // Mise à jour visuelle (On utilise la méthode du parent + la barre de vie)
-            UpdateVisu();
+            Canvas.SetLeft(hitboxVisu, hitboxLogi.X);
+            Canvas.SetTop(hitboxVisu, hitboxLogi.Y);
 
-            // Décalage de la barre de vie
+            //Mise à jour de la barre de PV
+            Canvas.SetLeft(barrePVMax, hitboxLogi.X + (entiteImg.Width - barrePVMax.Width) / 2);
+            Canvas.SetTop(barrePVMax, hitboxLogi.Y + entiteImg.Height + 5);
+
+            Canvas.SetLeft(barrePV, hitboxLogi.X + (entiteImg.Width - 80) / 2);
+            Canvas.SetTop(barrePV, hitboxLogi.Y + entiteImg.Height + 5);
+
+        }
+
+        //MoveEnnemie qui peut être changer et genre elle appele une methode dans entite qui fait déplacer l'entite
+        public void MoveEnnemie(Joueur joueur)  // Méthode de déplacement de l'ennemi
+        {
+            if (hitboxLogi.Right < joueur.hitboxLogi.Left)
+                directionRegard = 1;
+            else if (hitboxLogi.Left > joueur.hitboxLogi.Right)
+                directionRegard = -1;
+
+            // DÉPLACEMENT LOGIQUE
+            hitboxLogi.X += vitesse * directionRegard;
+
+            // Mise à jour visuelle
+            
+            // Barre de vie
             double decalage = (entiteImg.Width - 80) / 2;
-            Canvas.SetLeft(barrePVMax, posLeft + decalage);
-            Canvas.SetLeft(barrePV, posLeft + decalage);
+            Canvas.SetLeft(barrePVMax, hitboxLogi.X + decalage);
+            Canvas.SetLeft(barrePV, hitboxLogi.X + decalage);
         }
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
