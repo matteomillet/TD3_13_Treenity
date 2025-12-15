@@ -90,12 +90,12 @@ namespace Treenity
         {
             if (e.Key == Key.Right || e.Key == Key.D)
             {
-                joueur.DirectionRegard = 1;
+                joueur.directionRegard = 1;
                 joueur.vitesseX = 4;
             }
             if (e.Key == Key.Left || e.Key == Key.Q)
             {
-                joueur.DirectionRegard = -1;
+                joueur.directionRegard = -1;
                 joueur.vitesseX = -4;
             }
             if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))

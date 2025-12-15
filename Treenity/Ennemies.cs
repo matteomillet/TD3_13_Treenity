@@ -20,6 +20,7 @@ namespace Treenity
         public Ennemies(Canvas canvas, int pv, int degats, int vitesse, BitmapImage image)
             : base(canvas, pv, degats, vitesse) // Appel du constructeur parent
         {
+
             entiteImg.Source = image;   // Image source de l'ennemi
             entiteImg.Width = image.PixelWidth; // Largeur exact de l'image en pixel
             entiteImg.Height = image.PixelHeight;   // Hauteur exact de l'image en pixel
@@ -127,6 +128,8 @@ namespace Treenity
             // Mise à jour de la barre de vie
             double pourcentage = (double)pv / pvMax;
 
+            
+            
             barrePV.Width = 80 * pourcentage;
 
             if (pourcentage > 0.5)
@@ -135,6 +138,7 @@ namespace Treenity
                 barrePV.Fill = Brushes.Orange;
             else
                 barrePV.Fill = Brushes.Red;
+            
         }
     }
 }

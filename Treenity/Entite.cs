@@ -16,14 +16,13 @@ namespace Treenity
         public Canvas canvasJeu;   // Canvas sur lequel dessiné
 
         public double vitesseX = 0;
-        public int DirectionRegard = 1;
         public int pvMax;   // PV Max de l'entité
         public int pv;      // PV actuel de l'entité
         public int degats;  // Dégats de l'entité
         public int vitesse; // Vitesse de l'entité
         public double vitesseY; // Force de gravité
         public int directionRegard;
-        public int rayonAttaque;
+        public int rayonAttaque = 150;
 
         public double posTop;   // Position haute de l'entité
         public double posLeft;  // Position gauche de l'entité
@@ -36,22 +35,13 @@ namespace Treenity
         public Entite(Canvas canvas, int pvInit, int degatsInit, int vitesseInit)   // Constructeur de la classe parent Entite
         {
             canvasJeu = canvas;
+            pvMax = pvInit;
             pv = pvInit;
             degats = degatsInit;
             vitesse = vitesseInit;
 
             entiteImg = new Image();
         }
-
-      
-        /*
-        
-        {
-            if (hitboxLogi.Y + vitesse >= 0 && hitboxLogi.Y + vitesse <= canvasJeu.ActualWidth) //ajouter la condition que l'entite ne sera pas bloquer par un obstacle
-                hitboxLogi.Y += vitesse * directionRegard;
-        }
-
-        */
 
       
         
@@ -81,8 +71,8 @@ namespace Treenity
             int centreEntiteX = (int)(hitboxLogi.X + (hitboxLogi.Width / 2));
             int centreEntiteY = (int)(hitboxLogi.Y + (hitboxLogi.Height / 2));
 
-            double centreCibleX = cible.posLeft + (cible.entiteImg.Width / 2);
-            double centreCibleY = cible.posTop + (cible.entiteImg.Height / 2);
+            double centreCibleX = cible.hitboxLogi.X + (cible.hitboxLogi.Width / 2);
+            double centreCibleY = cible.hitboxLogi.Y + (cible.hitboxLogi.Height / 2);
 
             double distanceX = centreEntiteX - centreCibleX;
             double distanceY = centreEntiteY - centreCibleY;
