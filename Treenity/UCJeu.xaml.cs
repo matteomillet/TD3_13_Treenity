@@ -42,10 +42,8 @@ namespace Treenity
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.KeyDown -= canvasJeu_KeyDown;
             Application.Current.MainWindow.KeyDown += canvasJeu_KeyDown;
 
-            Application.Current.MainWindow.KeyUp -= canvasJeu_KeyUp;
             Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
 
             InitializeEnnemies();
