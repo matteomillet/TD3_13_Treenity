@@ -52,7 +52,7 @@ namespace Treenity
 
             if (MethodeColision.EntiteToucheSol(hitboxLogi))
             {
-                hitboxLogi.Y = 900 - hitboxLogi.Height;
+                hitboxLogi.Y = 1055 - hitboxLogi.Height;
                 vitesseY = 0;
             }
 

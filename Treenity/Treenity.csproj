@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\Images\background1.png" />
     <None Remove="Ressources\Images\backgroundFinJeu.jpg" />
     <None Remove="Ressources\Images\backgroundForest.jpg" />
     <None Remove="Ressources\Images\BackgroundMenu.png" />
@@ -30,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Ressources\Images\background1.png" />
     <Resource Include="Ressources\Images\backgroundFinJeu.jpg" />
     <Resource Include="Ressources\Images\backgroundForest.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />

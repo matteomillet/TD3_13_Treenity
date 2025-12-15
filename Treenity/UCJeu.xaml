@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Treenity"
              mc:Ignorable="d" 
-             d:DesignHeight="1080" d:DesignWidth="1920" Loaded="UserControl_Loaded">
-    <UserControl.Background>
-        <ImageBrush ImageSource="/Ressources/Images/backgroundForest.jpg"/>
-    </UserControl.Background>
+             d:DesignHeight="1080" d:DesignWidth="1920" Loaded="UserControl_Loaded" >
     <Canvas x:Name="canvasJeu">
-        <Image Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" Canvas.Left="1304" Canvas.Top="721" />
-        <Image Source="/Ressources/Images/Tronc.png" Stretch="Fill" Canvas.Left="1668" Canvas.Top="532"/>
-        <Button x:Name="jeuToMenu" Content="Retour au menu" Canvas.Left="734" Canvas.Top="39"/>
+        <Image Panel.ZIndex="1" Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" Canvas.Left="1304" Canvas.Top="721" />
+        <Image Panel.ZIndex="1" Source="/Ressources/Images/Tronc.png" Stretch="Fill" Canvas.Left="1668" Canvas.Top="542" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <Button x:Name="jeuToMenu" Panel.ZIndex="1" Content="Retour au menu" Canvas.Left="734" Canvas.Top="39"/>
+        <Image Panel.ZIndex="0" Height="2880" Source="/Ressources/Images/background1.png" Stretch="Fill" Canvas.Top="-975" Width="1920" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image Height="538" Canvas.Left="411" Source="/Ressources/Images/Tronc.png" Stretch="Fill" Canvas.Top="-447" Width="242"/>
+        <Image Height="102" Canvas.Left="532" Source="/Ressources/Images/branche.png" Stretch="Fill" Canvas.Top="-280" Width="381"/>
     </Canvas>
 </UserControl>

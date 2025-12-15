@@ -28,12 +28,16 @@ namespace Treenity
     {
         public List<Ennemies> ennemies;
         public Joueur joueur;
-        Rect[] obstacleHitbox = new Rect[2];
+        public List<Rect> obstacleHitbox;
         private static DispatcherTimer minuterie;
         public Ellipse cercleDebug;
         public double vitesseY = 0; 
         public const double gravite = 3;
         public const double FORCE_SAUT = -40;
+
+        private bool scrollNiveauEnCours = false;
+        private double scrollRestant = 0;
+        private double scrollVitesse = 5;
         public UCJeu()
         {
             InitializeComponent();
@@ -48,8 +52,27 @@ namespace Treenity
 
             InitializeEnnemies();
             InitializeTimer();
+            InitializeObstacleHitbox();
         }
 
+        private void InitializeObstacleHitbox()
+        {
+            obstacleHitbox = new List<Rect>();
+            foreach (UIElement element in canvasJeu.Children)
+            {
+                if (element is Image image && image.Name != "background")
+                {
+                    Rect obstacle = new Rect
+                    (
+                        Canvas.GetLeft(image),
+                        Canvas.GetTop(image),
+                        image.Width,
+                        image.Height
+                    );
+                    obstacleHitbox.Add( obstacle ); 
+                }
+            }
+        }
         private void InitializeJoueur()
         {
             BitmapImage joueurImg = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/bucheron.png"));
@@ -72,7 +95,7 @@ namespace Treenity
             Random rand = new Random();
             ennemies = new List<Ennemies>();
             BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
-            for(int i = 0; i < 3;  i++)
+            for(int i = 0; i < 1;  i++)
             {        
                 ennemies.Add(new Ennemies(canvasJeu, 50, 10, 1, imageEnnemie));
             }
@@ -102,6 +125,11 @@ namespace Treenity
             if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
             {
                 joueur.vitesseY += FORCE_SAUT;
+            }
+
+            if (e.Key == Key.P)
+            {
+                ProchainNiveau();
             }
             if (e.Key == Key.Enter)
             {
@@ -140,6 +168,8 @@ namespace Treenity
                     ennemies.RemoveAt(i);
                     // Console.WriteLine($"Ennemis restants : {ennemies.Count}");
 
+                    //if (ennemies.Count == 0)
+                        //ProchainNiveau();
                     continue;
                 }
 
@@ -205,6 +235,40 @@ namespace Treenity
             {
                 ennemies[i].UpdateVisu();   
             }
+
+            if (scrollNiveauEnCours)
+            {
+                double increment = Math.Min(scrollVitesse, scrollRestant);
+
+                foreach (UIElement element in canvasJeu.Children)
+                {
+                    if (element is Image image)
+                    {
+                        double top = Canvas.GetTop(image);
+                        if (double.IsNaN(top)) top = 0;
+                        Canvas.SetTop(image, top + increment);
+                    }
+                }
+
+                for (int i = 0; i < obstacleHitbox.Count; i++)
+                {
+                    Rect rectangle = obstacleHitbox[i];
+                    rectangle.Y += increment;
+                    obstacleHitbox[i] = rectangle;
+                }
+
+                scrollRestant -= increment;
+                if (scrollRestant <= 0)
+                {
+                    scrollNiveauEnCours = false;
+                }
+            }
+        }
+
+        private void ProchainNiveau()
+        {
+            scrollRestant = 988; // distance totale à scroller
+            scrollNiveauEnCours = true;
         }
     }
 }
