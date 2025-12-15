@@ -14,6 +14,8 @@ namespace Treenity
         public Joueur(Canvas canvas, int pv, int degats, int vitesse, BitmapImage image)
             : base(canvas, pv, degats, vitesse) // Appel du constructeur parent
         {
+            rayonAttaque = 200;
+
             entiteImg.Source = image;   // Image source du joueur
             entiteImg.Width = image.PixelWidth; // Largeur exact de l'image en pixel
             entiteImg.Height = image.PixelHeight;   // Hauteur exact de l'image en pixel
@@ -69,7 +71,9 @@ namespace Treenity
         {
             base.RecevoirDegats(degat); // Appel de la méthode RecevoirDegats dans la classe mère
 
-            if (pv < 0)
+            Console.WriteLine($"AÏE ! Le joueur a pris {degat} dégâts. PV restants : {pv}");
+
+            if (pv <= 0)
             {
                 pv = 0;
                 Mourir();

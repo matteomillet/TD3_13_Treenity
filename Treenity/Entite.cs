@@ -22,7 +22,7 @@ namespace Treenity
         public int vitesse; // Vitesse de l'entité
         public double vitesseY; // Force de gravité
         public int directionRegard;
-        public int rayonAttaque = 150;
+        public int rayonAttaque;
 
         public double posTop;   // Position haute de l'entité
         public double posLeft;  // Position gauche de l'entité
@@ -42,9 +42,6 @@ namespace Treenity
 
             entiteImg = new Image();
         }
-
-      
-        
 
         //Méthode a appeler a chaque tick pour chaque entite 
         public void AppliquerGravite()
@@ -81,7 +78,7 @@ namespace Treenity
 
             bool estDevant = false;
 
-            if (this.directionRegard == 1)
+            if (directionRegard == 1)
             {
                 if (centreCibleX > centreEntiteX) estDevant = true;
             }
@@ -90,7 +87,7 @@ namespace Treenity
 
             if (distanceCarre <= (rayonAttaque * rayonAttaque) && estDevant)
             {
-                cible.RecevoirDegats(this.degats);
+                cible.RecevoirDegats(degats);
                 Console.WriteLine("Ennemi touché dans le rayon !");
             }
         }

@@ -17,9 +17,13 @@ namespace Treenity
         public System.Windows.Shapes.Rectangle barrePV; // Barre de PV de l'ennemi
         public System.Windows.Shapes.Rectangle barrePVMax;  // Barre de PV Max de l'ennemi
 
+        public static int COOLDOWN_ATTAQUE = 60;
+        public int cooldownActuel;
+
         public Ennemies(Canvas canvas, int pv, int degats, int vitesse, BitmapImage image)
             : base(canvas, pv, degats, vitesse) // Appel du constructeur parent
         {
+            rayonAttaque = 150;
 
             entiteImg.Source = image;   // Image source de l'ennemi
             entiteImg.Width = image.PixelWidth; // Largeur exact de l'image en pixel
@@ -89,20 +93,44 @@ namespace Treenity
         //MoveEnnemie qui peut être changer et genre elle appele une methode dans entite qui fait déplacer l'entite
         public void MoveEnnemie(Joueur joueur)  // Méthode de déplacement de l'ennemi
         {
-            if (hitboxLogi.Right < joueur.hitboxLogi.Left)
-                directionRegard = 1;
-            else if (hitboxLogi.Left > joueur.hitboxLogi.Right)
-                directionRegard = -1;
-
             // DÉPLACEMENT LOGIQUE
             hitboxLogi.X += vitesse * directionRegard;
-
-            // Mise à jour visuelle
             
             // Barre de vie
             double decalage = (entiteImg.Width - 80) / 2;
             Canvas.SetLeft(barrePVMax, hitboxLogi.X + decalage);
             Canvas.SetLeft(barrePV, hitboxLogi.X + decalage);
+        }
+
+        public void Decision(Joueur joueur)
+        {
+
+            double centreEnnemiX = hitboxLogi.X + (hitboxLogi.Width / 2);
+            double centreJoueurX = joueur.hitboxLogi.X + (joueur.hitboxLogi.Width / 2);
+
+            if (centreJoueurX > centreEnnemiX)
+                directionRegard = 1;
+            else
+                directionRegard = -1;
+
+            MoveEnnemie(joueur);
+
+            if (cooldownActuel > 0)
+            {
+                // Si le cooldown n'est pas fini, on attend
+                cooldownActuel--;
+            }
+            else
+            {
+                // Si le cooldown est à 0, on tente une attaque !
+
+                // "this" (L'ennemi) attaque "leJoueur" (La cible)
+                // La méthode Attaque() du parent va vérifier toute seule la distance et la direction.
+                this.Attaque(joueur);
+
+                // On recharge le timer, qu'on ait touché ou pas (pour simuler le temps de l'animation)
+                cooldownActuel = COOLDOWN_ATTAQUE;
+            }
         }
 
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
@@ -117,9 +145,9 @@ namespace Treenity
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public override void RecevoirDegats(int degat)   // Méthode de dégats sur l'ennemi
         {
-            base.RecevoirDegats(degats);    // Appel de la méthode RecevoirDegats dans la classe mère
+            base.RecevoirDegats(degat);    // Appel de la méthode RecevoirDegats dans la classe mère
 
-            if (pv < 0)
+            if (pv <= 0)
             {
                 pv = 0;
                 Mourir();
