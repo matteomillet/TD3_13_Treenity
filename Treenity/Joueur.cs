@@ -44,10 +44,6 @@ namespace Treenity
             // Fin affichage de la hitbox visuelle
         }
 
-        
-            
-        }
-
         //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void Mourir()    // Méthode de mort du joueur
         {

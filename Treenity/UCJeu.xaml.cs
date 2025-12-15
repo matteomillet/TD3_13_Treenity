@@ -102,8 +102,13 @@ namespace Treenity
             {
                 joueur.vitesseY += FORCE_SAUT;
             }
-            // if (e.Key == Key.Enter)
-                //Attaque(ennemies, rectangleJoueur, 2, directionRegard);
+            if (e.Key == Key.Enter)
+            {
+                foreach(Ennemies ennemie in ennemies)
+                {
+                    joueur.Attaque(ennemie);
+                }
+            }
 
             //Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {joueur.hitboxLogi.X}, {joueur.hitboxLogi.Y}");
@@ -143,7 +148,7 @@ namespace Treenity
             }
             */
 
-            joueur.DeplacerEntite();
+            joueur.DeplacerEntite(canvasJeu);
             joueur.AppliquerGravite();
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, joueur.hitboxLogi);

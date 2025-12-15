@@ -72,8 +72,6 @@ namespace Treenity
             if (hitboxLogi.Right < joueurHitbox.Left) directionRegard = 1;      // Joueur est à droite
             else if (posLeft > joueurHitbox.Right) directionRegard = -1;    // Joueur est à gauche
 
-            DeplacerEntite(canvasJeu);
-
             // Mise à jour visuelle (On utilise la méthode du parent + la barre de vie)
             UpdateVisu();
 
