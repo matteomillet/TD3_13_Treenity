@@ -47,6 +47,7 @@ namespace Treenity
             // Fin affichage de la hitbox visuelle
         }
 
+        //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void Deplacer(string direction)  // Méthode de déplacement du joueur
         {
             if (direction == "Gauche")
@@ -67,12 +68,14 @@ namespace Treenity
             UpdateVisu();
         }
 
+        //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void Mourir()    // Méthode de mort du joueur
         {
             canvasJeu.Children.Remove(entiteImg);
             canvasJeu.Children.Remove(hitboxVisu);
         }
 
+        //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void RecevoirDegats(int degat)   // Méthode de dégats sur le joueur
         {
             pv -= degat;
@@ -80,6 +83,26 @@ namespace Treenity
             {
                 pv = 0;
                 Mourir();
+            }
+        }
+
+        //Methode en commun a Ennemie et Joueur donc a mettre dans entite si l'ennemie peut recevoir du recul
+        public void RecevoirRecul(string direction)
+        {
+            string abssice = direction.Substring(0, 1);
+            int recul = int.Parse(direction.Substring(1, direction.Length - 1));
+
+            if (abssice == "X" && hitboxLogi.X + recul > 0 && hitboxLogi.X + recul < canvasJeu.ActualWidth)
+            {
+                hitboxLogi.X = hitboxLogi.X + recul;
+                Canvas.SetLeft(entiteImg, Canvas.GetLeft(entiteImg) + recul);
+                Canvas.SetLeft(hitboxVisu, Canvas.GetLeft(hitboxVisu) + recul);
+            }
+            else
+            {
+                hitboxLogi.Y = hitboxLogi.Y + recul;
+                Canvas.SetTop(entiteImg, Canvas.GetTop(entiteImg) + recul);
+                Canvas.SetTop(hitboxVisu, Canvas.GetTop(hitboxVisu) + recul);
             }
         }
     }

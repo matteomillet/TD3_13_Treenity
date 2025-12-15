@@ -39,6 +39,7 @@ namespace Treenity
             entiteImg = new Image();
         }
 
+        //Méthode a appeler a chaque tick pour chaque entite 
         public void UpdateVisu()    // Méthode pour mettre à jour la position de l'entité
         {
             Canvas.SetLeft(entiteImg, posLeft); // Mise à jour de la position de l'image en abscisse
@@ -54,10 +55,11 @@ namespace Treenity
             Canvas.SetLeft(hitboxVisu, posLeft);
             Canvas.SetTop(hitboxVisu, posTop);
 
-            AppliquerGravite();
+            
         }
 
-        private void AppliquerGravite()
+        //Méthode a appeler a chaque tick pour chaque entite 
+        public void AppliquerGravite()
         {
             vitesseY += GRAVITE;
             hitboxLogi.Y += vitesseY;
@@ -70,5 +72,7 @@ namespace Treenity
 
             Canvas.SetTop(entiteImg, hitboxLogi.Y);
         }
+
+        
     }
 }

@@ -83,11 +83,11 @@ namespace Treenity
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.Key == Key.Right || e.Key == Key.D) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi) != "droite")
+            if ((e.Key == Key.Right || e.Key == Key.D) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi, canvasJeu) != "droite")
             {
                 joueur.Deplacer("Droite");
             }
-            if ((e.Key == Key.Left || e.Key == Key.Q) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi) != "droite")
+            if ((e.Key == Key.Left || e.Key == Key.Q) && MethodeColision.ColisionAvecObstacles(obstacleHitbox, joueur.hitboxLogi, canvasJeu) != "droite")
             {
                 joueur.Deplacer("Gauche");
             }
@@ -129,18 +129,20 @@ namespace Treenity
                     continue;
                 }
 
-                Console.WriteLine("l'ennemie va peut etre tomber");
-                Console.WriteLine("Tomber Y = " + ennemies[i].hitboxLogi.Y);
+                //Console.WriteLine("l'ennemie va peut etre tomber");
+                //Console.WriteLine("Tomber Y = " + ennemies[i].hitboxLogi.Y);
                 ennemies[i].MoveEnnemie(joueur.hitboxLogi);
-                Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
+                //Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
             }
+
+            joueur.AppliquerGravite();
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, joueur.hitboxLogi);
 
             if (colision != "pas colision")
             {
                 Console.WriteLine("Colision detecter");
-                DeplacerJoueur(colision,ref joueur.hitboxLogi, joueur.entiteImg);
+                joueur.RecevoirRecul(colision);
             }
 
             Canvas.SetLeft(joueur.hitboxVisu, joueur.hitboxLogi.X);

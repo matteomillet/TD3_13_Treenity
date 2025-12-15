@@ -66,6 +66,7 @@ namespace Treenity
             canvasJeu.Children.Add(barrePV);
         }
 
+        //MoveEnnemie qui peut être changer et genre elle appele une methode dans entite qui fait déplacer l'entite
         public void MoveEnnemie(Rect joueurHitbox)  // Méthode de déplacement de l'ennemi
         {
             int sens = 0;
@@ -83,6 +84,7 @@ namespace Treenity
             Canvas.SetLeft(barrePV, posLeft + decalage);
         }
 
+        //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void Mourir()    // Méthode de mort de l'ennemi
         {
             canvasJeu.Children.Remove(entiteImg);
@@ -91,6 +93,7 @@ namespace Treenity
             canvasJeu.Children.Remove(hitboxVisu);
         }
 
+        //Methode en commun a Ennemie et Joueur donc a mettre dans entite
         public void RecevoirDegats(int degat)   // Méthode de dégats sur l'ennemi
         {
             pv -= degat;
