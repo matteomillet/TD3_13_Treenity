@@ -9,13 +9,16 @@ namespace Treenity
 {
     public class GestionSons
     {
+        public static double VolumeGlobal = 0.5;
         public static void Jouer(string nomFichier)
         {
-            // Création d'un nouveau lecteur à chaque fois pour pouvoir superposer les sons (ex: 2 ennemis meurent en même temps)
             MediaPlayer player = new MediaPlayer();
 
             // Chargement du son
             player.Open(new Uri($"Ressources/Sons/{nomFichier}", UriKind.Relative));
+
+            // Gestion du volume
+            player.Volume = VolumeGlobal;
 
             player.Play();
         }

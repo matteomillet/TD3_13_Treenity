@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Treenity.UCParametres"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Treenity"
+             mc:Ignorable="d" 
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Background>
+        <ImageBrush ImageSource="/Ressources/Images/parametresBackground.png" Stretch="UniformToFill"/>
+    </UserControl.Background>
+    <Grid>
+        <Button x:Name="boutonRetourParametres" Background="Transparent" BorderThickness="0" Style="{StaticResource BoutonImmobile}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="30,800,0,0">
+            <Image Source="Ressources/Images/bouton/backButton.png" Width="150"/>
+        </Button>
+        <TextBlock Text="VOLUME SONORE" Foreground="White" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,250,0,0">
+            <TextBlock.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="3"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <Slider x:Name="SliderVolume" Minimum="0" Maximum="1" TickFrequency="0.1" IsSnapToTickEnabled="False" ValueChanged="SliderChangementVolume" Height="30" Width="300" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,320,0,0"/>
+        <TextBlock x:Name="TextPourcentage" Text="50%" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,360,0,0"/>
+        <TextBlock Text="CONTROLE" Foreground="White" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,450,0,0">
+            <TextBlock.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="5" ShadowDepth="3"/>
+            </TextBlock.Effect>
+        </TextBlock>
+        <RadioButton x:Name="RadioFleches" Content="FLECHES" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="-200,520,0,0" Checked="ChangerControles"/>
+        <RadioButton x:Name="RadioZQSD" Content="ZQSD" Foreground="White" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="200,520,0,0" Checked="ChangerControles"/>
+    </Grid>
+</UserControl>

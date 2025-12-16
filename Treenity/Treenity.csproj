@@ -13,9 +13,13 @@
     <None Remove="Ressources\Images\backgroundFinJeu.jpg" />
     <None Remove="Ressources\Images\backgroundForest.jpg" />
     <None Remove="Ressources\Images\BackgroundMenu.png" />
+    <None Remove="Ressources\Images\backgroundPause.png" />
     <None Remove="Ressources\Images\bgGroundOnly.png" />
     <None Remove="Ressources\Images\bouton\backButton.png" />
+    <None Remove="Ressources\Images\bouton\menuButton.png" />
+    <None Remove="Ressources\Images\bouton\pauseButton.png" />
     <None Remove="Ressources\Images\bouton\quitButton.png" />
+    <None Remove="Ressources\Images\bouton\resumeButton.png" />
     <None Remove="Ressources\Images\bouton\settingsButton.png" />
     <None Remove="Ressources\Images\branche.png" />
     <None Remove="Ressources\Images\Branche.png.png" />
@@ -37,6 +41,7 @@
     <None Remove="Ressources\Images\lapin\lapin3droite.png" />
     <None Remove="Ressources\Images\lapin\lapin4droite.png" />
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
+    <None Remove="Ressources\Images\parametresBackground.png" />
     <None Remove="Ressources\Images\playButton.png" />
     <None Remove="Ressources\Images\Tronc.png" />
     <None Remove="Ressources\Images\vers\vers1droite.png" />
@@ -56,13 +61,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Ressources\Sons\hitSound.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Ressources\Images\background1.png" />
     <Resource Include="Ressources\Images\backgroundFinJeu.jpg" />
     <Resource Include="Ressources\Images\backgroundForest.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
+    <Resource Include="Ressources\Images\backgroundPause.png" />
     <Resource Include="Ressources\Images\bgGroundOnly.png" />
     <Resource Include="Ressources\Images\bouton\backButton.png" />
+    <Resource Include="Ressources\Images\bouton\menuButton.png" />
+    <Resource Include="Ressources\Images\bouton\pauseButton.png" />
     <Resource Include="Ressources\Images\bouton\quitButton.png" />
+    <Resource Include="Ressources\Images\bouton\resumeButton.png" />
     <Resource Include="Ressources\Images\bouton\settingsButton.png" />
     <Resource Include="Ressources\Images\branche.png" />
     <Resource Include="Ressources\Images\citrouille\citrouille1droite.png" />
@@ -94,6 +109,7 @@
     <Resource Include="Ressources\Images\lapin\lapin4gauche.png" />
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
     <Resource Include="Ressources\Images\bouton\playButton.png" />
+    <Resource Include="Ressources\Images\parametresBackground.png" />
     <Resource Include="Ressources\Images\Tronc.png" />
     <Resource Include="Ressources\Images\vers\vers1droite.png" />
     <Resource Include="Ressources\Images\vers\vers1gauche.png" />
@@ -113,9 +129,6 @@
     <Resource Include="Ressources\Images\volatile\volatile4gauche.png" />
     <Resource Include="Ressources\Images\YouWinTitle.png" />
     <Resource Include="Ressources\Images\bouton\rulesButton.png" />
-    <Content Include="Ressources\Sons\hitSound.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

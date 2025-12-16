@@ -6,16 +6,48 @@
              xmlns:local="clr-namespace:Treenity"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920" Loaded="UserControl_Loaded" >
-    <Canvas x:Name="canvasJeu">
-        <Canvas.Background>
-            <ImageBrush ImageSource="/Ressources/Images/ecorce.png"/>
-        </Canvas.Background>
-        <Image Panel.ZIndex="1" Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" Canvas.Left="1304" Canvas.Top="721" />
-        <Image Panel.ZIndex="1" Source="/Ressources/Images/Tronc.png" Stretch="Fill" Canvas.Left="1668" Canvas.Top="542" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <Button x:Name="jeuToMenu" Panel.ZIndex="1" Content="Retour au menu" Canvas.Left="734" Canvas.Top="39"/>
-        <Image Height="20600" Canvas.Left="0" Source="/Ressources/Images/bgGroundOnly.png" Stretch="Fill" Canvas.Top="-19440" Width="1920"/>
+    <Grid>
+        <Canvas x:Name="canvasJeu">
+            <Canvas.Background>
+                <ImageBrush ImageSource="/Ressources/Images/ecorce.png"/>
+            </Canvas.Background>
+            <Image Panel.ZIndex="1" Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" Canvas.Left="1304" Canvas.Top="721" />
+            <Image Panel.ZIndex="1" Source="/Ressources/Images/Tronc.png" Stretch="Fill" Canvas.Left="1668" Canvas.Top="542" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button x:Name="pauseButton" VerticalAlignment="Top" Panel.ZIndex="1" Background="Transparent" BorderThickness="0" Style="{StaticResource BoutonImmobile}" HorizontalAlignment="Left" Margin="1800,30,0,0" Click="PauseButtonClick">
+                <Image Source="Ressources/Images/bouton/pauseButton.png" Width="90"/>
+            </Button>
+            <Image Height="20600" Canvas.Left="0" Source="/Ressources/Images/bgGroundOnly.png" Stretch="Fill" Canvas.Top="-19440" Width="1920"/>
+        </Canvas>
 
+        <Grid x:Name="GridMenuPause" Visibility="Collapsed">
 
+            <Rectangle Fill="Black" Opacity="0.5"/>
 
-    </Canvas>
+            <Grid Width="500" Height="400">
+                <Grid.Background>
+                    <ImageBrush ImageSource="Ressources/Images/backgroundPause.png"/>
+                </Grid.Background>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <TextBlock Text="PAUSE" FontSize="40" FontWeight="Bold" 
+                               Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,30">
+                        <TextBlock.Effect>
+                            <DropShadowEffect ShadowDepth="4"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <Button Margin="10" Style="{StaticResource BoutonImmobile}" Click="ReprendreClick" FontSize="20" FontWeight="Bold" Background="Transparent">
+                        <Image Source="Ressources/Images/bouton/resumeButton.png" Width="150"/>
+                    </Button>
+
+                    <Button x:Name="toMenu" Margin="10" Style="{StaticResource BoutonImmobile}" Click="MenuClick" FontSize="20" FontWeight="Bold" Background="Transparent">
+                        <Image Source="Ressources/Images/bouton/menuButton.png" Width="150"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+    </Grid>
+    
 </UserControl>

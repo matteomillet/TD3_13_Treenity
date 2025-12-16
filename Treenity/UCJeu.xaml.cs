@@ -55,6 +55,8 @@ namespace Treenity
 
             Application.Current.MainWindow.KeyUp += canvasJeu_KeyUp;
 
+            Application.Current.MainWindow.MouseLeftButtonDown += canvasJeu_MouseLeftButtonUp;
+
             InitializeEnnemies();
             InitializeTimer();
             InitializeObstacleHitbox();
@@ -117,36 +119,54 @@ namespace Treenity
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Right || e.Key == Key.D ||
-        e.Key == Key.Left || e.Key == Key.Q)
+            Key toucheDroite, toucheGauche, toucheSaut;
+
+            if (App.ModeZQSD)
             {
+                toucheDroite = Key.D;
+                toucheGauche = Key.Q;
+                toucheSaut = Key.Z;
+            }
+            else
+            {
+                toucheDroite = Key.Right;
+                toucheGauche = Key.Left;
+                toucheSaut = Key.Up;
+            }
+
+            if (e.Key == toucheDroite || e.Key == toucheGauche)
                 joueur.vitesseX = 0;
-            }
-            if (e.Key == Key.Enter)
-            {
-                foreach (Ennemies ennemie in ennemies)
-                {
-                    joueur.Attaque(ennemie);
-                }
-            }
         }
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Right || e.Key == Key.D)
+            Key toucheDroite, toucheGauche, toucheSaut;
+
+            if (App.ModeZQSD)
+            {
+                toucheDroite = Key.D;
+                toucheGauche = Key.Q;
+                toucheSaut = Key.Z;
+            }
+            else
+            {
+                toucheDroite = Key.Right;
+                toucheGauche = Key.Left;
+                toucheSaut = Key.Up;
+            }
+
+            if (e.Key == toucheDroite)
             {
                 joueur.directionRegard = 1;
                 joueur.vitesseX = 4;
             }
-            if (e.Key == Key.Left || e.Key == Key.Q)
+            if (e.Key == toucheGauche)
             {
                 joueur.directionRegard = -1;
                 joueur.vitesseX = -4;
             }
-            if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
-            {
+            if (e.Key == toucheSaut && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
                 joueur.vitesseY += FORCE_SAUT;
-            }
 
             if (e.Key == Key.P)
             {
@@ -156,6 +176,12 @@ namespace Treenity
 
             //Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {joueur.hitboxLogi.X}, {joueur.hitboxLogi.Y}");
+        }
+
+        private void canvasJeu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            foreach (Ennemies ennemie in ennemies)
+                joueur.Attaque(ennemie);
         }
 
         private void InitializeTimer()
@@ -169,6 +195,23 @@ namespace Treenity
             minuterie.Start();
         }
 
+        private void PauseButtonClick(object sender, RoutedEventArgs e)
+        {
+            minuterie.Stop();
+            GridMenuPause.Visibility = Visibility.Visible;
+        }
+
+        private void ReprendreClick(object sender, RoutedEventArgs e)
+        {
+            GridMenuPause.Visibility = Visibility.Collapsed;
+            minuterie.Start();
+            canvasJeu.Focus();
+        }
+
+        private void MenuClick(object sender, RoutedEventArgs e)
+        {
+            minuterie.Stop();
+        }
 
         private int nbTick = 0;
         private void Jeu(object? sender, EventArgs e)

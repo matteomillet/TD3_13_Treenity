@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Treenity"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
-    
+
     <Grid>
         <Button x:Name="playButton" Background="Transparent" BorderThickness="0" Style="{StaticResource BoutonImmobile}" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image Source="Ressources/Images/bouton/playButton.png" Width="150"/>

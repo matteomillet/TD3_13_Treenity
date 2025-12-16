@@ -9,6 +9,7 @@ namespace Treenity
     /// </summary>
     public partial class App : Application
     {
+        public static bool ModeZQSD = false;
     }
 
 }
