@@ -69,7 +69,7 @@ namespace Treenity
             return directionColision;
         }
 
-        public static string ColisionAvecObstacles(Rect[]obstacles, Rect joueur, Canvas canvasJeu)
+        public static string ColisionAvecObstacles(List <Rect> obstacles, Rect joueur, Canvas canvasJeu)
         {
             if (joueur.X <= 0)
                 return "gauche";
@@ -77,7 +77,7 @@ namespace Treenity
             if (joueur.X >= canvasJeu.ActualWidth - joueur.Width)
                 return "droite";
 
-            for (int i = 0; i < obstacles.Length; i++)
+            for (int i = 0; i < obstacles.Count; i++)
             {
                 if (joueur.IntersectsWith(obstacles[i]))
                 {

@@ -45,18 +45,59 @@ namespace Treenity
         }
 
         //Méthode a appeler a chaque tick pour chaque entite 
-        public void AppliquerGravite()
+        public void AppliquerGravite(List<Rect> obstacles)
         {
+            
             vitesseY += GRAVITE;
-            hitboxLogi.Y += vitesseY;
 
-            if (MethodeColision.EntiteToucheSol(hitboxLogi))
+            double nouveauY = hitboxLogi.Y + vitesseY;
+
+            bool collisionVerticale = false;
+
+            foreach (Rect obstacle in obstacles)
+            {
+                // Chevauchement horizontal uniquement
+                if (hitboxLogi.Right <= obstacle.Left ||
+                    hitboxLogi.Left >= obstacle.Right)
+                    continue;
+
+                // Atterrissage
+                if (vitesseY > 0 &&
+                    hitboxLogi.Bottom <= obstacle.Top &&
+                    nouveauY + hitboxLogi.Height >= obstacle.Top)
+                {
+                    nouveauY = obstacle.Top - hitboxLogi.Height;
+                    collisionVerticale = true;
+                    break;
+                }
+
+                // Tête contre plafond
+                if (vitesseY < 0 &&
+                    hitboxLogi.Top >= obstacle.Bottom &&
+                    nouveauY <= obstacle.Bottom)
+                {
+                    nouveauY = obstacle.Bottom;
+                    collisionVerticale = true;
+                    break;
+                }
+            }
+
+            //Application du mouvement
+            hitboxLogi.Y = nouveauY;
+
+            if (collisionVerticale)
+                vitesseY = 0;
+
+            //Sol global
+            if (hitboxLogi.Bottom >= 1010)
             {
                 hitboxLogi.Y = 1010 - hitboxLogi.Height;
                 vitesseY = 0;
             }
-
         }
+
+
+
 
         public virtual void RecevoirDegats(int degats)
         {

@@ -46,7 +46,7 @@ namespace Treenity
         public UCJeu()
         {
             InitializeComponent();
-            InitializeJoueur();
+            
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -57,9 +57,10 @@ namespace Treenity
 
             Application.Current.MainWindow.MouseLeftButtonDown += canvasJeu_MouseLeftButtonUp;
 
+            InitializeObstacleHitbox();
+            InitializeJoueur();
             InitializeEnnemies();
             InitializeTimer();
-            InitializeObstacleHitbox();
         }
 
         private void InitializeObstacleHitbox()
@@ -73,11 +74,17 @@ namespace Treenity
                     (
                         Canvas.GetLeft(image),
                         Canvas.GetTop(image),
-                        image.Width,
-                        image.Height
+                        image.ActualWidth,
+                        image.ActualHeight
                     );
                     obstacleHitbox.Add( obstacle ); 
                 }
+            }
+
+            for (int i = 0; i < obstacleHitbox.Count; i++)
+            {
+                Rect r = obstacleHitbox[i];
+                Console.WriteLine($"Obstacle #{i + 1} -> Position: ({r.X}, {r.Y}), Taille: {r.Width}x{r.Height}");
             }
         }
         private void InitializeJoueur()
@@ -115,6 +122,8 @@ namespace Treenity
                 }
                 ennemies.Add(new Ennemies(canvasJeu, 50, 10, 1, ennemi));
             }
+
+
         }
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
@@ -237,14 +246,38 @@ namespace Treenity
                 //Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
             }
 
+
+            joueur.AppliquerGravite(obstacleHitbox);
+
             double deplacementTotalX = joueur.vitesseX + joueur.vitesseXRecul;
 
-            joueur.AppliquerGravite();
-            if (joueur.hitboxLogi.X + joueur.vitesseX > 0 && joueur.hitboxLogi.X + joueur.vitesseX < canvasJeu.ActualWidth - joueur.entiteImg.Width)
+            //futur déplacement du joueur
+            Rect futurJoueur = joueur.hitboxLogi;
+            futurJoueur.X += deplacementTotalX;
+
+            //est ce que le futur déplacement du joueur va être en colision avec un obstacle 
+            string colisionObstacle = MethodeColision.ColisionAvecObstacles(
+                obstacleHitbox,
+                futurJoueur,
+                canvasJeu
+            );
+
+            bool dansLimites =
+                futurJoueur.X > 0 &&
+                futurJoueur.X < canvasJeu.ActualWidth - joueur.entiteImg.Width;
+
+            //futur déplacement du joueur est dans les limite de la map et n'entre pas en colision avec un obstacle donc on applique le déplacement
+            if (dansLimites && colisionObstacle == "pas colision")
             {
-                joueur.hitboxLogi.X += deplacementTotalX;
+                joueur.hitboxLogi.X = futurJoueur.X;
+            }
+            else
+            {
+                // Blocage par l'obstacle
+                joueur.vitesseX = 0;
             }
 
+            //gère la fluidité du recul, si il y en a un
             if (joueur.vitesseXRecul > 0)
             {
                 joueur.vitesseXRecul -= 4;
@@ -261,7 +294,7 @@ namespace Treenity
 
             for (int i = ennemies.Count - 1; i >= 0; i--)
             {
-                ennemies[i].AppliquerGravite();
+                ennemies[i].AppliquerGravite(obstacleHitbox);
             }
             
 
