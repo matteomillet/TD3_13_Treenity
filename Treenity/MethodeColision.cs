@@ -95,7 +95,7 @@ namespace Treenity
              * */
 
                 
-            int solY = 1055; //valeur a mettre en global
+            int solY = 1010; //valeur a mettre en global
             //Console.WriteLine(entite.Y);
             if (entite.Y + entite.Height >= solY)
             {

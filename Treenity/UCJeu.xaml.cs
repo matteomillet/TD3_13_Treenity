@@ -267,7 +267,7 @@ namespace Treenity
 
         private void ProchainNiveau()
         {
-            scrollRestant = 988; // distance totale à scroller
+            scrollRestant = 1080; // distance totale à scroller
             scrollNiveauEnCours = true;
         }
     }

@@ -13,10 +13,12 @@
     <None Remove="Ressources\Images\backgroundFinJeu.jpg" />
     <None Remove="Ressources\Images\backgroundForest.jpg" />
     <None Remove="Ressources\Images\BackgroundMenu.png" />
+    <None Remove="Ressources\Images\bgGroundOnly.png" />
     <None Remove="Ressources\Images\branche.png" />
     <None Remove="Ressources\Images\Branche.png.png" />
     <None Remove="Ressources\Images\ButtonShape.png" />
     <None Remove="Ressources\Images\bucheron.png" />
+    <None Remove="Ressources\Images\ecorce.png" />
     <None Remove="Ressources\Images\FinJeuBackground.png" />
     <None Remove="Ressources\Images\golem_glace_single.png" />
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
@@ -35,8 +37,10 @@
     <Resource Include="Ressources\Images\backgroundFinJeu.jpg" />
     <Resource Include="Ressources\Images\backgroundForest.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
+    <Resource Include="Ressources\Images\bgGroundOnly.png" />
     <Resource Include="Ressources\Images\branche.png" />
     <Resource Include="Ressources\Images\ButtonShape.png" />
+    <Resource Include="Ressources\Images\ecorce.png" />
     <Resource Include="Ressources\Images\golem_glace_single.png" />
     <Resource Include="Ressources\Images\pinguin.png" />
     <Resource Include="Ressources\Images\bucheron.png" />
