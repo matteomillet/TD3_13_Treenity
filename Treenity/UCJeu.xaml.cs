@@ -35,6 +35,11 @@ namespace Treenity
         public const double gravite = 3;
         public const double FORCE_SAUT = -40;
 
+        Dictionary<String, double> chanceEnnemis = new Dictionary<String, double>()
+        {
+            {"citrouille", 0},{"vers", 0},{"fantome", 0.1},{"lapin", 0.4},{"volatile", 1}
+        };
+
         private bool scrollNiveauEnCours = false;
         private double scrollRestant = 0;
         private double scrollVitesse = 5;
@@ -94,10 +99,19 @@ namespace Treenity
         {
             Random rand = new Random();
             ennemies = new List<Ennemies>();
-            BitmapImage imageEnnemie = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/pinguin.png"));
             for(int i = 0; i < 1;  i++)
             {        
-                ennemies.Add(new Ennemies(canvasJeu, 50, 10, 1, imageEnnemie));
+                double choixEnnemi = rand.NextDouble();
+                string ennemi = "";
+                foreach(KeyValuePair<String, double> chance in chanceEnnemis)
+                {
+                    if(choixEnnemi < chance.Value)
+                    {
+                        ennemi = chance.Key;
+                        break;
+                    }
+                }
+                ennemies.Add(new Ennemies(canvasJeu, 50, 10, 1, ennemi));
             }
         }
 
@@ -107,6 +121,13 @@ namespace Treenity
         e.Key == Key.Left || e.Key == Key.Q)
             {
                 joueur.vitesseX = 0;
+            }
+            if (e.Key == Key.Enter)
+            {
+                foreach (Ennemies ennemie in ennemies)
+                {
+                    joueur.Attaque(ennemie);
+                }
             }
         }
 
@@ -131,13 +152,7 @@ namespace Treenity
             {
                 ProchainNiveau();
             }
-            if (e.Key == Key.Enter)
-            {
-                foreach(Ennemies ennemie in ennemies)
-                {
-                    joueur.Attaque(ennemie);
-                }
-            }
+            
 
             //Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {joueur.hitboxLogi.X}, {joueur.hitboxLogi.Y}");

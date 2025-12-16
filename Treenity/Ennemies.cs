@@ -20,14 +20,30 @@ namespace Treenity
         public static int COOLDOWN_ATTAQUE = 60;
         public int cooldownActuel;
 
-        public Ennemies(Canvas canvas, int pv, int degats, int vitesse, BitmapImage image)
+        BitmapImage[] spriteEnnemiGauche = new BitmapImage[4];
+        BitmapImage[] spriteEnnemiDroite = new BitmapImage[4];
+
+        private int indexAnim = 0;      // Image à afficher
+        private int timerAnim = 0;      // Compteur de temps
+        private int vitesseAnim = 10;   // Vitesse de l'animation
+
+        public Ennemies(Canvas canvas, int pv, int degats, int vitesse, string name)
             : base(canvas, pv, degats, vitesse) // Appel du constructeur parent
         {
+            for (int i = 0; i < spriteEnnemiGauche.Length; i++)
+            {
+                spriteEnnemiGauche[i] = new BitmapImage(new Uri($"pack://application:,,,/Ressources/Images/{name}/{name}{i+1}gauche.png"));
+            }
+            for (int i = 0; i < spriteEnnemiDroite.Length; i++)
+            {
+                spriteEnnemiDroite[i] = new BitmapImage(new Uri($"pack://application:,,,/Ressources/Images/{name}/{name}{i + 1}droite.png"));
+            }
+
             rayonAttaque = 150;
 
-            entiteImg.Source = image;   // Image source de l'ennemi
-            entiteImg.Width = image.PixelWidth; // Largeur exact de l'image en pixel
-            entiteImg.Height = image.PixelHeight;   // Hauteur exact de l'image en pixel
+            entiteImg.Source = spriteEnnemiGauche[0];   // Image source de l'ennemi
+            entiteImg.Width = spriteEnnemiGauche[0].PixelWidth; // Largeur exact de l'image en pixel
+            entiteImg.Height = spriteEnnemiGauche[0].PixelHeight;   // Hauteur exact de l'image en pixel
 
             posLeft = rand.Next(0, (int)(canvasJeu.ActualWidth - entiteImg.Width)); // Position aléatoire de l'ennemi en abscisse
             posTop = rand.Next(0, (int)(canvasJeu.ActualHeight - entiteImg.Height));    // Position aléatoire de l'ennemi en ordonnée
@@ -54,6 +70,34 @@ namespace Treenity
             // Fin affichage de la hitbox visuelle
 
             CreerBarreDeVie();  // Appel de la fonction pour creer la barre de vie
+        }
+
+        public void Animer()
+        {
+            timerAnim++;
+
+            // Si le compteur atteint la limite (ex: tous les 10 ticks)
+            if (timerAnim >= vitesseAnim)
+            {
+                timerAnim = 0; // On reset le timer
+                indexAnim++;   // On passe à l'image suivante
+
+                // Si on dépasse la fin du tableau (4 images), on revient à 0
+                if (indexAnim >= spriteEnnemiGauche.Length)
+                {
+                    indexAnim = 0;
+                }
+
+                // MISE A JOUR DE L'IMAGE
+                if (directionRegard == 1) // Regarde à Droite
+                {
+                    entiteImg.Source = spriteEnnemiDroite[indexAnim];
+                }
+                else // Regarde à Gauche (-1)
+                {
+                    entiteImg.Source = spriteEnnemiGauche[indexAnim];
+                }
+            }
         }
 
         private void CreerBarreDeVie()  // Méthode de création de la barre de vie de l'ennemi
@@ -114,6 +158,7 @@ namespace Treenity
                 directionRegard = -1;
 
             MoveEnnemie(joueur);
+            Animer();
 
             if (cooldownActuel > 0)
             {
