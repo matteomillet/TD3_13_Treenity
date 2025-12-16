@@ -13,7 +13,7 @@
         <Image Panel.ZIndex="1" Source="/Ressources/Images/Branche.png" Stretch="Fill" Height="80" Width="364" Canvas.Left="1304" Canvas.Top="721" />
         <Image Panel.ZIndex="1" Source="/Ressources/Images/Tronc.png" Stretch="Fill" Canvas.Left="1668" Canvas.Top="542" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <Button x:Name="jeuToMenu" Panel.ZIndex="1" Content="Retour au menu" Canvas.Left="734" Canvas.Top="39"/>
-        <Image Height="20600" Canvas.Left="0" Source="/Ressources/Images/bgGroundOnly.png" Stretch="Fill" Canvas.Top="-19440" Width="1920"/>
+        <Image x:Name="background" Height="20600" Canvas.Left="0" Source="/Ressources/Images/bgGroundOnly.png" Stretch="Fill" Canvas.Top="-19440" Width="1920"/>
 
 
 
