@@ -14,6 +14,8 @@
     <None Remove="Ressources\Images\backgroundForest.jpg" />
     <None Remove="Ressources\Images\BackgroundMenu.png" />
     <None Remove="Ressources\Images\bgGroundOnly.png" />
+    <None Remove="Ressources\Images\bouton\backButton.png" />
+    <None Remove="Ressources\Images\bouton\quitButton.png" />
     <None Remove="Ressources\Images\bouton\settingsButton.png" />
     <None Remove="Ressources\Images\branche.png" />
     <None Remove="Ressources\Images\Branche.png.png" />
@@ -59,6 +61,8 @@
     <Resource Include="Ressources\Images\backgroundForest.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
     <Resource Include="Ressources\Images\bgGroundOnly.png" />
+    <Resource Include="Ressources\Images\bouton\backButton.png" />
+    <Resource Include="Ressources\Images\bouton\quitButton.png" />
     <Resource Include="Ressources\Images\bouton\settingsButton.png" />
     <Resource Include="Ressources\Images\branche.png" />
     <Resource Include="Ressources\Images\citrouille\citrouille1droite.png" />

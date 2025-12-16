@@ -17,7 +17,9 @@
         <Button x:Name="settingsButton" Background="Transparent" BorderThickness="0" Style="{StaticResource BoutonImmobile}" Margin="0,240,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image Source="Ressources/Images/bouton/settingsButton.png" Width="150"/>
         </Button>
-        <Button x:Name="quitButton" Content="Quitter" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,500,0,0" Width="150" Height="85" Click="quitButton_Click"/>
+        <Button x:Name="quitButton" Background="Transparent" BorderThickness="0" Style="{StaticResource BoutonImmobile}" Margin="0,360,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="quitButton_Click">
+            <Image Source="Ressources/Images/bouton/quitButton.png" Width="150"/>
+        </Button>
         <Button x:Name="testFinish" Content="Test" HorizontalAlignment="Left" Margin="344,99,0,0" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
