@@ -113,60 +113,37 @@ namespace Treenity
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
         {
-            Key toucheDroite, toucheGauche, toucheSaut;
-
-            if (App.ModeZQSD)
+            if (e.Key == Key.Right || e.Key == Key.D || e.Key == Key.Left || e.Key == Key.Q)
             {
-                toucheDroite = Key.D;
-                toucheGauche = Key.Q;
-                toucheSaut = Key.Z;
-            }
-            else
-            {
-                toucheDroite = Key.Right;
-                toucheGauche = Key.Left;
-                toucheSaut = Key.Up;
-            }
-
-            if (e.Key == toucheDroite || e.Key == toucheGauche)
                 joueur.vitesseX = 0;
+            }
+            
+
+            if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
+            {
+                joueur.vitesseY += FORCE_SAUT;
+            }
         }
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
-            Key toucheDroite, toucheGauche, toucheSaut;
-
-            if (App.ModeZQSD)
-            {
-                toucheDroite = Key.D;
-                toucheGauche = Key.Q;
-                toucheSaut = Key.Z;
-            }
-            else
-            {
-                toucheDroite = Key.Right;
-                toucheGauche = Key.Left;
-                toucheSaut = Key.Up;
-            }
-
-            if (e.Key == toucheDroite)
+            if (e.Key == Key.Right || e.Key == Key.D)
             {
                 joueur.directionRegard = 1;
                 joueur.vitesseX = 4;
             }
-            if (e.Key == toucheGauche)
+            if (e.Key == Key.Left || e.Key == Key.Q)
             {
                 joueur.directionRegard = -1;
                 joueur.vitesseX = -4;
             }
-            if (e.Key == toucheSaut && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
-                joueur.vitesseY += FORCE_SAUT;
+
 
             if (e.Key == Key.P)
             {
                 ProchainNiveau();
             }
-            
+
 
             //Console.WriteLine($"Position du joueur : {Canvas.GetLeft(imgPerso)}, {Canvas.GetTop(imgPerso)}");
             Console.WriteLine($"Position de la hitbox du joueur (rectangle joueur) : {joueur.hitboxLogi.X}, {joueur.hitboxLogi.Y}");
