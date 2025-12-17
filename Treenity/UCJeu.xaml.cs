@@ -64,7 +64,7 @@ namespace Treenity
             obstacleHitbox = new List<Rect>();
             foreach (UIElement element in canvasJeu.Children)
             {
-                if (element is Image image && image.Name != "background")
+                if (element is Image image && !( image.Name == "background1" || image.Name == "background2"))
                 {
                     Rect obstacle = new Rect
                     (
@@ -332,18 +332,31 @@ namespace Treenity
                 if (scrollRestant <= 0)
                 {
                     scrollNiveauEnCours = false;
+                    joueur.pv = joueur.pvMax;
+                    nbEnnemis += 2;
+                    nbNiveau += 1;
+                    InitializeEnnemies();
+
+                    foreach (UIElement element in canvasJeu.Children)
+                    {
+                        if (element is Image image && (image.Name == "Background1" || image.Name == "Background2"))
+                        {
+                            double top = Canvas.GetTop(image);
+                            if (top >= canvasJeu.ActualHeight) // si complètement en bas
+                            {
+                                Canvas.SetTop(image, -image.Height); // le replacer en haut
+                            }
+                        }
+                    }
                 }
             }
         }
 
         private void ProchainNiveau()
         {
-            //scrollRestant = 1080; // distance totale à scroller
-            //scrollNiveauEnCours = true;
-            joueur.pv = joueur.pvMax;
-            nbEnnemis += 2;
-            nbNiveau += 1;
-            InitializeEnnemies();
+            scrollRestant = 1080; // distance totale à scroller
+            scrollNiveauEnCours = true;
+            
         }
     }
 }

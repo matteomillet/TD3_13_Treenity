@@ -13,8 +13,8 @@
     <None Remove="Ressources\Images\backgroundFinJeu.jpg" />
     <None Remove="Ressources\Images\backgroundForest.jpg" />
     <None Remove="Ressources\Images\BackgroundMenu.png" />
+    <None Remove="Ressources\Images\backgroundNiveau.png" />
     <None Remove="Ressources\Images\backgroundPause.png" />
-    <None Remove="Ressources\Images\bgGroundOnly.png" />
     <None Remove="Ressources\Images\bouton\backButton.png" />
     <None Remove="Ressources\Images\bouton\menuButton.png" />
     <None Remove="Ressources\Images\bouton\pauseButton.png" />
@@ -71,8 +71,8 @@
     <Resource Include="Ressources\Images\backgroundFinJeu.jpg" />
     <Resource Include="Ressources\Images\backgroundForest.jpg" />
     <Resource Include="Ressources\Images\BackgroundMenu.png" />
+    <Resource Include="Ressources\Images\backgroundNiveau.png" />
     <Resource Include="Ressources\Images\backgroundPause.png" />
-    <Resource Include="Ressources\Images\bgGroundOnly.png" />
     <Resource Include="Ressources\Images\bouton\backButton.png" />
     <Resource Include="Ressources\Images\bouton\menuButton.png" />
     <Resource Include="Ressources\Images\bouton\pauseButton.png" />

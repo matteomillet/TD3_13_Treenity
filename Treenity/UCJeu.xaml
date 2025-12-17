@@ -14,7 +14,10 @@
             <Button x:Name="pauseButton" VerticalAlignment="Top" Panel.ZIndex="1" Background="Transparent" BorderThickness="0" Style="{StaticResource BoutonImmobile}" HorizontalAlignment="Left" Margin="1800,30,0,0" Click="PauseButtonClick">
                 <Image Source="Ressources/Images/bouton/pauseButton.png" Width="90"/>
             </Button>
-            <Image x:Name="background" Height="20600" Canvas.Left="0" Source="/Ressources/Images/bgGroundOnly.png" Stretch="Fill" Canvas.Top="-19440" Width="1920"/>
+            <Image x:Name="Background1" Height="1157" Source="/Ressources/Images/backgroundNiveau.png" Stretch="Fill" Width="1930" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <Image x:Name="Background2" Height="1157" Source="/Ressources/Images/backgroundNiveau.png" Stretch="Fill" Width="1930" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="-1085"/>
+
+
         </Canvas>
         <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,20,0,0" Width="300" Height="50">
 
@@ -84,5 +87,5 @@
         </Grid>
 
     </Grid>
-    
+
 </UserControl>
