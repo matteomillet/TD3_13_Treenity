@@ -45,7 +45,7 @@ namespace Treenity
             entiteImg.Width = spriteEnnemiGauche[0].PixelWidth; // Largeur exact de l'image en pixel
             entiteImg.Height = spriteEnnemiGauche[0].PixelHeight;   // Hauteur exact de l'image en pixel
 
-            posLeft = rand.Next(0, (int)(canvasJeu.ActualWidth - entiteImg.Width)); // Position aléatoire de l'ennemi en abscisse
+            posLeft = rand.Next(500, (int)(canvasJeu.ActualWidth - entiteImg.Width)); // Position aléatoire de l'ennemi en abscisse
             posTop = rand.Next(0, (int)(canvasJeu.ActualHeight - entiteImg.Height));    // Position aléatoire de l'ennemi en ordonnée
 
             hitboxLogi = new Rect(posLeft, posTop, entiteImg.Width, entiteImg.Height);   // Création de la hitbox logique de l'ennemie

@@ -25,6 +25,9 @@ namespace Treenity
         public int directionRegard;
         public int rayonAttaque;
 
+        public int cooldownReculActuel = 0;
+        public int cooldownReculMax = 30;
+
         public double posTop;   // Position haute de l'entité
         public double posLeft;  // Position gauche de l'entité
 
@@ -132,11 +135,17 @@ namespace Treenity
             {
                 cible.RecevoirDegats(degats);
                 Console.WriteLine("Ennemi touché dans le rayon !");
+
+                int forceRecul = 40;
+
+                cible.RecevoirRecul("X" + forceRecul*directionRegard);
             }
         }
 
         public void RecevoirRecul(string direction)
         {
+            if (cooldownReculActuel > 0) return;
+
             string abssice = direction.Substring(0, 1);
             int recul = int.Parse(direction.Substring(1, direction.Length - 1));
 
@@ -151,6 +160,8 @@ namespace Treenity
                 hitboxLogi.Y = hitboxLogi.Y + recul;
                 
             }
+
+            cooldownReculActuel = cooldownReculMax;
         }
     }
 }

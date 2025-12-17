@@ -72,7 +72,12 @@ namespace Treenity
             ZoneJeu.Content = uc;
 
             uc.toMenu.Click += AfficheDemarrage;
-            
+            uc.deathToMenu.Click += AfficheDemarrage;
+        }
+
+        private void DeathToMenu_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void AfficherParametres(object sender, RoutedEventArgs e)

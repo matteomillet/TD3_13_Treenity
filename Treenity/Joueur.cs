@@ -21,7 +21,7 @@ namespace Treenity
             entiteImg.Height = image.PixelHeight;   // Hauteur exact de l'image en pixel
 
             // Position fixe du joueur
-            posLeft = 100;
+            posLeft = 200;
             posTop = 600;
 
             hitboxLogi = new System.Windows.Rect(posLeft, posTop, entiteImg.Width, entiteImg.Height);   // Création de la hitbox logique du joueur

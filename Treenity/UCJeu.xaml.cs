@@ -30,22 +30,18 @@ namespace Treenity
         public Joueur joueur;
         public List<Rect> obstacleHitbox;
         private static DispatcherTimer minuterie;
-        public Ellipse cercleDebug;
-        public double vitesseY = 0; 
+        public double vitesseY = 0;
+        public int nbEnnemis = 4;
+        public int nbNiveau = 1;
         public const double gravite = 3;
         public const double FORCE_SAUT = -40;
-
-        Dictionary<String, double> chanceEnnemis = new Dictionary<String, double>()
-        {
-            {"citrouille", 0},{"vers", 0},{"fantome", 0.1},{"lapin", 0.4},{"volatile", 1}
-        };
 
         private bool scrollNiveauEnCours = false;
         private double scrollRestant = 0;
         private double scrollVitesse = 5;
         public UCJeu()
         {
-            InitializeComponent();
+                InitializeComponent();
             
         }
 
@@ -91,28 +87,17 @@ namespace Treenity
         {
             BitmapImage joueurImg = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/bucheron.png"));
             joueur = new Joueur(canvasJeu, 100, 5, 4, joueurImg);
-
-            // Initialisation d'un cercle de debug pour visualiser le rayon d'attaque
-            /*
-            cercleDebug = new Ellipse();
-            cercleDebug.Width = rayonAttaque * 2;
-            cercleDebug.Height = rayonAttaque * 2;
-            cercleDebug.Stroke = Brushes.Red;
-            cercleDebug.StrokeThickness = 2;
-
-            canvasJeu.Children.Add(cercleDebug);
-            */
         }
 
         private void InitializeEnnemies()
         {
             Random rand = new Random();
             ennemies = new List<Ennemies>();
-            for(int i = 0; i < 1;  i++)
+            for(int i = 0; i < nbEnnemis; i++)
             {        
                 double choixEnnemi = rand.NextDouble();
                 string ennemi = "";
-                foreach(KeyValuePair<String, double> chance in chanceEnnemis)
+                foreach(KeyValuePair<String, double> chance in App.chanceEnnemis)
                 {
                     if(choixEnnemi < chance.Value)
                     {
@@ -120,7 +105,7 @@ namespace Treenity
                         break;
                     }
                 }
-                ennemies.Add(new Ennemies(canvasJeu, 50, 10, 1, ennemi));
+                ennemies.Add(new Ennemies(canvasJeu, App.statsEnnemis[ennemi][0], App.statsEnnemis[ennemi][1], App.statsEnnemis[ennemi][2], ennemi));
             }
 
 
@@ -204,6 +189,25 @@ namespace Treenity
             minuterie.Start();
         }
 
+        private void MettreAJourInterface()
+        {
+            double pourcentage = (double)joueur.pv / joueur.pvMax;
+
+            if (pourcentage < 0) pourcentage = 0;
+
+            rectVieJoueur.Width = 200 * pourcentage;
+
+            txtVieJoueur.Text = $"{joueur.pv} / {joueur.pvMax}";
+        }
+        private void GameOver()
+        {
+            // 1. On arrête le temps
+            minuterie.Stop();
+
+            // 2. On affiche l'écran de fin
+            GridGameOver.Visibility = Visibility.Visible;
+        }
+
         private void PauseButtonClick(object sender, RoutedEventArgs e)
         {
             minuterie.Stop();
@@ -235,8 +239,12 @@ namespace Treenity
                     ennemies.RemoveAt(i);
                     // Console.WriteLine($"Ennemis restants : {ennemies.Count}");
 
-                    //if (ennemies.Count == 0)
-                        //ProchainNiveau();
+                    if (ennemies.Count == 0)
+                    {
+                        minuterie.Stop();
+                        ProchainNiveau();
+                        minuterie.Start();
+                    }
                     continue;
                 }
 
@@ -246,8 +254,15 @@ namespace Treenity
                 //Console.WriteLine("MoveEnnemie Y = " + ennemies[i].hitboxLogi.Y);
             }
 
+            if(joueur.pv <= 0)
+            {
+                GameOver();
+            }
+
 
             joueur.AppliquerGravite(obstacleHitbox);
+            if (joueur.cooldownReculActuel > 0)
+                joueur.cooldownReculActuel--;
 
             double deplacementTotalX = joueur.vitesseX + joueur.vitesseXRecul;
 
@@ -295,6 +310,8 @@ namespace Treenity
             for (int i = ennemies.Count - 1; i >= 0; i--)
             {
                 ennemies[i].AppliquerGravite(obstacleHitbox);
+                if (ennemies[i].cooldownReculActuel > 0)
+                    ennemies[i].cooldownReculActuel--;
             }
             
 
@@ -302,26 +319,12 @@ namespace Treenity
 
             if (colision != "pas colision")
             {
-                Console.WriteLine("Colision detecter");
-                joueur.RecevoirRecul(colision);
+                //Console.WriteLine("Colision detecter");
             }
 
-
-
-
-            // Cercle de debug pour apercevoire le rayon d'attaque
-            /*
-            double centreX = rectangleJoueur.X + (rectangleJoueur.Width / 2);
-            double centreY = rectangleJoueur.Y + (rectangleJoueur.Height / 2);
-
-            double left = centreX - rayonAttaque;
-            double top = centreY - rayonAttaque;
-
-            Canvas.SetLeft(cercleDebug, left);
-            Canvas.SetTop(cercleDebug, top);
-            */
             
             joueur.UpdateVisu();
+            MettreAJourInterface();
             for (int i = ennemies.Count - 1; i >= 0; i--)
             {
                 ennemies[i].UpdateVisu();   
@@ -358,8 +361,12 @@ namespace Treenity
 
         private void ProchainNiveau()
         {
-            scrollRestant = 1080; // distance totale à scroller
-            scrollNiveauEnCours = true;
+            //scrollRestant = 1080; // distance totale à scroller
+            //scrollNiveauEnCours = true;
+            joueur.pv = joueur.pvMax;
+            nbEnnemis += 2;
+            nbNiveau += 1;
+            InitializeEnnemies();
         }
     }
 }
