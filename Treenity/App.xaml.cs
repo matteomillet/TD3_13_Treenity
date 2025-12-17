@@ -9,11 +9,11 @@ namespace Treenity
     /// </summary>
     public partial class App : Application
     {
-        public static bool ModeZQSD = false;
+        public static bool ModeZQSD = true;
 
         public static Dictionary<String, double> chanceEnnemis = new Dictionary<String, double>()
         {
-            {"citrouille", 0.08},{"vers", 0.2},{"fantome", 0.4},{"lapin", 0.7},{"volatile", 1}
+            {"boss", 0},{"citrouille", 0.08},{"vers", 0.2},{"fantome", 0.4},{"lapin", 0.7},{"volatile", 1}
         };
 
         public static Dictionary<String, int[]> statsEnnemis = new Dictionary<string, int[]>()
@@ -22,7 +22,8 @@ namespace Treenity
             {"lapin", new int[] {20, 4, 3} },
             {"fantome", new int[] {20, 7, 2} },
             {"vers", new int[] {30, 7, 3} },
-            {"citrouille", new int[] {50, 12, 1}}
+            {"citrouille", new int[] {50, 10, 1} },
+            {"boss", new int[] {200, 15, 1} }
         };
     }
 

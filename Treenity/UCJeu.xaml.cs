@@ -30,11 +30,17 @@ namespace Treenity
         public Joueur joueur;
         public List<Rect> obstacleHitbox;
         private static DispatcherTimer minuterie;
+        public static int pvJoueur = 150;
+        public static int pvGodMode = 10000;
+        public static int degatsJoueur = 10;
+        public static int degatsGodMode = 10000;
+        public static int vitesseJoueur = 4;
         public double vitesseY = 0;
         public int nbEnnemis = 4;
-        public int nbNiveau = 1;
+        public int nbNiveau = 9;
         public const double gravite = 3;
         public const double FORCE_SAUT = -40;
+        public bool godMode = false;
 
         private bool scrollNiveauEnCours = false;
         private double scrollRestant = 0;
@@ -86,7 +92,7 @@ namespace Treenity
         private void InitializeJoueur()
         {
             BitmapImage joueurImg = new BitmapImage(new Uri("pack://application:,,,/Ressources/Images/bucheron.png"));
-            joueur = new Joueur(canvasJeu, 100, 5, 4, joueurImg);
+            joueur = new Joueur(canvasJeu, pvJoueur, degatsJoueur, vitesseJoueur, joueurImg);
         }
 
         private void InitializeEnnemies()
@@ -113,26 +119,71 @@ namespace Treenity
 
         private void canvasJeu_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Right || e.Key == Key.D || e.Key == Key.Left || e.Key == Key.Q)
+            Key toucheDroite, toucheGauche, toucheSaut;
+
+            if (App.ModeZQSD == true)
+            {
+                toucheDroite = Key.D;
+                toucheGauche = Key.Q;
+                toucheSaut = Key.Z;
+            }
+            else
+            {
+                toucheDroite = Key.Right;
+                toucheGauche = Key.Left;
+                toucheSaut = Key.Up;
+            }
+
+            if (e.Key == toucheDroite || e.Key == toucheGauche)
             {
                 joueur.vitesseX = 0;
             }
             
 
-            if (e.Key == Key.Space && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
+            if (e.Key == toucheSaut && MethodeColision.EntiteToucheSol(joueur.hitboxLogi))
             {
                 joueur.vitesseY += FORCE_SAUT;
+            }
+
+            if (e.Key == Key.G)
+            {
+                if(godMode == false)
+                {
+                    godMode = true;
+                    joueur.pv = pvGodMode;
+                    joueur.degats = degatsGodMode;
+                }
+                else
+                {
+                    godMode = false;
+                    joueur.pv = pvJoueur;
+                    joueur.degats = degatsJoueur;
+                }
             }
         }
 
         private void canvasJeu_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Right || e.Key == Key.D)
+
+            Key toucheDroite, toucheGauche;
+
+            if (App.ModeZQSD == true)
+            {
+                toucheDroite = Key.D;
+                toucheGauche = Key.Q;
+            }
+            else
+            {
+                toucheDroite = Key.Right;
+                toucheGauche = Key.Left;
+            }
+
+            if (e.Key == toucheDroite)
             {
                 joueur.directionRegard = 1;
                 joueur.vitesseX = 4;
             }
-            if (e.Key == Key.Left || e.Key == Key.Q)
+            if (e.Key == toucheGauche)
             {
                 joueur.directionRegard = -1;
                 joueur.vitesseX = -4;
@@ -218,9 +269,21 @@ namespace Treenity
 
                     if (ennemies.Count == 0)
                     {
+                        if(nbNiveau < 10)
+                        {
                         minuterie.Stop();
                         ProchainNiveau();
                         minuterie.Start();
+                        }
+                        else if(nbNiveau == 10)
+                        {
+                            minuterie.Stop();
+                            titreFin.Text = "VICTOIRE";
+                            titreFin.Foreground = Brushes.Green;
+                            texteFin.Text = "Félicitations héros,\nvous êtes venu à bout de l'arbre sacré !";
+                            effetFin.Fill = Brushes.Green;
+                            GameOver();
+                        }
                     }
                     continue;
                 }
@@ -332,9 +395,18 @@ namespace Treenity
                 if (scrollRestant <= 0)
                 {
                     scrollNiveauEnCours = false;
-                    joueur.pv = joueur.pvMax;
+                    if (godMode == true)
+                        joueur.pv = pvGodMode;
+                    else
+                        joueur.pv = joueur.pvMax;
                     nbEnnemis += 2;
+                    if (nbNiveau == 9)
+                    {
+                        nbEnnemis = 1;
+                        App.chanceEnnemis["boss"] = 1;
+                    }
                     nbNiveau += 1;
+                    numeroNiveau.Text = $"Niveau {nbNiveau}";
                     InitializeEnnemies();
 
                     foreach (UIElement element in canvasJeu.Children)
@@ -356,7 +428,6 @@ namespace Treenity
         {
             scrollRestant = 1080; // distance totale à scroller
             scrollNiveauEnCours = true;
-            
         }
     }
 }

@@ -31,7 +31,6 @@ namespace Treenity
 
             uc.playButton.Click += AfficherJeu;
             uc.rulesButton.Click += AfficherRegles;
-            uc.testFinish.Click += AfficherFinish;
             uc.settingsButton.Click += AfficherParametres;
         }
 
@@ -43,7 +42,6 @@ namespace Treenity
 
             uc.playButton.Click += AfficherJeu;
             uc.rulesButton.Click += AfficherRegles;
-            uc.testFinish.Click += AfficherFinish;
             uc.settingsButton.Click += AfficherParametres;
         }
 
@@ -54,15 +52,6 @@ namespace Treenity
             ZoneJeu.Content = uc;
 
             uc.boutonRetourRegle.Click += AfficheDemarrage;
-        }
-
-        private void AfficherFinish(object sender, RoutedEventArgs e)
-        {
-            UCFinish uc = new UCFinish();
-
-            ZoneJeu.Content = uc;
-
-            uc.backMenuButton.Click += AfficheDemarrage;
         }
 
         private void AfficherJeu(object sender, RoutedEventArgs e)

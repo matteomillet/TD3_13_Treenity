@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Ressources\Images\treenity.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,6 +44,7 @@
     <None Remove="Ressources\Images\PanneauRegleJeu.png" />
     <None Remove="Ressources\Images\parametresBackground.png" />
     <None Remove="Ressources\Images\playButton.png" />
+    <None Remove="Ressources\Images\treenity.ico" />
     <None Remove="Ressources\Images\Tronc.png" />
     <None Remove="Ressources\Images\vers\vers1droite.png" />
     <None Remove="Ressources\Images\vers\vers2droite.png" />
@@ -61,6 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Ressources\Images\treenity.ico" />
     <Content Include="Ressources\Sons\hitSound.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -110,6 +113,7 @@
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
     <Resource Include="Ressources\Images\bouton\playButton.png" />
     <Resource Include="Ressources\Images\parametresBackground.png" />
+    <Resource Include="Ressources\Images\treenity.ico" />
     <Resource Include="Ressources\Images\Tronc.png" />
     <Resource Include="Ressources\Images\vers\vers1droite.png" />
     <Resource Include="Ressources\Images\vers\vers1gauche.png" />
