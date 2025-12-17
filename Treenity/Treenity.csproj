@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Ressources\Images\treenity.ico</ApplicationIcon>
+    <ApplicationIcon>treenity.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -77,10 +77,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Ressources\Images\treenity.ico" />
     <Content Include="Ressources\Sons\hitSound.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="treenity.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -141,7 +141,9 @@
     <Resource Include="Ressources\Images\PanneauRegleJeu.png" />
     <Resource Include="Ressources\Images\bouton\playButton.png" />
     <Resource Include="Ressources\Images\parametresBackground.png" />
-    <Resource Include="Ressources\Images\treenity.ico" />
+    <Resource Include="Ressources\Images\treenity.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Ressources\Images\Tronc.png" />
     <Resource Include="Ressources\Images\vers\vers1droite.png" />
     <Resource Include="Ressources\Images\vers\vers1gauche.png" />
