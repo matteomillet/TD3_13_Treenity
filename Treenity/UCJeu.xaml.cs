@@ -182,14 +182,16 @@ namespace Treenity
             {
                 joueur.directionRegard = 1;
                 joueur.vitesseX = 4;
+                joueur.attaque = false;
             }
             if (e.Key == toucheGauche)
             {
                 joueur.directionRegard = -1;
                 joueur.vitesseX = -4;
+                joueur.attaque = false;
             }
 
-
+            
             if (e.Key == Key.P)
             {
                 ProchainNiveau();
@@ -202,8 +204,14 @@ namespace Treenity
 
         private void canvasJeu_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            foreach (Ennemies ennemie in ennemies)
-                joueur.Attaque(ennemie);
+            if (joueur.attaque == false)
+            {
+                foreach (Ennemies ennemie in ennemies)
+                    joueur.Attaque(ennemie);
+
+                joueur.attaque = true;
+                Console.WriteLine(joueur.attaque);
+            }
         }
 
         private void InitializeTimer()
@@ -258,7 +266,8 @@ namespace Treenity
         private void Jeu(object? sender, EventArgs e)
         {
             nbTick++;
-            
+
+            joueur.AnimerAttaque();
             for(int i = ennemies.Count - 1; i >= 0; i--)
             {
                 if (ennemies[i].pv <= 0)
@@ -305,6 +314,8 @@ namespace Treenity
                 joueur.cooldownReculActuel--;
 
             double deplacementTotalX = joueur.vitesseX + joueur.vitesseXRecul;
+            if (deplacementTotalX != 0 && joueur.attaque == false)
+                joueur.AnimerMouvement();
 
             //futur déplacement du joueur
             Rect futurJoueur = joueur.hitboxLogi;
@@ -353,6 +364,7 @@ namespace Treenity
                 if (ennemies[i].cooldownReculActuel > 0)
                     ennemies[i].cooldownReculActuel--;
             }
+            
             
 
             string colision = MethodeColision.ColisionAvecEnnemies(ennemies, joueur.hitboxLogi);
@@ -411,7 +423,7 @@ namespace Treenity
 
                     foreach (UIElement element in canvasJeu.Children)
                     {
-                        if (element is Image image && (image.Name == "Background1" || image.Name == "Background2"))
+                        if (element is Image image && (image.Name == "background1" || image.Name == "background2"))
                         {
                             double top = Canvas.GetTop(image);
                             if (top >= canvasJeu.ActualHeight) // si complètement en bas

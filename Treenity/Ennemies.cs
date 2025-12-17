@@ -137,9 +137,16 @@ namespace Treenity
         //MoveEnnemie qui peut être changer et genre elle appele une methode dans entite qui fait déplacer l'entite
         public void MoveEnnemie(Joueur joueur)  // Méthode de déplacement de l'ennemi
         {
-            // DÉPLACEMENT LOGIQUE
-            hitboxLogi.X += vitesse * directionRegard;
-            
+            double futurX = hitboxLogi.X + vitesse * directionRegard;
+
+            // Vérification collision avec le joueur
+            Rect futurHitbox = new Rect(futurX, hitboxLogi.Y, hitboxLogi.Width, hitboxLogi.Height);
+            if (!futurHitbox.IntersectsWith(joueur.hitboxLogi))
+            {
+                // Déplacement autorisé uniquement si pas de collision
+                hitboxLogi.X = futurX;
+            }
+
             // Barre de vie
             double decalage = (entiteImg.Width - 80) / 2;
             Canvas.SetLeft(barrePVMax, hitboxLogi.X + decalage);

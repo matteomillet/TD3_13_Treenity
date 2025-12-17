@@ -14,8 +14,8 @@
             <Button x:Name="pauseButton" VerticalAlignment="Top" Panel.ZIndex="1" Background="Transparent" BorderThickness="0" Style="{StaticResource BoutonImmobile}" HorizontalAlignment="Left" Margin="1800,30,0,0" Click="PauseButtonClick">
                 <Image Source="Ressources/Images/bouton/pauseButton.png" Width="90"/>
             </Button>
-            <Image x:Name="Background1" Height="1157" Source="/Ressources/Images/backgroundNiveau.png" Stretch="Fill" Width="1930" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Image x:Name="Background2" Height="1157" Source="/Ressources/Images/backgroundNiveau.png" Stretch="Fill" Width="1930" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="-1085"/>
+            <Image x:Name="background1" Panel.ZIndex="0" Height="301" Source="/Ressources/Images/backgroundNiveau.png" Stretch="Fill" Width="1930" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="0" Canvas.Top="779"/>
+            <Image x:Name="background2" Panel.ZIndex="0" Height="301" Source="/Ressources/Images/backgroundNiveau.png" Stretch="Fill" Width="1930" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Top="-301" Canvas.Left="0"/>
 
 
         </Canvas>
